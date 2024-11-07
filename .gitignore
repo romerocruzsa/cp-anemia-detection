@@ -1,7 +1,7 @@
 # ADDED BY USER (Sebastian)
-*.png
-*.jpeg
-*.jpg 
+# *.png
+# *.jpeg
+# *.jpg 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
