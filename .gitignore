@@ -3,6 +3,12 @@
 # *.jpeg
 # *.jpg 
 
+# Notebooks to ignore
+*notebooks/AnemiaDetection_ONNX.ipynb
+*notebooks/AnemiaDetection_CoreML.ipynb
+*notebooks/Anemia_MobileNet_BaseVsQAT.ipynb
+*notebooks/4_Using_PyTorch_through_ONNX.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
