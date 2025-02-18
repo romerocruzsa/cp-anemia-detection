@@ -1,0 +1,1223 @@
+====================================================================================================
+Training Model: shufflenetv2-0.5x
+Initial Backbone Model Size: 5.59 MB
+Modified Backbone Model Size: 2.02 MB
+
+
+Epoch 1/150
+Training: Fold 1 - Total Loss: 28.5079, Cross Entropy: 1.358708, Accuracy: 0.2060, Precision: 0.1793, Recall: 0.2060, F1 Score: 0.0922, AUC: 0.5153, R² Score: -16.611597, MAE: 9.2832, MSE: 91.8562
+Training: Fold 2 - Total Loss: 18.1430, Cross Entropy: 1.305262, Accuracy: 0.2254, Precision: 0.1349, Recall: 0.2254, F1 Score: 0.1593, AUC: 0.5065, R² Score: -10.568779, MAE: 7.2344, MSE: 57.4309
+Training: Fold 3 - Total Loss: 9.5285, Cross Entropy: 1.269052, Accuracy: 0.3345, Precision: 0.3652, Recall: 0.3345, F1 Score: 0.2168, AUC: 0.4731, R² Score: -4.941102, MAE: 4.8850, MSE: 28.8006
+Training: Fold 4 - Total Loss: 4.8359, Cross Entropy: 1.265574, Accuracy: 0.3750, Precision: 0.2608, Recall: 0.3750, F1 Score: 0.3038, AUC: 0.4935, R² Score: -1.477808, MAE: 3.1193, MSE: 13.1667
+Training: Fold 5 - Total Loss: 4.1851, Cross Entropy: 1.242747, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5589, R2 Score: -0.987900, MAE: 2.8101, MSE: 11.0506
+Avg Latency (ms): 11.83, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.3873
+
+Epoch 2/150
+Training: Fold 1 - Total Loss: 2.8330, Cross Entropy: 1.251756, Accuracy: 0.4085, Precision: 0.1668, Recall: 0.4085, F1 Score: 0.2369, AUC: 0.4849, R² Score: -0.229030, MAE: 2.0821, MSE: 6.5227
+Training: Fold 2 - Total Loss: 2.3927, Cross Entropy: 1.238388, Accuracy: 0.4049, Precision: 0.3277, Recall: 0.4049, F1 Score: 0.2357, AUC: 0.4976, R² Score: -0.023578, MAE: 1.7939, MSE: 5.0861
+Training: Fold 3 - Total Loss: 2.3611, Cross Entropy: 1.253673, Accuracy: 0.3785, Precision: 0.2770, Recall: 0.3785, F1 Score: 0.2141, AUC: 0.5064, R² Score: 0.003773, MAE: 1.7656, MSE: 4.9451
+Training: Fold 4 - Total Loss: 2.4823, Cross Entropy: 1.246736, Accuracy: 0.3891, Precision: 0.2233, Recall: 0.3891, F1 Score: 0.2535, AUC: 0.4695, R² Score: 0.006349, MAE: 1.8425, MSE: 5.3654
+Training: Fold 5 - Total Loss: 2.4524, Cross Entropy: 1.236089, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5280, R2 Score: -0.000523, MAE: 1.8173, MSE: 5.2904
+Avg Latency (ms): 8.95, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 3/150
+Training: Fold 1 - Total Loss: 2.4669, Cross Entropy: 1.236916, Accuracy: 0.4085, Precision: 0.1668, Recall: 0.4085, F1 Score: 0.2369, AUC: 0.4881, R² Score: -0.006279, MAE: 1.8491, MSE: 5.3369
+Training: Fold 2 - Total Loss: 2.3685, Cross Entropy: 1.233162, Accuracy: 0.4032, Precision: 0.1625, Recall: 0.4032, F1 Score: 0.2317, AUC: 0.4963, R² Score: -0.005621, MAE: 1.7811, MSE: 5.0178
+Training: Fold 3 - Total Loss: 2.3383, Cross Entropy: 1.247602, Accuracy: 0.3785, Precision: 0.2521, Recall: 0.3785, F1 Score: 0.2481, AUC: 0.5230, R² Score: 0.012899, MAE: 1.7485, MSE: 4.8833
+Training: Fold 4 - Total Loss: 2.4880, Cross Entropy: 1.248225, Accuracy: 0.3944, Precision: 0.2561, Recall: 0.3944, F1 Score: 0.2825, AUC: 0.4812, R² Score: -0.009897, MAE: 1.8467, MSE: 5.3809
+Training: Fold 5 - Total Loss: 2.4659, Cross Entropy: 1.235112, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.4948, R2 Score: -0.029446, MAE: 1.8248, MSE: 5.3379
+Avg Latency (ms): 9.00, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 4/150
+Training: Fold 1 - Total Loss: 2.4418, Cross Entropy: 1.233954, Accuracy: 0.4085, Precision: 0.1668, Recall: 0.4085, F1 Score: 0.2369, AUC: 0.4965, R² Score: -0.002603, MAE: 1.8404, MSE: 5.2603
+Training: Fold 2 - Total Loss: 2.3752, Cross Entropy: 1.233067, Accuracy: 0.4085, Precision: 0.4926, Recall: 0.4085, F1 Score: 0.2430, AUC: 0.5130, R² Score: -0.006864, MAE: 1.7830, MSE: 5.0401
+Training: Fold 3 - Total Loss: 2.3464, Cross Entropy: 1.248597, Accuracy: 0.3609, Precision: 0.2295, Recall: 0.3609, F1 Score: 0.2485, AUC: 0.5274, R² Score: 0.001733, MAE: 1.7533, MSE: 4.9078
+Training: Fold 4 - Total Loss: 2.4852, Cross Entropy: 1.244331, Accuracy: 0.4155, Precision: 0.2750, Recall: 0.4155, F1 Score: 0.2711, AUC: 0.4931, R² Score: -0.018190, MAE: 1.8477, MSE: 5.3805
+Training: Fold 5 - Total Loss: 2.4494, Cross Entropy: 1.228866, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5873, R2 Score: 0.003213, MAE: 1.8148, MSE: 5.2973
+Avg Latency (ms): 9.01, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 5/150
+Training: Fold 1 - Total Loss: 2.4581, Cross Entropy: 1.241773, Accuracy: 0.4085, Precision: 0.1668, Recall: 0.4085, F1 Score: 0.2369, AUC: 0.4749, R² Score: -0.006682, MAE: 1.8446, MSE: 5.2962
+Training: Fold 2 - Total Loss: 2.3672, Cross Entropy: 1.229362, Accuracy: 0.4085, Precision: 0.4926, Recall: 0.4085, F1 Score: 0.2430, AUC: 0.5311, R² Score: -0.006267, MAE: 1.7807, MSE: 5.0220
+Training: Fold 3 - Total Loss: 2.3355, Cross Entropy: 1.244692, Accuracy: 0.3820, Precision: 0.2665, Recall: 0.3820, F1 Score: 0.2332, AUC: 0.5336, R² Score: -0.001832, MAE: 1.7491, MSE: 4.8807
+Training: Fold 4 - Total Loss: 2.4772, Cross Entropy: 1.243545, Accuracy: 0.4190, Precision: 0.2832, Recall: 0.4190, F1 Score: 0.2868, AUC: 0.4875, R² Score: -0.014959, MAE: 1.8404, MSE: 5.3557
+Training: Fold 5 - Total Loss: 2.4541, Cross Entropy: 1.232385, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5508, R2 Score: 0.014243, MAE: 1.8110, MSE: 5.3048
+Avg Latency (ms): 9.15, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 6/150
+Training: Fold 1 - Total Loss: 2.4350, Cross Entropy: 1.233282, Accuracy: 0.4085, Precision: 0.1668, Recall: 0.4085, F1 Score: 0.2369, AUC: 0.4998, R² Score: -0.000403, MAE: 1.8364, MSE: 5.2391
+Training: Fold 2 - Total Loss: 2.3591, Cross Entropy: 1.230045, Accuracy: 0.3979, Precision: 0.1621, Recall: 0.3979, F1 Score: 0.2304, AUC: 0.5222, R² Score: -0.019992, MAE: 1.7774, MSE: 4.9936
+Training: Fold 3 - Total Loss: 2.3604, Cross Entropy: 1.252348, Accuracy: 0.3609, Precision: 0.2497, Recall: 0.3609, F1 Score: 0.2556, AUC: 0.4946, R² Score: -0.013239, MAE: 1.7616, MSE: 4.9460
+Training: Fold 4 - Total Loss: 2.4763, Cross Entropy: 1.244342, Accuracy: 0.4014, Precision: 0.2142, Recall: 0.4014, F1 Score: 0.2492, AUC: 0.4980, R² Score: -0.020386, MAE: 1.8366, MSE: 5.3509
+Training: Fold 5 - Total Loss: 2.4407, Cross Entropy: 1.229056, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5191, R2 Score: 0.015673, MAE: 1.8110, MSE: 5.2680
+Avg Latency (ms): 8.85, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 7/150
+Training: Fold 1 - Total Loss: 2.4446, Cross Entropy: 1.229281, Accuracy: 0.4014, Precision: 0.2416, Recall: 0.4014, F1 Score: 0.2434, AUC: 0.5359, R² Score: -0.004230, MAE: 1.8440, MSE: 5.2805
+Training: Fold 2 - Total Loss: 2.3579, Cross Entropy: 1.230058, Accuracy: 0.4067, Precision: 0.3608, Recall: 0.4067, F1 Score: 0.2424, AUC: 0.5328, R² Score: 0.001531, MAE: 1.7746, MSE: 4.9894
+Training: Fold 3 - Total Loss: 2.3521, Cross Entropy: 1.253205, Accuracy: 0.3644, Precision: 0.2547, Recall: 0.3644, F1 Score: 0.2953, AUC: 0.4958, R² Score: -0.015054, MAE: 1.7549, MSE: 4.9163
+Training: Fold 4 - Total Loss: 2.4788, Cross Entropy: 1.239872, Accuracy: 0.4067, Precision: 0.2752, Recall: 0.4067, F1 Score: 0.2750, AUC: 0.5130, R² Score: 0.003744, MAE: 1.8437, MSE: 5.3696
+Training: Fold 5 - Total Loss: 2.4229, Cross Entropy: 1.221981, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.5859, R2 Score: 0.004894, MAE: 1.8088, MSE: 5.2249
+Avg Latency (ms): 9.13, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 8/150
+Training: Fold 1 - Total Loss: 2.4441, Cross Entropy: 1.230641, Accuracy: 0.4032, Precision: 0.2206, Recall: 0.4032, F1 Score: 0.2380, AUC: 0.5137, R² Score: -0.014553, MAE: 1.8423, MSE: 5.2754
+Training: Fold 2 - Total Loss: 2.3643, Cross Entropy: 1.231209, Accuracy: 0.4049, Precision: 0.3270, Recall: 0.4049, F1 Score: 0.2499, AUC: 0.5095, R² Score: -0.008378, MAE: 1.7773, MSE: 5.0082
+Training: Fold 3 - Total Loss: 2.3337, Cross Entropy: 1.244361, Accuracy: 0.3715, Precision: 0.2503, Recall: 0.3715, F1 Score: 0.2373, AUC: 0.5096, R² Score: 0.000958, MAE: 1.7491, MSE: 4.8754
+Training: Fold 4 - Total Loss: 2.4725, Cross Entropy: 1.236125, Accuracy: 0.4173, Precision: 0.2793, Recall: 0.4173, F1 Score: 0.2976, AUC: 0.5175, R² Score: -0.016899, MAE: 1.8439, MSE: 5.3572
+Training: Fold 5 - Total Loss: 2.4279, Cross Entropy: 1.214804, Accuracy: 0.3873, Precision: 0.1500, Recall: 0.3873, F1 Score: 0.2163, AUC: 0.6215, R2 Score: 0.005827, MAE: 1.8077, MSE: 5.2584
+Avg Latency (ms): 9.22, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 9/150
+Training: Fold 1 - Total Loss: 2.4651, Cross Entropy: 1.231798, Accuracy: 0.4014, Precision: 0.2758, Recall: 0.4014, F1 Score: 0.2964, AUC: 0.5140, R² Score: -0.007982, MAE: 1.8558, MSE: 5.3428
+Training: Fold 2 - Total Loss: 2.3802, Cross Entropy: 1.229449, Accuracy: 0.3961, Precision: 0.2352, Recall: 0.3961, F1 Score: 0.2416, AUC: 0.5304, R² Score: -0.002138, MAE: 1.7868, MSE: 5.0651
+Training: Fold 3 - Total Loss: 2.3487, Cross Entropy: 1.245492, Accuracy: 0.3662, Precision: 0.2457, Recall: 0.3662, F1 Score: 0.2506, AUC: 0.5295, R² Score: -0.016623, MAE: 1.7586, MSE: 4.9227
+Training: Fold 4 - Total Loss: 2.4711, Cross Entropy: 1.238525, Accuracy: 0.3926, Precision: 0.2686, Recall: 0.3926, F1 Score: 0.3064, AUC: 0.5074, R² Score: -0.022592, MAE: 1.8390, MSE: 5.3470
+Training: Fold 5 - Total Loss: 2.4391, Cross Entropy: 1.213702, Accuracy: 0.3592, Precision: 0.1877, Recall: 0.3592, F1 Score: 0.2160, AUC: 0.5873, R2 Score: 0.000256, MAE: 1.8189, MSE: 5.2982
+Avg Latency (ms): 8.94, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 10/150
+Training: Fold 1 - Total Loss: 2.4395, Cross Entropy: 1.221541, Accuracy: 0.4085, Precision: 0.2986, Recall: 0.4085, F1 Score: 0.2491, AUC: 0.5795, R² Score: -0.007691, MAE: 1.8439, MSE: 5.2813
+Training: Fold 2 - Total Loss: 2.3549, Cross Entropy: 1.225565, Accuracy: 0.3891, Precision: 0.2664, Recall: 0.3891, F1 Score: 0.2734, AUC: 0.5367, R² Score: 0.002142, MAE: 1.7748, MSE: 4.9901
+Training: Fold 3 - Total Loss: 2.3406, Cross Entropy: 1.242678, Accuracy: 0.3785, Precision: 0.2673, Recall: 0.3785, F1 Score: 0.3017, AUC: 0.5373, R² Score: -0.015470, MAE: 1.7530, MSE: 4.9024
+Training: Fold 4 - Total Loss: 2.4669, Cross Entropy: 1.235408, Accuracy: 0.3996, Precision: 0.2746, Recall: 0.3996, F1 Score: 0.3174, AUC: 0.5468, R² Score: -0.007089, MAE: 1.8394, MSE: 5.3403
+Training: Fold 5 - Total Loss: 2.4225, Cross Entropy: 1.211546, Accuracy: 0.3873, Precision: 0.3037, Recall: 0.3873, F1 Score: 0.2385, AUC: 0.5766, R2 Score: -0.009310, MAE: 1.8143, MSE: 5.2482
+Avg Latency (ms): 9.26, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 11/150
+Training: Fold 1 - Total Loss: 2.4373, Cross Entropy: 1.220291, Accuracy: 0.4155, Precision: 0.3154, Recall: 0.4155, F1 Score: 0.2736, AUC: 0.5427, R² Score: -0.005426, MAE: 1.8425, MSE: 5.2770
+Training: Fold 2 - Total Loss: 2.3603, Cross Entropy: 1.233346, Accuracy: 0.3926, Precision: 0.2763, Recall: 0.3926, F1 Score: 0.2912, AUC: 0.5094, R² Score: -0.008837, MAE: 1.7745, MSE: 4.9898
+Training: Fold 3 - Total Loss: 2.3433, Cross Entropy: 1.242802, Accuracy: 0.3891, Precision: 0.2852, Recall: 0.3891, F1 Score: 0.2985, AUC: 0.5272, R² Score: -0.013136, MAE: 1.7563, MSE: 4.9112
+Training: Fold 4 - Total Loss: 2.4628, Cross Entropy: 1.231610, Accuracy: 0.4085, Precision: 0.2880, Recall: 0.4085, F1 Score: 0.3303, AUC: 0.5446, R² Score: -0.007396, MAE: 1.8380, MSE: 5.3355
+Training: Fold 5 - Total Loss: 2.4244, Cross Entropy: 1.203488, Accuracy: 0.4014, Precision: 0.2848, Recall: 0.4014, F1 Score: 0.2919, AUC: 0.5943, R2 Score: 0.010443, MAE: 1.8097, MSE: 5.2732
+Avg Latency (ms): 9.07, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.4014
+
+Epoch 12/150
+Training: Fold 1 - Total Loss: 2.4421, Cross Entropy: 1.225924, Accuracy: 0.4120, Precision: 0.2996, Recall: 0.4120, F1 Score: 0.3108, AUC: 0.5292, R² Score: -0.013174, MAE: 1.8456, MSE: 5.2799
+Training: Fold 2 - Total Loss: 2.3600, Cross Entropy: 1.228173, Accuracy: 0.3820, Precision: 0.2632, Recall: 0.3820, F1 Score: 0.2805, AUC: 0.5309, R² Score: -0.000226, MAE: 1.7765, MSE: 5.0009
+Training: Fold 3 - Total Loss: 2.3497, Cross Entropy: 1.246334, Accuracy: 0.3732, Precision: 0.2610, Recall: 0.3732, F1 Score: 0.3004, AUC: 0.5180, R² Score: -0.012139, MAE: 1.7571, MSE: 4.9242
+Training: Fold 4 - Total Loss: 2.4754, Cross Entropy: 1.231191, Accuracy: 0.4137, Precision: 0.2859, Recall: 0.4137, F1 Score: 0.3233, AUC: 0.5473, R² Score: 0.001199, MAE: 1.8465, MSE: 5.3787
+Training: Fold 5 - Total Loss: 2.4095, Cross Entropy: 1.188645, Accuracy: 0.4085, Precision: 0.2473, Recall: 0.4085, F1 Score: 0.2719, AUC: 0.6778, R2 Score: 0.003710, MAE: 1.8129, MSE: 5.2580
+Avg Latency (ms): 9.03, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.4085
+
+Epoch 13/150
+Training: Fold 1 - Total Loss: 2.4367, Cross Entropy: 1.224446, Accuracy: 0.4102, Precision: 0.2857, Recall: 0.4102, F1 Score: 0.2691, AUC: 0.5421, R² Score: 0.003169, MAE: 1.8427, MSE: 5.2652
+Training: Fold 2 - Total Loss: 2.3767, Cross Entropy: 1.230147, Accuracy: 0.3944, Precision: 0.2824, Recall: 0.3944, F1 Score: 0.3142, AUC: 0.5238, R² Score: -0.011457, MAE: 1.7858, MSE: 5.0520
+Training: Fold 3 - Total Loss: 2.3483, Cross Entropy: 1.238823, Accuracy: 0.3891, Precision: 0.2755, Recall: 0.3891, F1 Score: 0.3110, AUC: 0.5412, R² Score: -0.013256, MAE: 1.7590, MSE: 4.9372
+Training: Fold 4 - Total Loss: 2.4564, Cross Entropy: 1.221257, Accuracy: 0.4278, Precision: 0.2948, Recall: 0.4278, F1 Score: 0.3351, AUC: 0.5747, R² Score: -0.001470, MAE: 1.8385, MSE: 5.3384
+Training: Fold 5 - Total Loss: 2.3981, Cross Entropy: 1.186865, Accuracy: 0.3732, Precision: 0.2459, Recall: 0.3732, F1 Score: 0.2636, AUC: 0.6636, R2 Score: 0.007898, MAE: 1.8102, MSE: 5.2242
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 14/150
+Training: Fold 1 - Total Loss: 2.4328, Cross Entropy: 1.212323, Accuracy: 0.4049, Precision: 0.2813, Recall: 0.4049, F1 Score: 0.3055, AUC: 0.5813, R² Score: -0.017720, MAE: 1.8426, MSE: 5.2805
+Training: Fold 2 - Total Loss: 2.3510, Cross Entropy: 1.218334, Accuracy: 0.4014, Precision: 0.2832, Recall: 0.4014, F1 Score: 0.3210, AUC: 0.5505, R² Score: 0.002798, MAE: 1.7766, MSE: 4.9939
+Training: Fold 3 - Total Loss: 2.3270, Cross Entropy: 1.239329, Accuracy: 0.4032, Precision: 0.2879, Recall: 0.4032, F1 Score: 0.3359, AUC: 0.5501, R² Score: -0.001872, MAE: 1.7453, MSE: 4.8649
+Training: Fold 4 - Total Loss: 2.4724, Cross Entropy: 1.227048, Accuracy: 0.4102, Precision: 0.2925, Recall: 0.4102, F1 Score: 0.3404, AUC: 0.5509, R² Score: -0.007573, MAE: 1.8486, MSE: 5.3783
+Training: Fold 5 - Total Loss: 2.4102, Cross Entropy: 1.190598, Accuracy: 0.4085, Precision: 0.2710, Recall: 0.4085, F1 Score: 0.2778, AUC: 0.6183, R2 Score: 0.003476, MAE: 1.8127, MSE: 5.2559
+Avg Latency (ms): 9.03, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 15/150
+Training: Fold 1 - Total Loss: 2.4364, Cross Entropy: 1.223094, Accuracy: 0.4155, Precision: 0.3078, Recall: 0.4155, F1 Score: 0.2925, AUC: 0.5559, R² Score: -0.016292, MAE: 1.8411, MSE: 5.2675
+Training: Fold 2 - Total Loss: 2.3578, Cross Entropy: 1.220732, Accuracy: 0.4137, Precision: 0.2985, Recall: 0.4137, F1 Score: 0.3418, AUC: 0.5425, R² Score: -0.015929, MAE: 1.7807, MSE: 5.0111
+Training: Fold 3 - Total Loss: 2.3337, Cross Entropy: 1.225930, Accuracy: 0.4120, Precision: 0.2913, Recall: 0.4120, F1 Score: 0.3402, AUC: 0.5688, R² Score: -0.000384, MAE: 1.7544, MSE: 4.9185
+Training: Fold 4 - Total Loss: 2.4800, Cross Entropy: 1.215430, Accuracy: 0.4384, Precision: 0.3130, Recall: 0.4384, F1 Score: 0.3627, AUC: 0.5936, R² Score: -0.006393, MAE: 1.8536, MSE: 5.4305
+Training: Fold 5 - Total Loss: 2.4112, Cross Entropy: 1.189726, Accuracy: 0.4014, Precision: 0.2672, Recall: 0.4014, F1 Score: 0.2866, AUC: 0.6159, R2 Score: -0.001760, MAE: 1.8157, MSE: 5.2613
+Avg Latency (ms): 9.27, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 16/150
+Training: Fold 1 - Total Loss: 2.4313, Cross Entropy: 1.218108, Accuracy: 0.4190, Precision: 0.2971, Recall: 0.4190, F1 Score: 0.2933, AUC: 0.5585, R² Score: -0.011946, MAE: 1.8394, MSE: 5.2622
+Training: Fold 2 - Total Loss: 2.3490, Cross Entropy: 1.208776, Accuracy: 0.4366, Precision: 0.3196, Recall: 0.4366, F1 Score: 0.3690, AUC: 0.5757, R² Score: -0.007486, MAE: 1.7812, MSE: 5.0094
+Training: Fold 3 - Total Loss: 2.3438, Cross Entropy: 1.233085, Accuracy: 0.4049, Precision: 0.2860, Recall: 0.4049, F1 Score: 0.3335, AUC: 0.5658, R² Score: 0.011375, MAE: 1.7621, MSE: 4.9356
+Training: Fold 4 - Total Loss: 2.4508, Cross Entropy: 1.206466, Accuracy: 0.4349, Precision: 0.3145, Recall: 0.4349, F1 Score: 0.3647, AUC: 0.5851, R² Score: -0.016543, MAE: 1.8438, MSE: 5.3543
+Training: Fold 5 - Total Loss: 2.4265, Cross Entropy: 1.180747, Accuracy: 0.4648, Precision: 0.3219, Recall: 0.4648, F1 Score: 0.3797, AUC: 0.6079, R2 Score: -0.020043, MAE: 1.8202, MSE: 5.3331
+Avg Latency (ms): 9.15, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.4648
+
+Epoch 17/150
+Training: Fold 1 - Total Loss: 2.4133, Cross Entropy: 1.189939, Accuracy: 0.4665, Precision: 0.3396, Recall: 0.4665, F1 Score: 0.3907, AUC: 0.6171, R² Score: 0.000879, MAE: 1.8399, MSE: 5.2678
+Training: Fold 2 - Total Loss: 2.3424, Cross Entropy: 1.198619, Accuracy: 0.4542, Precision: 0.3280, Recall: 0.4542, F1 Score: 0.3757, AUC: 0.5959, R² Score: -0.013878, MAE: 1.7804, MSE: 5.0111
+Training: Fold 3 - Total Loss: 2.3306, Cross Entropy: 1.219197, Accuracy: 0.4208, Precision: 0.3021, Recall: 0.4208, F1 Score: 0.3514, AUC: 0.5622, R² Score: -0.013560, MAE: 1.7582, MSE: 4.9239
+Training: Fold 4 - Total Loss: 2.4622, Cross Entropy: 1.203224, Accuracy: 0.4560, Precision: 0.3342, Recall: 0.4560, F1 Score: 0.3854, AUC: 0.6018, R² Score: -0.010607, MAE: 1.8486, MSE: 5.3997
+Training: Fold 5 - Total Loss: 2.3930, Cross Entropy: 1.169863, Accuracy: 0.4648, Precision: 0.3358, Recall: 0.4648, F1 Score: 0.3591, AUC: 0.6585, R2 Score: -0.002242, MAE: 1.8166, MSE: 5.2471
+Avg Latency (ms): 9.17, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 18/150
+Training: Fold 1 - Total Loss: 2.4499, Cross Entropy: 1.216552, Accuracy: 0.4560, Precision: 0.3340, Recall: 0.4560, F1 Score: 0.3850, AUC: 0.5658, R² Score: -0.027165, MAE: 1.8523, MSE: 5.3279
+Training: Fold 2 - Total Loss: 2.3581, Cross Entropy: 1.205847, Accuracy: 0.4349, Precision: 0.3178, Recall: 0.4349, F1 Score: 0.3671, AUC: 0.5659, R² Score: -0.009980, MAE: 1.7844, MSE: 5.0466
+Training: Fold 3 - Total Loss: 2.3201, Cross Entropy: 1.212654, Accuracy: 0.4208, Precision: 0.2983, Recall: 0.4208, F1 Score: 0.3475, AUC: 0.5892, R² Score: -0.015330, MAE: 1.7542, MSE: 4.9040
+Training: Fold 4 - Total Loss: 2.4378, Cross Entropy: 1.198994, Accuracy: 0.4718, Precision: 0.3464, Recall: 0.4718, F1 Score: 0.3992, AUC: 0.6028, R² Score: 0.001841, MAE: 1.8315, MSE: 5.3283
+Training: Fold 5 - Total Loss: 2.3908, Cross Entropy: 1.141748, Accuracy: 0.5000, Precision: 0.3593, Recall: 0.5000, F1 Score: 0.4154, AUC: 0.6734, R2 Score: 0.007926, MAE: 1.8192, MSE: 5.3052
+Avg Latency (ms): 9.61, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5000
+
+Epoch 19/150
+Training: Fold 1 - Total Loss: 2.4269, Cross Entropy: 1.199580, Accuracy: 0.4718, Precision: 0.3450, Recall: 0.4718, F1 Score: 0.3963, AUC: 0.5821, R² Score: -0.007101, MAE: 1.8450, MSE: 5.2906
+Training: Fold 2 - Total Loss: 2.3457, Cross Entropy: 1.203315, Accuracy: 0.4595, Precision: 0.3374, Recall: 0.4595, F1 Score: 0.3890, AUC: 0.5621, R² Score: -0.018787, MAE: 1.7841, MSE: 5.0113
+Training: Fold 3 - Total Loss: 2.3095, Cross Entropy: 1.204405, Accuracy: 0.4525, Precision: 0.3267, Recall: 0.4525, F1 Score: 0.3783, AUC: 0.5815, R² Score: -0.013603, MAE: 1.7534, MSE: 4.8881
+Training: Fold 4 - Total Loss: 2.4444, Cross Entropy: 1.188749, Accuracy: 0.4560, Precision: 0.3363, Recall: 0.4560, F1 Score: 0.3865, AUC: 0.6150, R² Score: -0.002879, MAE: 1.8463, MSE: 5.3742
+Training: Fold 5 - Total Loss: 2.3651, Cross Entropy: 1.130431, Accuracy: 0.5423, Precision: 0.3755, Recall: 0.5423, F1 Score: 0.4429, AUC: 0.6721, R2 Score: 0.008353, MAE: 1.8183, MSE: 5.2461
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5423
+
+Epoch 20/150
+Training: Fold 1 - Total Loss: 2.4321, Cross Entropy: 1.195743, Accuracy: 0.4701, Precision: 0.3485, Recall: 0.4701, F1 Score: 0.4001, AUC: 0.5943, R² Score: -0.012601, MAE: 1.8512, MSE: 5.3169
+Training: Fold 2 - Total Loss: 2.3474, Cross Entropy: 1.207168, Accuracy: 0.4542, Precision: 0.3322, Recall: 0.4542, F1 Score: 0.3837, AUC: 0.5695, R² Score: -0.003075, MAE: 1.7744, MSE: 5.0078
+Training: Fold 3 - Total Loss: 2.3177, Cross Entropy: 1.216020, Accuracy: 0.4331, Precision: 0.3088, Recall: 0.4331, F1 Score: 0.3606, AUC: 0.5693, R² Score: -0.000498, MAE: 1.7501, MSE: 4.8882
+Training: Fold 4 - Total Loss: 2.4483, Cross Entropy: 1.201416, Accuracy: 0.4560, Precision: 0.3447, Recall: 0.4560, F1 Score: 0.3894, AUC: 0.5990, R² Score: -0.009619, MAE: 1.8416, MSE: 5.3578
+Training: Fold 5 - Total Loss: 2.3629, Cross Entropy: 1.132217, Accuracy: 0.5000, Precision: 0.3631, Recall: 0.5000, F1 Score: 0.4164, AUC: 0.6629, R2 Score: 0.002692, MAE: 1.8145, MSE: 5.2344
+Avg Latency (ms): 9.01, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 21/150
+Training: Fold 1 - Total Loss: 2.4080, Cross Entropy: 1.170522, Accuracy: 0.4824, Precision: 0.3528, Recall: 0.4824, F1 Score: 0.4059, AUC: 0.6029, R² Score: -0.015010, MAE: 1.8459, MSE: 5.2953
+Training: Fold 2 - Total Loss: 2.3337, Cross Entropy: 1.188781, Accuracy: 0.4437, Precision: 0.3308, Recall: 0.4437, F1 Score: 0.3775, AUC: 0.5815, R² Score: -0.011977, MAE: 1.7786, MSE: 5.0052
+Training: Fold 3 - Total Loss: 2.3073, Cross Entropy: 1.190135, Accuracy: 0.4437, Precision: 0.3203, Recall: 0.4437, F1 Score: 0.3710, AUC: 0.5924, R² Score: -0.025587, MAE: 1.7542, MSE: 4.9141
+Training: Fold 4 - Total Loss: 2.4298, Cross Entropy: 1.180334, Accuracy: 0.4754, Precision: 0.3600, Recall: 0.4754, F1 Score: 0.4055, AUC: 0.6149, R² Score: -0.000999, MAE: 1.8383, MSE: 5.3453
+Training: Fold 5 - Total Loss: 2.3903, Cross Entropy: 1.138247, Accuracy: 0.4648, Precision: 0.3185, Recall: 0.4648, F1 Score: 0.3718, AUC: 0.6872, R2 Score: 0.005345, MAE: 1.8191, MSE: 5.3117
+Avg Latency (ms): 9.52, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 22/150
+Training: Fold 1 - Total Loss: 2.4136, Cross Entropy: 1.177944, Accuracy: 0.4718, Precision: 0.3445, Recall: 0.4718, F1 Score: 0.3973, AUC: 0.6163, R² Score: -0.018736, MAE: 1.8455, MSE: 5.2967
+Training: Fold 2 - Total Loss: 2.3188, Cross Entropy: 1.178081, Accuracy: 0.4648, Precision: 0.3505, Recall: 0.4648, F1 Score: 0.3963, AUC: 0.6066, R² Score: -0.005986, MAE: 1.7740, MSE: 4.9804
+Training: Fold 3 - Total Loss: 2.3092, Cross Entropy: 1.198558, Accuracy: 0.4542, Precision: 0.3276, Recall: 0.4542, F1 Score: 0.3794, AUC: 0.6000, R² Score: -0.003770, MAE: 1.7499, MSE: 4.9006
+Training: Fold 4 - Total Loss: 2.4335, Cross Entropy: 1.192594, Accuracy: 0.4419, Precision: 0.3355, Recall: 0.4419, F1 Score: 0.3773, AUC: 0.6061, R² Score: -0.017224, MAE: 1.8367, MSE: 5.3290
+Training: Fold 5 - Total Loss: 2.3597, Cross Entropy: 1.122078, Accuracy: 0.4718, Precision: 0.3409, Recall: 0.4718, F1 Score: 0.3937, AUC: 0.6914, R2 Score: -0.008080, MAE: 1.8194, MSE: 5.2474
+Avg Latency (ms): 9.24, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 23/150
+Training: Fold 1 - Total Loss: 2.4040, Cross Entropy: 1.176567, Accuracy: 0.4701, Precision: 0.3475, Recall: 0.4701, F1 Score: 0.3996, AUC: 0.6128, R² Score: -0.005675, MAE: 1.8420, MSE: 5.2682
+Training: Fold 2 - Total Loss: 2.3430, Cross Entropy: 1.186656, Accuracy: 0.4525, Precision: 0.3337, Recall: 0.4525, F1 Score: 0.3838, AUC: 0.5877, R² Score: -0.025119, MAE: 1.7864, MSE: 5.0412
+Training: Fold 3 - Total Loss: 2.3126, Cross Entropy: 1.200710, Accuracy: 0.4454, Precision: 0.3261, Recall: 0.4454, F1 Score: 0.3735, AUC: 0.5902, R² Score: -0.006104, MAE: 1.7553, MSE: 4.9071
+Training: Fold 4 - Total Loss: 2.4374, Cross Entropy: 1.184103, Accuracy: 0.4701, Precision: 0.3517, Recall: 0.4701, F1 Score: 0.4006, AUC: 0.6181, R² Score: -0.006911, MAE: 1.8430, MSE: 5.3618
+Training: Fold 5 - Total Loss: 2.3668, Cross Entropy: 1.120440, Accuracy: 0.4930, Precision: 0.3519, Recall: 0.4930, F1 Score: 0.4084, AUC: 0.6460, R2 Score: 0.001224, MAE: 1.8167, MSE: 5.2748
+Avg Latency (ms): 8.98, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 24/150
+Training: Fold 1 - Total Loss: 2.4085, Cross Entropy: 1.169471, Accuracy: 0.4701, Precision: 0.3449, Recall: 0.4701, F1 Score: 0.3977, AUC: 0.6219, R² Score: 0.002874, MAE: 1.8478, MSE: 5.2995
+Training: Fold 2 - Total Loss: 2.3284, Cross Entropy: 1.177886, Accuracy: 0.4630, Precision: 0.3408, Recall: 0.4630, F1 Score: 0.3924, AUC: 0.5889, R² Score: -0.004924, MAE: 1.7833, MSE: 5.0131
+Training: Fold 3 - Total Loss: 2.3081, Cross Entropy: 1.194165, Accuracy: 0.4560, Precision: 0.3292, Recall: 0.4560, F1 Score: 0.3810, AUC: 0.5897, R² Score: -0.002296, MAE: 1.7527, MSE: 4.9074
+Training: Fold 4 - Total Loss: 2.4290, Cross Entropy: 1.170067, Accuracy: 0.4683, Precision: 0.3558, Recall: 0.4683, F1 Score: 0.3998, AUC: 0.6400, R² Score: -0.017335, MAE: 1.8417, MSE: 5.3665
+Training: Fold 5 - Total Loss: 2.3486, Cross Entropy: 1.109603, Accuracy: 0.4718, Precision: 0.3473, Recall: 0.4718, F1 Score: 0.3949, AUC: 0.6778, R2 Score: 0.008105, MAE: 1.8130, MSE: 5.2395
+Avg Latency (ms): 9.43, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 25/150
+Training: Fold 1 - Total Loss: 2.4162, Cross Entropy: 1.179351, Accuracy: 0.4525, Precision: 0.3361, Recall: 0.4525, F1 Score: 0.3855, AUC: 0.6085, R² Score: -0.006503, MAE: 1.8463, MSE: 5.3020
+Training: Fold 2 - Total Loss: 2.3207, Cross Entropy: 1.165490, Accuracy: 0.4683, Precision: 0.3460, Recall: 0.4683, F1 Score: 0.3975, AUC: 0.6172, R² Score: -0.016829, MAE: 1.7797, MSE: 5.0161
+Training: Fold 3 - Total Loss: 2.2923, Cross Entropy: 1.179198, Accuracy: 0.4437, Precision: 0.3256, Recall: 0.4437, F1 Score: 0.3726, AUC: 0.6083, R² Score: -0.010934, MAE: 1.7546, MSE: 4.8894
+Training: Fold 4 - Total Loss: 2.4209, Cross Entropy: 1.161599, Accuracy: 0.4771, Precision: 0.3666, Recall: 0.4771, F1 Score: 0.4088, AUC: 0.6317, R² Score: -0.017638, MAE: 1.8405, MSE: 5.3593
+Training: Fold 5 - Total Loss: 2.3293, Cross Entropy: 1.073849, Accuracy: 0.5282, Precision: 0.3666, Recall: 0.5282, F1 Score: 0.4326, AUC: 0.7171, R2 Score: 0.017993, MAE: 1.8177, MSE: 5.2587
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 26/150
+Training: Fold 1 - Total Loss: 2.4065, Cross Entropy: 1.170682, Accuracy: 0.4771, Precision: 0.3486, Recall: 0.4771, F1 Score: 0.4008, AUC: 0.6133, R² Score: -0.001998, MAE: 1.8498, MSE: 5.2899
+Training: Fold 2 - Total Loss: 2.3253, Cross Entropy: 1.165856, Accuracy: 0.4665, Precision: 0.3553, Recall: 0.4665, F1 Score: 0.3979, AUC: 0.6063, R² Score: -0.014773, MAE: 1.7818, MSE: 5.0306
+Training: Fold 3 - Total Loss: 2.2946, Cross Entropy: 1.179777, Accuracy: 0.4525, Precision: 0.3328, Recall: 0.4525, F1 Score: 0.3797, AUC: 0.6189, R² Score: -0.019352, MAE: 1.7508, MSE: 4.8957
+Training: Fold 4 - Total Loss: 2.4218, Cross Entropy: 1.163082, Accuracy: 0.4665, Precision: 0.3443, Recall: 0.4665, F1 Score: 0.3955, AUC: 0.6393, R² Score: -0.011138, MAE: 1.8443, MSE: 5.3590
+Training: Fold 5 - Total Loss: 2.3415, Cross Entropy: 1.093019, Accuracy: 0.5000, Precision: 0.3531, Recall: 0.5000, F1 Score: 0.4132, AUC: 0.6975, R2 Score: 0.009847, MAE: 1.8184, MSE: 5.2547
+Avg Latency (ms): 9.02, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 27/150
+Training: Fold 1 - Total Loss: 2.4163, Cross Entropy: 1.174469, Accuracy: 0.4806, Precision: 0.3573, Recall: 0.4806, F1 Score: 0.4094, AUC: 0.6206, R² Score: -0.020160, MAE: 1.8525, MSE: 5.3139
+Training: Fold 2 - Total Loss: 2.3362, Cross Entropy: 1.190883, Accuracy: 0.4313, Precision: 0.3183, Recall: 0.4313, F1 Score: 0.3659, AUC: 0.5792, R² Score: -0.014250, MAE: 1.7781, MSE: 5.0085
+Training: Fold 3 - Total Loss: 2.3081, Cross Entropy: 1.186002, Accuracy: 0.4472, Precision: 0.3280, Recall: 0.4472, F1 Score: 0.3745, AUC: 0.6074, R² Score: -0.008504, MAE: 1.7565, MSE: 4.9264
+Training: Fold 4 - Total Loss: 2.4275, Cross Entropy: 1.179640, Accuracy: 0.4701, Precision: 0.3579, Recall: 0.4701, F1 Score: 0.4017, AUC: 0.6312, R² Score: -0.019502, MAE: 1.8355, MSE: 5.3391
+Training: Fold 5 - Total Loss: 2.3637, Cross Entropy: 1.120982, Accuracy: 0.4648, Precision: 0.3198, Recall: 0.4648, F1 Score: 0.3777, AUC: 0.6700, R2 Score: 0.008407, MAE: 1.8132, MSE: 5.2632
+Avg Latency (ms): 9.15, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 28/150
+Training: Fold 1 - Total Loss: 2.3922, Cross Entropy: 1.150988, Accuracy: 0.4718, Precision: 0.3497, Recall: 0.4718, F1 Score: 0.4016, AUC: 0.6467, R² Score: 0.000415, MAE: 1.8515, MSE: 5.2885
+Training: Fold 2 - Total Loss: 2.3155, Cross Entropy: 1.161799, Accuracy: 0.4771, Precision: 0.3525, Recall: 0.4771, F1 Score: 0.4050, AUC: 0.6075, R² Score: -0.011497, MAE: 1.7809, MSE: 5.0075
+Training: Fold 3 - Total Loss: 2.2936, Cross Entropy: 1.171766, Accuracy: 0.4595, Precision: 0.3289, Recall: 0.4595, F1 Score: 0.3832, AUC: 0.6246, R² Score: -0.026845, MAE: 1.7569, MSE: 4.9112
+Training: Fold 4 - Total Loss: 2.4185, Cross Entropy: 1.162523, Accuracy: 0.4648, Precision: 0.3517, Recall: 0.4648, F1 Score: 0.3961, AUC: 0.6184, R² Score: -0.004878, MAE: 1.8402, MSE: 5.3490
+Training: Fold 5 - Total Loss: 2.3582, Cross Entropy: 1.095437, Accuracy: 0.4437, Precision: 0.3122, Recall: 0.4437, F1 Score: 0.3664, AUC: 0.7091, R2 Score: 0.000055, MAE: 1.8193, MSE: 5.3045
+Avg Latency (ms): 9.31, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 29/150
+Training: Fold 1 - Total Loss: 2.3943, Cross Entropy: 1.154980, Accuracy: 0.4859, Precision: 0.3623, Recall: 0.4859, F1 Score: 0.4145, AUC: 0.6109, R² Score: -0.000737, MAE: 1.8420, MSE: 5.2860
+Training: Fold 2 - Total Loss: 2.3059, Cross Entropy: 1.155116, Accuracy: 0.4683, Precision: 0.3499, Recall: 0.4683, F1 Score: 0.3986, AUC: 0.6219, R² Score: -0.020024, MAE: 1.7728, MSE: 4.9910
+Training: Fold 3 - Total Loss: 2.3047, Cross Entropy: 1.189802, Accuracy: 0.4489, Precision: 0.3295, Recall: 0.4489, F1 Score: 0.3767, AUC: 0.5985, R² Score: -0.012514, MAE: 1.7539, MSE: 4.9062
+Training: Fold 4 - Total Loss: 2.4224, Cross Entropy: 1.153909, Accuracy: 0.4859, Precision: 0.3616, Recall: 0.4859, F1 Score: 0.4127, AUC: 0.6332, R² Score: 0.007173, MAE: 1.8463, MSE: 5.3822
+Training: Fold 5 - Total Loss: 2.3300, Cross Entropy: 1.081670, Accuracy: 0.5352, Precision: 0.3745, Recall: 0.5352, F1 Score: 0.4405, AUC: 0.6882, R2 Score: 0.011846, MAE: 1.8175, MSE: 5.2428
+Avg Latency (ms): 8.98, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 30/150
+Training: Fold 1 - Total Loss: 2.4111, Cross Entropy: 1.171847, Accuracy: 0.4630, Precision: 0.3432, Recall: 0.4630, F1 Score: 0.3940, AUC: 0.6224, R² Score: -0.027515, MAE: 1.8467, MSE: 5.3029
+Training: Fold 2 - Total Loss: 2.3231, Cross Entropy: 1.156999, Accuracy: 0.4577, Precision: 0.3408, Recall: 0.4577, F1 Score: 0.3894, AUC: 0.6319, R² Score: 0.001074, MAE: 1.7837, MSE: 5.0440
+Training: Fold 3 - Total Loss: 2.2983, Cross Entropy: 1.175845, Accuracy: 0.4454, Precision: 0.3311, Recall: 0.4454, F1 Score: 0.3740, AUC: 0.6273, R² Score: -0.010867, MAE: 1.7546, MSE: 4.9173
+Training: Fold 4 - Total Loss: 2.4208, Cross Entropy: 1.162914, Accuracy: 0.4683, Precision: 0.3412, Recall: 0.4683, F1 Score: 0.3948, AUC: 0.6129, R² Score: -0.003267, MAE: 1.8393, MSE: 5.3558
+Training: Fold 5 - Total Loss: 2.3410, Cross Entropy: 1.076591, Accuracy: 0.5282, Precision: 0.3676, Recall: 0.5282, F1 Score: 0.4335, AUC: 0.7033, R2 Score: 0.008568, MAE: 1.8164, MSE: 5.2912
+Avg Latency (ms): 9.02, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 31/150
+Training: Fold 1 - Total Loss: 2.4111, Cross Entropy: 1.179976, Accuracy: 0.4683, Precision: 0.3471, Recall: 0.4683, F1 Score: 0.3985, AUC: 0.6019, R² Score: -0.017868, MAE: 1.8419, MSE: 5.2836
+Training: Fold 2 - Total Loss: 2.3271, Cross Entropy: 1.160830, Accuracy: 0.4718, Precision: 0.3483, Recall: 0.4718, F1 Score: 0.4002, AUC: 0.6154, R² Score: -0.010958, MAE: 1.7866, MSE: 5.0483
+Training: Fold 3 - Total Loss: 2.2780, Cross Entropy: 1.163266, Accuracy: 0.4701, Precision: 0.3374, Recall: 0.4701, F1 Score: 0.3925, AUC: 0.6389, R² Score: -0.001425, MAE: 1.7487, MSE: 4.8792
+Training: Fold 4 - Total Loss: 2.4050, Cross Entropy: 1.154469, Accuracy: 0.4718, Precision: 0.3652, Recall: 0.4718, F1 Score: 0.4046, AUC: 0.6315, R² Score: -0.001573, MAE: 1.8386, MSE: 5.3231
+Training: Fold 5 - Total Loss: 2.3389, Cross Entropy: 1.064174, Accuracy: 0.5211, Precision: 0.4030, Recall: 0.5211, F1 Score: 0.4415, AUC: 0.7049, R2 Score: 0.006715, MAE: 1.8269, MSE: 5.3131
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 32/150
+Training: Fold 1 - Total Loss: 2.3966, Cross Entropy: 1.167453, Accuracy: 0.4754, Precision: 0.3545, Recall: 0.4754, F1 Score: 0.4056, AUC: 0.6317, R² Score: 0.001239, MAE: 1.8432, MSE: 5.2644
+Training: Fold 2 - Total Loss: 2.3125, Cross Entropy: 1.153683, Accuracy: 0.4789, Precision: 0.3546, Recall: 0.4789, F1 Score: 0.4066, AUC: 0.6312, R² Score: -0.023109, MAE: 1.7782, MSE: 5.0164
+Training: Fold 3 - Total Loss: 2.3005, Cross Entropy: 1.175484, Accuracy: 0.4542, Precision: 0.3319, Recall: 0.4542, F1 Score: 0.3798, AUC: 0.6040, R² Score: -0.019814, MAE: 1.7587, MSE: 4.9254
+Training: Fold 4 - Total Loss: 2.4195, Cross Entropy: 1.160689, Accuracy: 0.4454, Precision: 0.3342, Recall: 0.4454, F1 Score: 0.3802, AUC: 0.6314, R² Score: -0.017440, MAE: 1.8391, MSE: 5.3567
+Training: Fold 5 - Total Loss: 2.3201, Cross Entropy: 1.065135, Accuracy: 0.5282, Precision: 0.3709, Recall: 0.5282, F1 Score: 0.4353, AUC: 0.6988, R2 Score: 0.005679, MAE: 1.8131, MSE: 5.2484
+Avg Latency (ms): 9.26, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 33/150
+Training: Fold 1 - Total Loss: 2.3932, Cross Entropy: 1.152143, Accuracy: 0.4877, Precision: 0.3600, Recall: 0.4877, F1 Score: 0.4142, AUC: 0.6346, R² Score: -0.011777, MAE: 1.8459, MSE: 5.2890
+Training: Fold 2 - Total Loss: 2.3243, Cross Entropy: 1.163119, Accuracy: 0.4718, Precision: 0.3556, Recall: 0.4718, F1 Score: 0.4019, AUC: 0.6127, R² Score: -0.018006, MAE: 1.7818, MSE: 5.0338
+Training: Fold 3 - Total Loss: 2.2859, Cross Entropy: 1.156979, Accuracy: 0.4648, Precision: 0.3444, Recall: 0.4648, F1 Score: 0.3910, AUC: 0.6458, R² Score: -0.013879, MAE: 1.7541, MSE: 4.9200
+Training: Fold 4 - Total Loss: 2.3964, Cross Entropy: 1.137633, Accuracy: 0.4771, Precision: 0.3719, Recall: 0.4771, F1 Score: 0.4091, AUC: 0.6560, R² Score: -0.006128, MAE: 1.8422, MSE: 5.3336
+Training: Fold 5 - Total Loss: 2.3050, Cross Entropy: 1.043404, Accuracy: 0.5070, Precision: 0.3886, Recall: 0.5070, F1 Score: 0.4273, AUC: 0.6980, R2 Score: 0.013131, MAE: 1.8172, MSE: 5.2486
+Avg Latency (ms): 9.14, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 34/150
+Training: Fold 1 - Total Loss: 2.3880, Cross Entropy: 1.145053, Accuracy: 0.4824, Precision: 0.3523, Recall: 0.4824, F1 Score: 0.4058, AUC: 0.6349, R² Score: -0.001637, MAE: 1.8446, MSE: 5.2881
+Training: Fold 2 - Total Loss: 2.3004, Cross Entropy: 1.148547, Accuracy: 0.4789, Precision: 0.3642, Recall: 0.4789, F1 Score: 0.4079, AUC: 0.6232, R² Score: -0.003184, MAE: 1.7741, MSE: 4.9881
+Training: Fold 3 - Total Loss: 2.3030, Cross Entropy: 1.178978, Accuracy: 0.4525, Precision: 0.3276, Recall: 0.4525, F1 Score: 0.3786, AUC: 0.6154, R² Score: -0.007808, MAE: 1.7559, MSE: 4.9256
+Training: Fold 4 - Total Loss: 2.4269, Cross Entropy: 1.161652, Accuracy: 0.4736, Precision: 0.3643, Recall: 0.4736, F1 Score: 0.4052, AUC: 0.6211, R² Score: -0.012983, MAE: 1.8465, MSE: 5.3790
+Training: Fold 5 - Total Loss: 2.3263, Cross Entropy: 1.061491, Accuracy: 0.4930, Precision: 0.3568, Recall: 0.4930, F1 Score: 0.4114, AUC: 0.7052, R2 Score: -0.004584, MAE: 1.8284, MSE: 5.2776
+Avg Latency (ms): 9.55, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 35/150
+Training: Fold 1 - Total Loss: 2.3931, Cross Entropy: 1.140128, Accuracy: 0.4947, Precision: 0.3701, Recall: 0.4947, F1 Score: 0.4223, AUC: 0.6460, R² Score: -0.017769, MAE: 1.8484, MSE: 5.3168
+Training: Fold 2 - Total Loss: 2.3210, Cross Entropy: 1.156687, Accuracy: 0.4877, Precision: 0.3682, Recall: 0.4877, F1 Score: 0.4156, AUC: 0.6369, R² Score: -0.021470, MAE: 1.7865, MSE: 5.0378
+Training: Fold 3 - Total Loss: 2.2955, Cross Entropy: 1.161250, Accuracy: 0.4771, Precision: 0.3432, Recall: 0.4771, F1 Score: 0.3986, AUC: 0.6317, R² Score: 0.010876, MAE: 1.7647, MSE: 4.9422
+Training: Fold 4 - Total Loss: 2.4437, Cross Entropy: 1.159106, Accuracy: 0.4824, Precision: 0.3717, Recall: 0.4824, F1 Score: 0.4126, AUC: 0.6239, R² Score: -0.034261, MAE: 1.8579, MSE: 5.4410
+Training: Fold 5 - Total Loss: 2.3012, Cross Entropy: 1.060338, Accuracy: 0.4930, Precision: 0.3661, Recall: 0.4930, F1 Score: 0.4124, AUC: 0.6925, R2 Score: 0.009106, MAE: 1.8160, MSE: 5.1964
+Avg Latency (ms): 9.41, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 36/150
+Training: Fold 1 - Total Loss: 2.3881, Cross Entropy: 1.157253, Accuracy: 0.4806, Precision: 0.3545, Recall: 0.4806, F1 Score: 0.4080, AUC: 0.6333, R² Score: 0.002167, MAE: 1.8418, MSE: 5.2600
+Training: Fold 2 - Total Loss: 2.3028, Cross Entropy: 1.146745, Accuracy: 0.4665, Precision: 0.3453, Recall: 0.4665, F1 Score: 0.3963, AUC: 0.6175, R² Score: -0.017744, MAE: 1.7768, MSE: 5.0002
+Training: Fold 3 - Total Loss: 2.2950, Cross Entropy: 1.142550, Accuracy: 0.4630, Precision: 0.3412, Recall: 0.4630, F1 Score: 0.3893, AUC: 0.6430, R² Score: -0.024030, MAE: 1.7694, MSE: 4.9841
+Training: Fold 4 - Total Loss: 2.3960, Cross Entropy: 1.131398, Accuracy: 0.4877, Precision: 0.3679, Recall: 0.4877, F1 Score: 0.4156, AUC: 0.6502, R² Score: -0.000398, MAE: 1.8401, MSE: 5.3469
+Training: Fold 5 - Total Loss: 2.3067, Cross Entropy: 1.031442, Accuracy: 0.5352, Precision: 0.3871, Recall: 0.5352, F1 Score: 0.4453, AUC: 0.7086, R2 Score: 0.008357, MAE: 1.8177, MSE: 5.2824
+Avg Latency (ms): 9.04, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 37/150
+Training: Fold 1 - Total Loss: 2.3797, Cross Entropy: 1.137736, Accuracy: 0.4789, Precision: 0.3589, Recall: 0.4789, F1 Score: 0.4089, AUC: 0.6401, R² Score: -0.003836, MAE: 1.8447, MSE: 5.2776
+Training: Fold 2 - Total Loss: 2.3477, Cross Entropy: 1.170100, Accuracy: 0.4754, Precision: 0.3544, Recall: 0.4754, F1 Score: 0.4041, AUC: 0.6211, R² Score: -0.017021, MAE: 1.7900, MSE: 5.0953
+Training: Fold 3 - Total Loss: 2.2812, Cross Entropy: 1.156084, Accuracy: 0.4789, Precision: 0.3569, Recall: 0.4789, F1 Score: 0.4013, AUC: 0.6411, R² Score: 0.005340, MAE: 1.7571, MSE: 4.9066
+Training: Fold 4 - Total Loss: 2.4174, Cross Entropy: 1.158920, Accuracy: 0.4859, Precision: 0.3684, Recall: 0.4859, F1 Score: 0.4152, AUC: 0.6343, R² Score: -0.011839, MAE: 1.8373, MSE: 5.3539
+Training: Fold 5 - Total Loss: 2.3020, Cross Entropy: 1.041893, Accuracy: 0.5423, Precision: 0.3932, Recall: 0.5423, F1 Score: 0.4512, AUC: 0.7007, R2 Score: 0.004726, MAE: 1.8191, MSE: 5.2422
+Avg Latency (ms): 9.24, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 38/150
+Training: Fold 1 - Total Loss: 2.3853, Cross Entropy: 1.141805, Accuracy: 0.4894, Precision: 0.3606, Recall: 0.4894, F1 Score: 0.4152, AUC: 0.6399, R² Score: -0.011559, MAE: 1.8447, MSE: 5.2869
+Training: Fold 2 - Total Loss: 2.3201, Cross Entropy: 1.155468, Accuracy: 0.4648, Precision: 0.3499, Recall: 0.4648, F1 Score: 0.3966, AUC: 0.6224, R² Score: -0.015990, MAE: 1.7822, MSE: 5.0376
+Training: Fold 3 - Total Loss: 2.2781, Cross Entropy: 1.143088, Accuracy: 0.5053, Precision: 0.3718, Recall: 0.5053, F1 Score: 0.4225, AUC: 0.6385, R² Score: -0.027947, MAE: 1.7578, MSE: 4.9264
+Training: Fold 4 - Total Loss: 2.4210, Cross Entropy: 1.155988, Accuracy: 0.4718, Precision: 0.3441, Recall: 0.4718, F1 Score: 0.3979, AUC: 0.6274, R² Score: -0.012722, MAE: 1.8470, MSE: 5.3727
+Training: Fold 5 - Total Loss: 2.3003, Cross Entropy: 1.019295, Accuracy: 0.5141, Precision: 0.3575, Recall: 0.5141, F1 Score: 0.4217, AUC: 0.7303, R2 Score: 0.012814, MAE: 1.8210, MSE: 5.2893
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 39/150
+Training: Fold 1 - Total Loss: 2.3767, Cross Entropy: 1.137623, Accuracy: 0.4947, Precision: 0.3660, Recall: 0.4947, F1 Score: 0.4206, AUC: 0.6328, R² Score: -0.014566, MAE: 1.8398, MSE: 5.2679
+Training: Fold 2 - Total Loss: 2.3082, Cross Entropy: 1.144444, Accuracy: 0.4701, Precision: 0.3578, Recall: 0.4701, F1 Score: 0.4014, AUC: 0.6276, R² Score: 0.005388, MAE: 1.7778, MSE: 5.0235
+Training: Fold 3 - Total Loss: 2.3005, Cross Entropy: 1.161588, Accuracy: 0.4806, Precision: 0.3464, Recall: 0.4806, F1 Score: 0.4018, AUC: 0.6331, R² Score: -0.017028, MAE: 1.7676, MSE: 4.9580
+Training: Fold 4 - Total Loss: 2.4233, Cross Entropy: 1.142039, Accuracy: 0.4665, Precision: 0.3691, Recall: 0.4665, F1 Score: 0.4025, AUC: 0.6420, R² Score: -0.018899, MAE: 1.8485, MSE: 5.4130
+Training: Fold 5 - Total Loss: 2.2826, Cross Entropy: 1.013546, Accuracy: 0.5423, Precision: 0.3907, Recall: 0.5423, F1 Score: 0.4512, AUC: 0.7271, R2 Score: -0.010869, MAE: 1.8245, MSE: 5.2438
+Avg Latency (ms): 9.04, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 40/150
+Training: Fold 1 - Total Loss: 2.3795, Cross Entropy: 1.124203, Accuracy: 0.4894, Precision: 0.3622, Recall: 0.4894, F1 Score: 0.4162, AUC: 0.6507, R² Score: -0.018318, MAE: 1.8477, MSE: 5.3084
+Training: Fold 2 - Total Loss: 2.2952, Cross Entropy: 1.131343, Accuracy: 0.4894, Precision: 0.3651, Recall: 0.4894, F1 Score: 0.4163, AUC: 0.6512, R² Score: 0.006591, MAE: 1.7829, MSE: 5.0110
+Training: Fold 3 - Total Loss: 2.2784, Cross Entropy: 1.162239, Accuracy: 0.4613, Precision: 0.3327, Recall: 0.4613, F1 Score: 0.3856, AUC: 0.6361, R² Score: -0.014149, MAE: 1.7512, MSE: 4.8827
+Training: Fold 4 - Total Loss: 2.4176, Cross Entropy: 1.134607, Accuracy: 0.4894, Precision: 0.3766, Recall: 0.4894, F1 Score: 0.4190, AUC: 0.6552, R² Score: -0.019294, MAE: 1.8477, MSE: 5.4111
+Training: Fold 5 - Total Loss: 2.2693, Cross Entropy: 0.999434, Accuracy: 0.5634, Precision: 0.4201, Recall: 0.5634, F1 Score: 0.4734, AUC: 0.7393, R2 Score: 0.013264, MAE: 1.8159, MSE: 5.2323
+Avg Latency (ms): 9.49, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5634
+
+Epoch 41/150
+Training: Fold 1 - Total Loss: 2.3743, Cross Entropy: 1.114760, Accuracy: 0.4859, Precision: 0.3632, Recall: 0.4859, F1 Score: 0.4149, AUC: 0.6734, R² Score: -0.021208, MAE: 1.8499, MSE: 5.3131
+Training: Fold 2 - Total Loss: 2.3007, Cross Entropy: 1.122840, Accuracy: 0.4859, Precision: 0.3628, Recall: 0.4859, F1 Score: 0.4140, AUC: 0.6619, R² Score: -0.010567, MAE: 1.7868, MSE: 5.0491
+Training: Fold 3 - Total Loss: 2.2536, Cross Entropy: 1.128420, Accuracy: 0.4771, Precision: 0.3527, Recall: 0.4771, F1 Score: 0.4008, AUC: 0.6434, R² Score: -0.007308, MAE: 1.7482, MSE: 4.8790
+Training: Fold 4 - Total Loss: 2.4049, Cross Entropy: 1.129766, Accuracy: 0.4894, Precision: 0.3662, Recall: 0.4894, F1 Score: 0.4165, AUC: 0.6657, R² Score: -0.007741, MAE: 1.8468, MSE: 5.3803
+Training: Fold 5 - Total Loss: 2.2714, Cross Entropy: 0.981437, Accuracy: 0.5563, Precision: 0.3969, Recall: 0.5563, F1 Score: 0.4612, AUC: 0.7460, R2 Score: 0.014893, MAE: 1.8126, MSE: 5.2812
+Avg Latency (ms): 9.35, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 42/150
+Training: Fold 1 - Total Loss: 2.3856, Cross Entropy: 1.116117, Accuracy: 0.5088, Precision: 0.3743, Recall: 0.5088, F1 Score: 0.4312, AUC: 0.6658, R² Score: -0.012563, MAE: 1.8535, MSE: 5.3478
+Training: Fold 2 - Total Loss: 2.2926, Cross Entropy: 1.132509, Accuracy: 0.4947, Precision: 0.3843, Recall: 0.4947, F1 Score: 0.4238, AUC: 0.6504, R² Score: -0.008041, MAE: 1.7759, MSE: 4.9995
+Training: Fold 3 - Total Loss: 2.2657, Cross Entropy: 1.139185, Accuracy: 0.4771, Precision: 0.3453, Recall: 0.4771, F1 Score: 0.3993, AUC: 0.6552, R² Score: -0.007883, MAE: 1.7529, MSE: 4.8942
+Training: Fold 4 - Total Loss: 2.3970, Cross Entropy: 1.134493, Accuracy: 0.4736, Precision: 0.3558, Recall: 0.4736, F1 Score: 0.4034, AUC: 0.6466, R² Score: -0.007966, MAE: 1.8394, MSE: 5.3429
+Training: Fold 5 - Total Loss: 2.2803, Cross Entropy: 1.003120, Accuracy: 0.5000, Precision: 0.3506, Recall: 0.5000, F1 Score: 0.4120, AUC: 0.7100, R2 Score: 0.004716, MAE: 1.8134, MSE: 5.2605
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 43/150
+Training: Fold 1 - Total Loss: 2.4032, Cross Entropy: 1.131106, Accuracy: 0.5035, Precision: 0.3762, Recall: 0.5035, F1 Score: 0.4298, AUC: 0.6697, R² Score: -0.008181, MAE: 1.8556, MSE: 5.3714
+Training: Fold 2 - Total Loss: 2.3178, Cross Entropy: 1.148014, Accuracy: 0.4560, Precision: 0.3380, Recall: 0.4560, F1 Score: 0.3877, AUC: 0.6365, R² Score: -0.004396, MAE: 1.7838, MSE: 5.0472
+Training: Fold 3 - Total Loss: 2.2732, Cross Entropy: 1.134020, Accuracy: 0.4701, Precision: 0.3567, Recall: 0.4701, F1 Score: 0.3970, AUC: 0.6610, R² Score: -0.027339, MAE: 1.7559, MSE: 4.9314
+Training: Fold 4 - Total Loss: 2.3900, Cross Entropy: 1.126465, Accuracy: 0.5000, Precision: 0.3748, Recall: 0.5000, F1 Score: 0.4254, AUC: 0.6587, R² Score: -0.011662, MAE: 1.8373, MSE: 5.3383
+Training: Fold 5 - Total Loss: 2.2944, Cross Entropy: 1.029848, Accuracy: 0.5352, Precision: 0.3801, Recall: 0.5352, F1 Score: 0.4425, AUC: 0.6951, R2 Score: -0.018903, MAE: 1.8250, MSE: 5.2450
+Avg Latency (ms): 8.96, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 44/150
+Training: Fold 1 - Total Loss: 2.3695, Cross Entropy: 1.117624, Accuracy: 0.5106, Precision: 0.3758, Recall: 0.5106, F1 Score: 0.4329, AUC: 0.6690, R² Score: -0.012505, MAE: 1.8465, MSE: 5.2906
+Training: Fold 2 - Total Loss: 2.2979, Cross Entropy: 1.131947, Accuracy: 0.4842, Precision: 0.3692, Recall: 0.4842, F1 Score: 0.4133, AUC: 0.6427, R² Score: -0.010742, MAE: 1.7838, MSE: 5.0184
+Training: Fold 3 - Total Loss: 2.2642, Cross Entropy: 1.139610, Accuracy: 0.4842, Precision: 0.3484, Recall: 0.4842, F1 Score: 0.4046, AUC: 0.6451, R² Score: -0.018037, MAE: 1.7581, MSE: 4.8883
+Training: Fold 4 - Total Loss: 2.3953, Cross Entropy: 1.121347, Accuracy: 0.5106, Precision: 0.3768, Recall: 0.5106, F1 Score: 0.4326, AUC: 0.6677, R² Score: -0.001103, MAE: 1.8435, MSE: 5.3677
+Training: Fold 5 - Total Loss: 2.2649, Cross Entropy: 0.970984, Accuracy: 0.5352, Precision: 0.4031, Recall: 0.5352, F1 Score: 0.4486, AUC: 0.7524, R2 Score: -0.016679, MAE: 1.8199, MSE: 5.2840
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 45/150
+Training: Fold 1 - Total Loss: 2.3577, Cross Entropy: 1.100917, Accuracy: 0.5035, Precision: 0.3817, Recall: 0.5035, F1 Score: 0.4314, AUC: 0.6751, R² Score: 0.005959, MAE: 1.8488, MSE: 5.2903
+Training: Fold 2 - Total Loss: 2.3205, Cross Entropy: 1.132672, Accuracy: 0.4842, Precision: 0.3607, Recall: 0.4842, F1 Score: 0.4116, AUC: 0.6414, R² Score: -0.014545, MAE: 1.7928, MSE: 5.0921
+Training: Fold 3 - Total Loss: 2.2665, Cross Entropy: 1.120434, Accuracy: 0.4877, Precision: 0.3545, Recall: 0.4877, F1 Score: 0.4086, AUC: 0.6693, R² Score: -0.028161, MAE: 1.7577, MSE: 4.9407
+Training: Fold 4 - Total Loss: 2.4038, Cross Entropy: 1.136718, Accuracy: 0.4736, Precision: 0.4710, Recall: 0.4736, F1 Score: 0.4069, AUC: 0.6371, R² Score: -0.000419, MAE: 1.8466, MSE: 5.3604
+Training: Fold 5 - Total Loss: 2.2810, Cross Entropy: 0.989147, Accuracy: 0.5493, Precision: 0.4171, Recall: 0.5493, F1 Score: 0.4603, AUC: 0.7174, R2 Score: -0.034294, MAE: 1.8255, MSE: 5.2953
+Avg Latency (ms): 9.79, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 46/150
+Training: Fold 1 - Total Loss: 2.4004, Cross Entropy: 1.140871, Accuracy: 0.4824, Precision: 0.3519, Recall: 0.4824, F1 Score: 0.4057, AUC: 0.6367, R² Score: -0.027771, MAE: 1.8542, MSE: 5.3393
+Training: Fold 2 - Total Loss: 2.2786, Cross Entropy: 1.102615, Accuracy: 0.5053, Precision: 0.3860, Recall: 0.5053, F1 Score: 0.4325, AUC: 0.6609, R² Score: -0.009283, MAE: 1.7773, MSE: 5.0226
+Training: Fold 3 - Total Loss: 2.2574, Cross Entropy: 1.118033, Accuracy: 0.4789, Precision: 0.3535, Recall: 0.4789, F1 Score: 0.4044, AUC: 0.6810, R² Score: -0.010957, MAE: 1.7534, MSE: 4.9160
+Training: Fold 4 - Total Loss: 2.3831, Cross Entropy: 1.106810, Accuracy: 0.4912, Precision: 0.3704, Recall: 0.4912, F1 Score: 0.4181, AUC: 0.6663, R² Score: -0.023485, MAE: 1.8398, MSE: 5.3612
+Training: Fold 5 - Total Loss: 2.2445, Cross Entropy: 0.969303, Accuracy: 0.5211, Precision: 0.3632, Recall: 0.5211, F1 Score: 0.4281, AUC: 0.7441, R2 Score: 0.038232, MAE: 1.8119, MSE: 5.2198
+Avg Latency (ms): 9.13, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 47/150
+Training: Fold 1 - Total Loss: 2.3628, Cross Entropy: 1.108584, Accuracy: 0.5176, Precision: 0.3855, Recall: 0.5176, F1 Score: 0.4414, AUC: 0.6686, R² Score: -0.015380, MAE: 1.8438, MSE: 5.2894
+Training: Fold 2 - Total Loss: 2.2867, Cross Entropy: 1.117748, Accuracy: 0.4877, Precision: 0.3683, Recall: 0.4877, F1 Score: 0.4163, AUC: 0.6682, R² Score: -0.012386, MAE: 1.7797, MSE: 5.0143
+Training: Fold 3 - Total Loss: 2.2363, Cross Entropy: 1.091640, Accuracy: 0.5158, Precision: 0.3789, Recall: 0.5158, F1 Score: 0.4333, AUC: 0.6742, R² Score: -0.007407, MAE: 1.7527, MSE: 4.9071
+Training: Fold 4 - Total Loss: 2.3675, Cross Entropy: 1.094726, Accuracy: 0.5176, Precision: 0.3996, Recall: 0.5176, F1 Score: 0.4430, AUC: 0.6777, R² Score: -0.011637, MAE: 1.8384, MSE: 5.3372
+Training: Fold 5 - Total Loss: 2.2498, Cross Entropy: 0.961654, Accuracy: 0.5282, Precision: 0.3742, Recall: 0.5282, F1 Score: 0.4368, AUC: 0.7244, R2 Score: 0.011052, MAE: 1.8199, MSE: 5.2555
+Avg Latency (ms): 8.94, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 48/150
+Training: Fold 1 - Total Loss: 2.3448, Cross Entropy: 1.098281, Accuracy: 0.5106, Precision: 0.3818, Recall: 0.5106, F1 Score: 0.4359, AUC: 0.6744, R² Score: -0.005480, MAE: 1.8399, MSE: 5.2535
+Training: Fold 2 - Total Loss: 2.2860, Cross Entropy: 1.108273, Accuracy: 0.5000, Precision: 0.3777, Recall: 0.5000, F1 Score: 0.4266, AUC: 0.6560, R² Score: -0.016596, MAE: 1.7866, MSE: 5.0339
+Training: Fold 3 - Total Loss: 2.2949, Cross Entropy: 1.139215, Accuracy: 0.4842, Precision: 0.3506, Recall: 0.4842, F1 Score: 0.4052, AUC: 0.6688, R² Score: -0.028691, MAE: 1.7711, MSE: 4.9916
+Training: Fold 4 - Total Loss: 2.4101, Cross Entropy: 1.123817, Accuracy: 0.4930, Precision: 0.3740, Recall: 0.4930, F1 Score: 0.4203, AUC: 0.6570, R² Score: -0.021278, MAE: 1.8533, MSE: 5.4113
+Training: Fold 5 - Total Loss: 2.2532, Cross Entropy: 0.954609, Accuracy: 0.5352, Precision: 0.4064, Recall: 0.5352, F1 Score: 0.4497, AUC: 0.7488, R2 Score: -0.023754, MAE: 1.8128, MSE: 5.2831
+Avg Latency (ms): 8.95, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 49/150
+Training: Fold 1 - Total Loss: 2.3540, Cross Entropy: 1.075697, Accuracy: 0.5176, Precision: 0.3837, Recall: 0.5176, F1 Score: 0.4406, AUC: 0.6895, R² Score: -0.016175, MAE: 1.8603, MSE: 5.3367
+Training: Fold 2 - Total Loss: 2.2986, Cross Entropy: 1.121088, Accuracy: 0.4736, Precision: 0.3532, Recall: 0.4736, F1 Score: 0.4033, AUC: 0.6554, R² Score: -0.005163, MAE: 1.7911, MSE: 5.0463
+Training: Fold 3 - Total Loss: 2.2524, Cross Entropy: 1.125395, Accuracy: 0.4894, Precision: 0.3648, Recall: 0.4894, F1 Score: 0.4127, AUC: 0.6728, R² Score: 0.000654, MAE: 1.7538, MSE: 4.8822
+Training: Fold 4 - Total Loss: 2.4111, Cross Entropy: 1.111643, Accuracy: 0.5123, Precision: 0.3977, Recall: 0.5123, F1 Score: 0.4375, AUC: 0.6582, R² Score: -0.003995, MAE: 1.8577, MSE: 5.4432
+Training: Fold 5 - Total Loss: 2.2637, Cross Entropy: 0.981756, Accuracy: 0.5423, Precision: 0.3911, Recall: 0.5423, F1 Score: 0.4504, AUC: 0.7230, R2 Score: -0.010378, MAE: 1.8215, MSE: 5.2549
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 50/150
+Training: Fold 1 - Total Loss: 2.3694, Cross Entropy: 1.102108, Accuracy: 0.5088, Precision: 0.3756, Recall: 0.5088, F1 Score: 0.4322, AUC: 0.6745, R² Score: -0.030715, MAE: 1.8530, MSE: 5.3265
+Training: Fold 2 - Total Loss: 2.2876, Cross Entropy: 1.108873, Accuracy: 0.5106, Precision: 0.3780, Recall: 0.5106, F1 Score: 0.4335, AUC: 0.6669, R² Score: -0.005178, MAE: 1.7854, MSE: 5.0381
+Training: Fold 3 - Total Loss: 2.2540, Cross Entropy: 1.118594, Accuracy: 0.5035, Precision: 0.3704, Recall: 0.5035, F1 Score: 0.4223, AUC: 0.6549, R² Score: -0.008534, MAE: 1.7522, MSE: 4.9031
+Training: Fold 4 - Total Loss: 2.3949, Cross Entropy: 1.109839, Accuracy: 0.5141, Precision: 0.3875, Recall: 0.5141, F1 Score: 0.4382, AUC: 0.6709, R² Score: -0.006054, MAE: 1.8485, MSE: 5.3933
+Training: Fold 5 - Total Loss: 2.2355, Cross Entropy: 0.952959, Accuracy: 0.5423, Precision: 0.4172, Recall: 0.5423, F1 Score: 0.4580, AUC: 0.7673, R2 Score: -0.002209, MAE: 1.8197, MSE: 5.2280
+Avg Latency (ms): 8.93, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 51/150
+Training: Fold 1 - Total Loss: 2.3525, Cross Entropy: 1.087975, Accuracy: 0.5229, Precision: 0.3918, Recall: 0.5229, F1 Score: 0.4466, AUC: 0.6948, R² Score: -0.000094, MAE: 1.8508, MSE: 5.3029
+Training: Fold 2 - Total Loss: 2.2674, Cross Entropy: 1.090771, Accuracy: 0.5370, Precision: 0.4013, Recall: 0.5370, F1 Score: 0.4573, AUC: 0.6822, R² Score: -0.018745, MAE: 1.7814, MSE: 5.0129
+Training: Fold 3 - Total Loss: 2.2561, Cross Entropy: 1.138298, Accuracy: 0.4701, Precision: 0.3397, Recall: 0.4701, F1 Score: 0.3931, AUC: 0.6459, R² Score: -0.010330, MAE: 1.7444, MSE: 4.8644
+Training: Fold 4 - Total Loss: 2.3747, Cross Entropy: 1.097830, Accuracy: 0.5070, Precision: 0.3932, Recall: 0.5070, F1 Score: 0.4357, AUC: 0.6895, R² Score: -0.015132, MAE: 1.8432, MSE: 5.3542
+Training: Fold 5 - Total Loss: 2.2583, Cross Entropy: 0.976736, Accuracy: 0.5493, Precision: 0.4553, Recall: 0.5493, F1 Score: 0.4684, AUC: 0.7255, R2 Score: -0.007123, MAE: 1.8192, MSE: 5.2487
+Avg Latency (ms): 9.10, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 52/150
+Training: Fold 1 - Total Loss: 2.3472, Cross Entropy: 1.106008, Accuracy: 0.5018, Precision: 0.3711, Recall: 0.5018, F1 Score: 0.4266, AUC: 0.6678, R² Score: -0.007262, MAE: 1.8342, MSE: 5.2432
+Training: Fold 2 - Total Loss: 2.2819, Cross Entropy: 1.110511, Accuracy: 0.5088, Precision: 0.3835, Recall: 0.5088, F1 Score: 0.4335, AUC: 0.6590, R² Score: -0.005979, MAE: 1.7802, MSE: 5.0152
+Training: Fold 3 - Total Loss: 2.2546, Cross Entropy: 1.105895, Accuracy: 0.4771, Precision: 0.3511, Recall: 0.4771, F1 Score: 0.4014, AUC: 0.6622, R² Score: -0.023898, MAE: 1.7604, MSE: 4.9349
+Training: Fold 4 - Total Loss: 2.3898, Cross Entropy: 1.115283, Accuracy: 0.4859, Precision: 0.3699, Recall: 0.4859, F1 Score: 0.4148, AUC: 0.6633, R² Score: -0.004053, MAE: 1.8420, MSE: 5.3636
+Training: Fold 5 - Total Loss: 2.2701, Cross Entropy: 0.974145, Accuracy: 0.5070, Precision: 0.3884, Recall: 0.5070, F1 Score: 0.4260, AUC: 0.7327, R2 Score: -0.012250, MAE: 1.8180, MSE: 5.2940
+Avg Latency (ms): 9.14, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 53/150
+Training: Fold 1 - Total Loss: 2.3690, Cross Entropy: 1.106572, Accuracy: 0.5000, Precision: 0.3688, Recall: 0.5000, F1 Score: 0.4245, AUC: 0.6647, R² Score: -0.017777, MAE: 1.8499, MSE: 5.3147
+Training: Fold 2 - Total Loss: 2.2683, Cross Entropy: 1.090087, Accuracy: 0.4894, Precision: 0.3776, Recall: 0.4894, F1 Score: 0.4193, AUC: 0.6639, R² Score: -0.021519, MAE: 1.7881, MSE: 5.0174
+Training: Fold 3 - Total Loss: 2.2376, Cross Entropy: 1.085533, Accuracy: 0.4947, Precision: 0.3585, Recall: 0.4947, F1 Score: 0.4145, AUC: 0.6812, R² Score: -0.004074, MAE: 1.7621, MSE: 4.9257
+Training: Fold 4 - Total Loss: 2.3891, Cross Entropy: 1.101256, Accuracy: 0.5141, Precision: 0.3938, Recall: 0.5141, F1 Score: 0.4395, AUC: 0.6671, R² Score: -0.011243, MAE: 1.8508, MSE: 5.3940
+Training: Fold 5 - Total Loss: 2.2170, Cross Entropy: 0.922608, Accuracy: 0.5634, Precision: 0.3980, Recall: 0.5634, F1 Score: 0.4654, AUC: 0.7482, R2 Score: 0.020109, MAE: 1.8108, MSE: 5.2373
+Avg Latency (ms): 9.61, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 54/150
+Training: Fold 1 - Total Loss: 2.3551, Cross Entropy: 1.089397, Accuracy: 0.5246, Precision: 0.3934, Recall: 0.5246, F1 Score: 0.4484, AUC: 0.6810, R² Score: 0.001145, MAE: 1.8477, MSE: 5.3083
+Training: Fold 2 - Total Loss: 2.2808, Cross Entropy: 1.100855, Accuracy: 0.4894, Precision: 0.3651, Recall: 0.4894, F1 Score: 0.4167, AUC: 0.6705, R² Score: -0.020909, MAE: 1.7835, MSE: 5.0340
+Training: Fold 3 - Total Loss: 2.2397, Cross Entropy: 1.093981, Accuracy: 0.5141, Precision: 0.3752, Recall: 0.5141, F1 Score: 0.4313, AUC: 0.6916, R² Score: -0.008400, MAE: 1.7543, MSE: 4.9131
+Training: Fold 4 - Total Loss: 2.3775, Cross Entropy: 1.094890, Accuracy: 0.5053, Precision: 0.4018, Recall: 0.5053, F1 Score: 0.4338, AUC: 0.6847, R² Score: -0.004644, MAE: 1.8446, MSE: 5.3702
+Training: Fold 5 - Total Loss: 2.2333, Cross Entropy: 0.950870, Accuracy: 0.5493, Precision: 0.4207, Recall: 0.5493, F1 Score: 0.4627, AUC: 0.7347, R2 Score: 0.020787, MAE: 1.8134, MSE: 5.2258
+Avg Latency (ms): 9.20, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 55/150
+Training: Fold 1 - Total Loss: 2.3478, Cross Entropy: 1.069626, Accuracy: 0.5299, Precision: 0.4041, Recall: 0.5299, F1 Score: 0.4542, AUC: 0.6969, R² Score: -0.007723, MAE: 1.8534, MSE: 5.3303
+Training: Fold 2 - Total Loss: 2.2744, Cross Entropy: 1.093263, Accuracy: 0.5035, Precision: 0.3709, Recall: 0.5035, F1 Score: 0.4269, AUC: 0.6687, R² Score: -0.021098, MAE: 1.7824, MSE: 5.0304
+Training: Fold 3 - Total Loss: 2.2658, Cross Entropy: 1.112694, Accuracy: 0.4982, Precision: 0.3683, Recall: 0.4982, F1 Score: 0.4185, AUC: 0.6783, R² Score: -0.020573, MAE: 1.7592, MSE: 4.9565
+Training: Fold 4 - Total Loss: 2.3886, Cross Entropy: 1.112153, Accuracy: 0.4859, Precision: 0.3897, Recall: 0.4859, F1 Score: 0.4180, AUC: 0.6608, R² Score: -0.009805, MAE: 1.8445, MSE: 5.3670
+Training: Fold 5 - Total Loss: 2.2204, Cross Entropy: 0.931569, Accuracy: 0.5423, Precision: 0.3932, Recall: 0.5423, F1 Score: 0.4512, AUC: 0.7620, R2 Score: 0.001482, MAE: 1.8097, MSE: 5.2275
+Avg Latency (ms): 9.40, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 56/150
+Training: Fold 1 - Total Loss: 2.3597, Cross Entropy: 1.083217, Accuracy: 0.5229, Precision: 0.3879, Recall: 0.5229, F1 Score: 0.4451, AUC: 0.6849, R² Score: -0.021428, MAE: 1.8531, MSE: 5.3381
+Training: Fold 2 - Total Loss: 2.2751, Cross Entropy: 1.092233, Accuracy: 0.5088, Precision: 0.3800, Recall: 0.5088, F1 Score: 0.4336, AUC: 0.6798, R² Score: -0.014870, MAE: 1.7861, MSE: 5.0351
+Training: Fold 3 - Total Loss: 2.2661, Cross Entropy: 1.124938, Accuracy: 0.5141, Precision: 0.3828, Recall: 0.5141, F1 Score: 0.4327, AUC: 0.6570, R² Score: -0.018957, MAE: 1.7597, MSE: 4.9287
+Training: Fold 4 - Total Loss: 2.3499, Cross Entropy: 1.074748, Accuracy: 0.5317, Precision: 0.4123, Recall: 0.5317, F1 Score: 0.4571, AUC: 0.6999, R² Score: -0.000215, MAE: 1.8367, MSE: 5.3252
+Training: Fold 5 - Total Loss: 2.2436, Cross Entropy: 0.966469, Accuracy: 0.5634, Precision: 0.4546, Recall: 0.5634, F1 Score: 0.4805, AUC: 0.7508, R2 Score: -0.003821, MAE: 1.8174, MSE: 5.2237
+Avg Latency (ms): 9.31, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 57/150
+Training: Fold 1 - Total Loss: 2.3442, Cross Entropy: 1.081732, Accuracy: 0.5211, Precision: 0.3829, Recall: 0.5211, F1 Score: 0.4413, AUC: 0.6867, R² Score: -0.023194, MAE: 1.8502, MSE: 5.2899
+Training: Fold 2 - Total Loss: 2.2741, Cross Entropy: 1.086601, Accuracy: 0.4965, Precision: 0.3781, Recall: 0.4965, F1 Score: 0.4256, AUC: 0.6827, R² Score: -0.012883, MAE: 1.7911, MSE: 5.0450
+Training: Fold 3 - Total Loss: 2.2195, Cross Entropy: 1.072078, Accuracy: 0.5141, Precision: 0.3753, Recall: 0.5141, F1 Score: 0.4312, AUC: 0.6942, R² Score: -0.020944, MAE: 1.7513, MSE: 4.8967
+Training: Fold 4 - Total Loss: 2.3864, Cross Entropy: 1.105823, Accuracy: 0.4754, Precision: 0.3772, Recall: 0.4754, F1 Score: 0.4085, AUC: 0.6621, R² Score: -0.014573, MAE: 1.8426, MSE: 5.3744
+Training: Fold 5 - Total Loss: 2.2115, Cross Entropy: 0.927905, Accuracy: 0.5634, Precision: 0.4117, Recall: 0.5634, F1 Score: 0.4702, AUC: 0.7596, R2 Score: 0.020894, MAE: 1.8131, MSE: 5.2067
+Avg Latency (ms): 9.25, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 58/150
+Training: Fold 1 - Total Loss: 2.3155, Cross Entropy: 1.048757, Accuracy: 0.5317, Precision: 0.3920, Recall: 0.5317, F1 Score: 0.4513, AUC: 0.7083, R² Score: -0.015767, MAE: 1.8478, MSE: 5.2713
+Training: Fold 2 - Total Loss: 2.2581, Cross Entropy: 1.064729, Accuracy: 0.5158, Precision: 0.3833, Recall: 0.5158, F1 Score: 0.4383, AUC: 0.6756, R² Score: -0.028010, MAE: 1.7838, MSE: 5.0426
+Training: Fold 3 - Total Loss: 2.2479, Cross Entropy: 1.098101, Accuracy: 0.5035, Precision: 0.3668, Recall: 0.5035, F1 Score: 0.4224, AUC: 0.6903, R² Score: -0.015325, MAE: 1.7615, MSE: 4.9308
+Training: Fold 4 - Total Loss: 2.3776, Cross Entropy: 1.099744, Accuracy: 0.5141, Precision: 0.3925, Recall: 0.5141, F1 Score: 0.4387, AUC: 0.6619, R² Score: -0.005910, MAE: 1.8392, MSE: 5.3591
+Training: Fold 5 - Total Loss: 2.2497, Cross Entropy: 0.967003, Accuracy: 0.5141, Precision: 0.3802, Recall: 0.5141, F1 Score: 0.4307, AUC: 0.7250, R2 Score: 0.014635, MAE: 1.8111, MSE: 5.2426
+Avg Latency (ms): 8.84, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 59/150
+Training: Fold 1 - Total Loss: 2.3457, Cross Entropy: 1.091717, Accuracy: 0.4982, Precision: 0.3679, Recall: 0.4982, F1 Score: 0.4233, AUC: 0.6947, R² Score: -0.019333, MAE: 1.8411, MSE: 5.2717
+Training: Fold 2 - Total Loss: 2.2751, Cross Entropy: 1.090227, Accuracy: 0.4930, Precision: 0.3760, Recall: 0.4930, F1 Score: 0.4220, AUC: 0.6762, R² Score: -0.012332, MAE: 1.7828, MSE: 5.0399
+Training: Fold 3 - Total Loss: 2.2277, Cross Entropy: 1.079784, Accuracy: 0.5106, Precision: 0.3715, Recall: 0.5106, F1 Score: 0.4280, AUC: 0.6818, R² Score: -0.018817, MAE: 1.7562, MSE: 4.9062
+Training: Fold 4 - Total Loss: 2.3847, Cross Entropy: 1.100723, Accuracy: 0.5000, Precision: 0.3681, Recall: 0.5000, F1 Score: 0.4236, AUC: 0.6713, R² Score: -0.002693, MAE: 1.8476, MSE: 5.3806
+Training: Fold 5 - Total Loss: 2.2209, Cross Entropy: 0.936388, Accuracy: 0.5704, Precision: 0.4386, Recall: 0.5704, F1 Score: 0.4816, AUC: 0.7426, R2 Score: 0.032862, MAE: 1.8031, MSE: 5.2181
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5704
+
+Epoch 60/150
+Training: Fold 1 - Total Loss: 2.3559, Cross Entropy: 1.077212, Accuracy: 0.5211, Precision: 0.3953, Recall: 0.5211, F1 Score: 0.4463, AUC: 0.6957, R² Score: -0.019357, MAE: 1.8528, MSE: 5.3394
+Training: Fold 2 - Total Loss: 2.2595, Cross Entropy: 1.077425, Accuracy: 0.5158, Precision: 0.3893, Recall: 0.5158, F1 Score: 0.4406, AUC: 0.6844, R² Score: -0.001673, MAE: 1.7815, MSE: 5.0178
+Training: Fold 3 - Total Loss: 2.2402, Cross Entropy: 1.094802, Accuracy: 0.4982, Precision: 0.3648, Recall: 0.4982, F1 Score: 0.4183, AUC: 0.6743, R² Score: -0.014426, MAE: 1.7486, MSE: 4.9128
+Training: Fold 4 - Total Loss: 2.3463, Cross Entropy: 1.060511, Accuracy: 0.5246, Precision: 0.4056, Recall: 0.5246, F1 Score: 0.4504, AUC: 0.6952, R² Score: -0.016735, MAE: 1.8463, MSE: 5.3466
+Training: Fold 5 - Total Loss: 2.2590, Cross Entropy: 0.976192, Accuracy: 0.5352, Precision: 0.4271, Recall: 0.5352, F1 Score: 0.4517, AUC: 0.7236, R2 Score: -0.014586, MAE: 1.8288, MSE: 5.2522
+Avg Latency (ms): 8.94, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 61/150
+Training: Fold 1 - Total Loss: 2.3623, Cross Entropy: 1.076356, Accuracy: 0.5440, Precision: 0.4045, Recall: 0.5440, F1 Score: 0.4636, AUC: 0.6994, R² Score: -0.025123, MAE: 1.8632, MSE: 5.3628
+Training: Fold 2 - Total Loss: 2.2612, Cross Entropy: 1.090423, Accuracy: 0.5035, Precision: 0.3833, Recall: 0.5035, F1 Score: 0.4304, AUC: 0.6704, R² Score: -0.010436, MAE: 1.7739, MSE: 4.9929
+Training: Fold 3 - Total Loss: 2.2055, Cross Entropy: 1.072981, Accuracy: 0.5211, Precision: 0.3764, Recall: 0.5211, F1 Score: 0.4359, AUC: 0.7053, R² Score: -0.008221, MAE: 1.7442, MSE: 4.8480
+Training: Fold 4 - Total Loss: 2.3680, Cross Entropy: 1.082735, Accuracy: 0.5035, Precision: 0.3948, Recall: 0.5035, F1 Score: 0.4335, AUC: 0.6825, R² Score: -0.013598, MAE: 1.8410, MSE: 5.3668
+Training: Fold 5 - Total Loss: 2.2160, Cross Entropy: 0.924879, Accuracy: 0.5493, Precision: 0.4557, Recall: 0.5493, F1 Score: 0.4666, AUC: 0.7446, R2 Score: -0.006712, MAE: 1.8155, MSE: 5.2286
+Avg Latency (ms): 8.86, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 62/150
+Training: Fold 1 - Total Loss: 2.3359, Cross Entropy: 1.072589, Accuracy: 0.5335, Precision: 0.3962, Recall: 0.5335, F1 Score: 0.4543, AUC: 0.6906, R² Score: -0.011920, MAE: 1.8435, MSE: 5.2837
+Training: Fold 2 - Total Loss: 2.2792, Cross Entropy: 1.097835, Accuracy: 0.4930, Precision: 0.3730, Recall: 0.4930, F1 Score: 0.4214, AUC: 0.6771, R² Score: -0.016188, MAE: 1.7853, MSE: 5.0358
+Training: Fold 3 - Total Loss: 2.2326, Cross Entropy: 1.069373, Accuracy: 0.5158, Precision: 0.3835, Recall: 0.5158, F1 Score: 0.4347, AUC: 0.6916, R² Score: -0.044016, MAE: 1.7676, MSE: 4.9469
+Training: Fold 4 - Total Loss: 2.3867, Cross Entropy: 1.078183, Accuracy: 0.5088, Precision: 0.3879, Recall: 0.5088, F1 Score: 0.4365, AUC: 0.6975, R² Score: -0.008843, MAE: 1.8591, MSE: 5.4400
+Training: Fold 5 - Total Loss: 2.2301, Cross Entropy: 0.918808, Accuracy: 0.5775, Precision: 0.4307, Recall: 0.5775, F1 Score: 0.4844, AUC: 0.7574, R2 Score: 0.006256, MAE: 1.8134, MSE: 5.2898
+Avg Latency (ms): 9.65, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5775
+
+Epoch 63/150
+Training: Fold 1 - Total Loss: 2.3105, Cross Entropy: 1.050865, Accuracy: 0.5335, Precision: 0.3978, Recall: 0.5335, F1 Score: 0.4550, AUC: 0.7035, R² Score: -0.008331, MAE: 1.8396, MSE: 5.2498
+Training: Fold 2 - Total Loss: 2.2415, Cross Entropy: 1.053736, Accuracy: 0.5528, Precision: 0.4084, Recall: 0.5528, F1 Score: 0.4692, AUC: 0.7002, R² Score: -0.009249, MAE: 1.7809, MSE: 5.0130
+Training: Fold 3 - Total Loss: 2.2469, Cross Entropy: 1.102501, Accuracy: 0.5035, Precision: 0.3731, Recall: 0.5035, F1 Score: 0.4247, AUC: 0.6940, R² Score: -0.004361, MAE: 1.7538, MSE: 4.9170
+Training: Fold 4 - Total Loss: 2.3528, Cross Entropy: 1.066699, Accuracy: 0.5352, Precision: 0.4213, Recall: 0.5352, F1 Score: 0.4586, AUC: 0.6941, R² Score: -0.017340, MAE: 1.8372, MSE: 5.3537
+Training: Fold 5 - Total Loss: 2.2009, Cross Entropy: 0.899513, Accuracy: 0.5845, Precision: 0.4448, Recall: 0.5845, F1 Score: 0.4930, AUC: 0.7840, R2 Score: -0.010335, MAE: 1.8169, MSE: 5.2375
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.5845
+
+Epoch 64/150
+Training: Fold 1 - Total Loss: 2.3268, Cross Entropy: 1.068673, Accuracy: 0.5282, Precision: 0.3896, Recall: 0.5282, F1 Score: 0.4484, AUC: 0.6944, R² Score: -0.010128, MAE: 1.8428, MSE: 5.2626
+Training: Fold 2 - Total Loss: 2.2318, Cross Entropy: 1.056897, Accuracy: 0.5176, Precision: 0.3899, Recall: 0.5176, F1 Score: 0.4419, AUC: 0.6869, R² Score: -0.020899, MAE: 1.7725, MSE: 4.9733
+Training: Fold 3 - Total Loss: 2.2103, Cross Entropy: 1.072044, Accuracy: 0.5141, Precision: 0.6008, Recall: 0.5141, F1 Score: 0.4352, AUC: 0.6896, R² Score: 0.006928, MAE: 1.7451, MSE: 4.8663
+Training: Fold 4 - Total Loss: 2.3627, Cross Entropy: 1.080457, Accuracy: 0.5158, Precision: 0.4023, Recall: 0.5158, F1 Score: 0.4427, AUC: 0.6897, R² Score: -0.015612, MAE: 1.8426, MSE: 5.3545
+Training: Fold 5 - Total Loss: 2.2361, Cross Entropy: 0.950815, Accuracy: 0.5775, Precision: 0.4147, Recall: 0.5775, F1 Score: 0.4796, AUC: 0.7426, R2 Score: -0.002526, MAE: 1.8200, MSE: 5.2350
+Avg Latency (ms): 9.17, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 65/150
+Training: Fold 1 - Total Loss: 2.3595, Cross Entropy: 1.090985, Accuracy: 0.5264, Precision: 0.3905, Recall: 0.5264, F1 Score: 0.4482, AUC: 0.6859, R² Score: -0.019526, MAE: 1.8497, MSE: 5.3195
+Training: Fold 2 - Total Loss: 2.2888, Cross Entropy: 1.084752, Accuracy: 0.5194, Precision: 0.3905, Recall: 0.5194, F1 Score: 0.4426, AUC: 0.6756, R² Score: -0.013732, MAE: 1.7889, MSE: 5.0981
+Training: Fold 3 - Total Loss: 2.2563, Cross Entropy: 1.110101, Accuracy: 0.5106, Precision: 0.3692, Recall: 0.5106, F1 Score: 0.4269, AUC: 0.6782, R² Score: -0.003865, MAE: 1.7546, MSE: 4.9309
+Training: Fold 4 - Total Loss: 2.3600, Cross Entropy: 1.084705, Accuracy: 0.5176, Precision: 0.4071, Recall: 0.5176, F1 Score: 0.4446, AUC: 0.6763, R² Score: -0.012195, MAE: 1.8397, MSE: 5.3358
+Training: Fold 5 - Total Loss: 2.2236, Cross Entropy: 0.924303, Accuracy: 0.6127, Precision: 0.4485, Recall: 0.6127, F1 Score: 0.5111, AUC: 0.7559, R2 Score: -0.001706, MAE: 1.8142, MSE: 5.2554
+Avg Latency (ms): 9.50, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.6127
+
+Epoch 66/150
+Training: Fold 1 - Total Loss: 2.3284, Cross Entropy: 1.068698, Accuracy: 0.5528, Precision: 0.4074, Recall: 0.5528, F1 Score: 0.4691, AUC: 0.6990, R² Score: -0.010374, MAE: 1.8407, MSE: 5.2675
+Training: Fold 2 - Total Loss: 2.2427, Cross Entropy: 1.067494, Accuracy: 0.5176, Precision: 0.3902, Recall: 0.5176, F1 Score: 0.4424, AUC: 0.6813, R² Score: -0.016178, MAE: 1.7746, MSE: 4.9848
+Training: Fold 3 - Total Loss: 2.2411, Cross Entropy: 1.061294, Accuracy: 0.5282, Precision: 0.3902, Recall: 0.5282, F1 Score: 0.4442, AUC: 0.7096, R² Score: -0.019137, MAE: 1.7655, MSE: 4.9941
+Training: Fold 4 - Total Loss: 2.3729, Cross Entropy: 1.078642, Accuracy: 0.5018, Precision: 0.3962, Recall: 0.5018, F1 Score: 0.4329, AUC: 0.6896, R² Score: -0.027375, MAE: 1.8517, MSE: 5.3930
+Training: Fold 5 - Total Loss: 2.2100, Cross Entropy: 0.918572, Accuracy: 0.5634, Precision: 0.4449, Recall: 0.5634, F1 Score: 0.4760, AUC: 0.7510, R2 Score: 0.016575, MAE: 1.8121, MSE: 5.2234
+Avg Latency (ms): 9.24, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 67/150
+Training: Fold 1 - Total Loss: 2.3584, Cross Entropy: 1.083035, Accuracy: 0.5123, Precision: 0.3774, Recall: 0.5123, F1 Score: 0.4346, AUC: 0.6859, R² Score: -0.019801, MAE: 1.8473, MSE: 5.3341
+Training: Fold 2 - Total Loss: 2.2510, Cross Entropy: 1.063148, Accuracy: 0.5229, Precision: 0.3870, Recall: 0.5229, F1 Score: 0.4442, AUC: 0.6860, R² Score: -0.006763, MAE: 1.7839, MSE: 5.0226
+Training: Fold 3 - Total Loss: 2.2014, Cross Entropy: 1.050949, Accuracy: 0.5229, Precision: 0.3942, Recall: 0.5229, F1 Score: 0.4409, AUC: 0.7100, R² Score: 0.003613, MAE: 1.7465, MSE: 4.8858
+Training: Fold 4 - Total Loss: 2.3472, Cross Entropy: 1.064250, Accuracy: 0.5387, Precision: 0.4103, Recall: 0.5387, F1 Score: 0.4598, AUC: 0.6930, R² Score: -0.012406, MAE: 1.8360, MSE: 5.3406
+Training: Fold 5 - Total Loss: 2.2233, Cross Entropy: 0.928869, Accuracy: 0.5282, Precision: 0.3828, Recall: 0.5282, F1 Score: 0.4405, AUC: 0.7406, R2 Score: 0.002789, MAE: 1.8092, MSE: 5.2438
+Avg Latency (ms): 9.02, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 68/150
+Training: Fold 1 - Total Loss: 2.3376, Cross Entropy: 1.076779, Accuracy: 0.5194, Precision: 0.3876, Recall: 0.5194, F1 Score: 0.4432, AUC: 0.6964, R² Score: -0.000167, MAE: 1.8422, MSE: 5.2796
+Training: Fold 2 - Total Loss: 2.2561, Cross Entropy: 1.089707, Accuracy: 0.5088, Precision: 0.3791, Recall: 0.5088, F1 Score: 0.4330, AUC: 0.6823, R² Score: -0.025192, MAE: 1.7727, MSE: 4.9777
+Training: Fold 3 - Total Loss: 2.2121, Cross Entropy: 1.057064, Accuracy: 0.5141, Precision: 0.3761, Recall: 0.5141, F1 Score: 0.4316, AUC: 0.7129, R² Score: 0.002821, MAE: 1.7523, MSE: 4.9073
+Training: Fold 4 - Total Loss: 2.3762, Cross Entropy: 1.081542, Accuracy: 0.5317, Precision: 0.4651, Recall: 0.5317, F1 Score: 0.4617, AUC: 0.6915, R² Score: -0.016397, MAE: 1.8481, MSE: 5.3969
+Training: Fold 5 - Total Loss: 2.2179, Cross Entropy: 0.922487, Accuracy: 0.5915, Precision: 0.4140, Recall: 0.5915, F1 Score: 0.4869, AUC: 0.7580, R2 Score: -0.002671, MAE: 1.8210, MSE: 5.2406
+Avg Latency (ms): 9.15, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 69/150
+Training: Fold 1 - Total Loss: 2.3318, Cross Entropy: 1.068122, Accuracy: 0.5106, Precision: 0.3843, Recall: 0.5106, F1 Score: 0.4369, AUC: 0.6911, R² Score: -0.014125, MAE: 1.8511, MSE: 5.2803
+Training: Fold 2 - Total Loss: 2.2829, Cross Entropy: 1.096208, Accuracy: 0.5299, Precision: 0.4008, Recall: 0.5299, F1 Score: 0.4521, AUC: 0.6723, R² Score: -0.014428, MAE: 1.7868, MSE: 5.0520
+Training: Fold 3 - Total Loss: 2.2516, Cross Entropy: 1.059988, Accuracy: 0.5176, Precision: 0.4835, Recall: 0.5176, F1 Score: 0.4360, AUC: 0.7142, R² Score: -0.031949, MAE: 1.7799, MSE: 5.0321
+Training: Fold 4 - Total Loss: 2.3798, Cross Entropy: 1.098124, Accuracy: 0.4947, Precision: 0.3730, Recall: 0.4947, F1 Score: 0.4222, AUC: 0.6798, R² Score: -0.002362, MAE: 1.8468, MSE: 5.3705
+Training: Fold 5 - Total Loss: 2.2159, Cross Entropy: 0.922241, Accuracy: 0.5634, Precision: 0.4117, Recall: 0.5634, F1 Score: 0.4702, AUC: 0.7433, R2 Score: 0.015745, MAE: 1.8135, MSE: 5.2344
+Avg Latency (ms): 9.32, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 70/150
+Training: Fold 1 - Total Loss: 2.3256, Cross Entropy: 1.045753, Accuracy: 0.5352, Precision: 0.4012, Recall: 0.5352, F1 Score: 0.4574, AUC: 0.7078, R² Score: -0.012525, MAE: 1.8487, MSE: 5.3119
+Training: Fold 2 - Total Loss: 2.2517, Cross Entropy: 1.077536, Accuracy: 0.5088, Precision: 0.3777, Recall: 0.5088, F1 Score: 0.4326, AUC: 0.6949, R² Score: -0.011249, MAE: 1.7774, MSE: 4.9913
+Training: Fold 3 - Total Loss: 2.2396, Cross Entropy: 1.064012, Accuracy: 0.5282, Precision: 0.3853, Recall: 0.5282, F1 Score: 0.4434, AUC: 0.7034, R² Score: -0.015007, MAE: 1.7679, MSE: 4.9827
+Training: Fold 4 - Total Loss: 2.3915, Cross Entropy: 1.073897, Accuracy: 0.5088, Precision: 0.4080, Recall: 0.5088, F1 Score: 0.4409, AUC: 0.7059, R² Score: -0.028163, MAE: 1.8577, MSE: 5.4659
+Training: Fold 5 - Total Loss: 2.1929, Cross Entropy: 0.905187, Accuracy: 0.5704, Precision: 0.3981, Recall: 0.5704, F1 Score: 0.4689, AUC: 0.7618, R2 Score: 0.011119, MAE: 1.8222, MSE: 5.1975
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 71/150
+Training: Fold 1 - Total Loss: 2.3051, Cross Entropy: 1.040187, Accuracy: 0.5299, Precision: 0.3930, Recall: 0.5299, F1 Score: 0.4511, AUC: 0.7123, R² Score: -0.007272, MAE: 1.8433, MSE: 5.2567
+Training: Fold 2 - Total Loss: 2.2485, Cross Entropy: 1.057594, Accuracy: 0.5264, Precision: 0.3962, Recall: 0.5264, F1 Score: 0.4492, AUC: 0.6886, R² Score: -0.029273, MAE: 1.7851, MSE: 5.0272
+Training: Fold 3 - Total Loss: 2.2385, Cross Entropy: 1.103072, Accuracy: 0.5088, Precision: 0.3695, Recall: 0.5088, F1 Score: 0.4265, AUC: 0.6948, R² Score: -0.018526, MAE: 1.7529, MSE: 4.8879
+Training: Fold 4 - Total Loss: 2.3601, Cross Entropy: 1.064360, Accuracy: 0.5282, Precision: 0.4069, Recall: 0.5282, F1 Score: 0.4523, AUC: 0.6956, R² Score: -0.024747, MAE: 1.8464, MSE: 5.3834
+Training: Fold 5 - Total Loss: 2.2247, Cross Entropy: 0.934828, Accuracy: 0.5563, Precision: 0.4203, Recall: 0.5563, F1 Score: 0.4682, AUC: 0.7254, R2 Score: 0.007487, MAE: 1.8133, MSE: 5.2343
+Avg Latency (ms): 9.09, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 72/150
+Training: Fold 1 - Total Loss: 2.2981, Cross Entropy: 1.041619, Accuracy: 0.5493, Precision: 0.4145, Recall: 0.5493, F1 Score: 0.4704, AUC: 0.7094, R² Score: -0.003164, MAE: 1.8366, MSE: 5.2300
+Training: Fold 2 - Total Loss: 2.2397, Cross Entropy: 1.057850, Accuracy: 0.5088, Precision: 0.3771, Recall: 0.5088, F1 Score: 0.4323, AUC: 0.6960, R² Score: -0.016152, MAE: 1.7741, MSE: 4.9973
+Training: Fold 3 - Total Loss: 2.1883, Cross Entropy: 1.027514, Accuracy: 0.5264, Precision: 0.3935, Recall: 0.5264, F1 Score: 0.4439, AUC: 0.7166, R² Score: -0.011472, MAE: 1.7546, MSE: 4.8967
+Training: Fold 4 - Total Loss: 2.3555, Cross Entropy: 1.063383, Accuracy: 0.5264, Precision: 0.4138, Recall: 0.5264, F1 Score: 0.4530, AUC: 0.6951, R² Score: -0.015349, MAE: 1.8410, MSE: 5.3705
+Training: Fold 5 - Total Loss: 2.2150, Cross Entropy: 0.928776, Accuracy: 0.5282, Precision: 0.3739, Recall: 0.5282, F1 Score: 0.4369, AUC: 0.7346, R2 Score: -0.014645, MAE: 1.8200, MSE: 5.2162
+Avg Latency (ms): 8.96, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 73/150
+Training: Fold 1 - Total Loss: 2.3427, Cross Entropy: 1.057492, Accuracy: 0.5299, Precision: 0.3966, Recall: 0.5299, F1 Score: 0.4527, AUC: 0.6987, R² Score: -0.014906, MAE: 1.8522, MSE: 5.3416
+Training: Fold 2 - Total Loss: 2.2617, Cross Entropy: 1.082852, Accuracy: 0.5158, Precision: 0.3879, Recall: 0.5158, F1 Score: 0.4400, AUC: 0.6867, R² Score: -0.007841, MAE: 1.7803, MSE: 5.0124
+Training: Fold 3 - Total Loss: 2.2192, Cross Entropy: 1.071257, Accuracy: 0.5317, Precision: 0.3907, Recall: 0.5317, F1 Score: 0.4466, AUC: 0.7110, R² Score: -0.009993, MAE: 1.7480, MSE: 4.8976
+Training: Fold 4 - Total Loss: 2.3607, Cross Entropy: 1.075364, Accuracy: 0.5053, Precision: 0.3896, Recall: 0.5053, F1 Score: 0.4334, AUC: 0.7008, R² Score: -0.011477, MAE: 1.8435, MSE: 5.3599
+Training: Fold 5 - Total Loss: 2.2237, Cross Entropy: 0.938247, Accuracy: 0.5493, Precision: 0.3839, Recall: 0.5493, F1 Score: 0.4519, AUC: 0.7374, R2 Score: 0.011355, MAE: 1.8109, MSE: 5.2231
+Avg Latency (ms): 8.89, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 74/150
+Training: Fold 1 - Total Loss: 2.3135, Cross Entropy: 1.047554, Accuracy: 0.5282, Precision: 0.3961, Recall: 0.5282, F1 Score: 0.4517, AUC: 0.7130, R² Score: -0.010675, MAE: 1.8407, MSE: 5.2673
+Training: Fold 2 - Total Loss: 2.2476, Cross Entropy: 1.060134, Accuracy: 0.5141, Precision: 0.3952, Recall: 0.5141, F1 Score: 0.4415, AUC: 0.7133, R² Score: -0.016736, MAE: 1.7809, MSE: 5.0182
+Training: Fold 3 - Total Loss: 2.2046, Cross Entropy: 1.051924, Accuracy: 0.5282, Precision: 0.6013, Recall: 0.5282, F1 Score: 0.4442, AUC: 0.6990, R² Score: -0.004967, MAE: 1.7491, MSE: 4.8941
+Training: Fold 4 - Total Loss: 2.3339, Cross Entropy: 1.048314, Accuracy: 0.5335, Precision: 0.4092, Recall: 0.5335, F1 Score: 0.4578, AUC: 0.7137, R² Score: -0.016127, MAE: 1.8357, MSE: 5.3335
+Training: Fold 5 - Total Loss: 2.1901, Cross Entropy: 0.904541, Accuracy: 0.5634, Precision: 0.6345, Recall: 0.5634, F1 Score: 0.4782, AUC: 0.7764, R2 Score: 0.033290, MAE: 1.8039, MSE: 5.1898
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 75/150
+Training: Fold 1 - Total Loss: 2.3202, Cross Entropy: 1.045558, Accuracy: 0.5440, Precision: 0.4099, Recall: 0.5440, F1 Score: 0.4651, AUC: 0.7185, R² Score: -0.011253, MAE: 1.8452, MSE: 5.2942
+Training: Fold 2 - Total Loss: 2.2586, Cross Entropy: 1.066123, Accuracy: 0.5370, Precision: 0.3975, Recall: 0.5370, F1 Score: 0.4558, AUC: 0.6952, R² Score: -0.021843, MAE: 1.7837, MSE: 5.0410
+Training: Fold 3 - Total Loss: 2.2136, Cross Entropy: 1.048247, Accuracy: 0.5106, Precision: 0.3861, Recall: 0.5106, F1 Score: 0.4322, AUC: 0.7235, R² Score: -0.024822, MAE: 1.7579, MSE: 4.9328
+Training: Fold 4 - Total Loss: 2.3636, Cross Entropy: 1.070756, Accuracy: 0.5018, Precision: 0.4677, Recall: 0.5018, F1 Score: 0.4412, AUC: 0.6964, R² Score: -0.018579, MAE: 1.8461, MSE: 5.3802
+Training: Fold 5 - Total Loss: 2.2132, Cross Entropy: 0.908328, Accuracy: 0.5775, Precision: 0.4081, Recall: 0.5775, F1 Score: 0.4768, AUC: 0.7448, R2 Score: 0.002586, MAE: 1.8172, MSE: 5.2580
+Avg Latency (ms): 9.35, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 76/150
+Training: Fold 1 - Total Loss: 2.3025, Cross Entropy: 1.017160, Accuracy: 0.5546, Precision: 0.4125, Recall: 0.5546, F1 Score: 0.4727, AUC: 0.7228, R² Score: -0.017327, MAE: 1.8442, MSE: 5.3016
+Training: Fold 2 - Total Loss: 2.2205, Cross Entropy: 1.023937, Accuracy: 0.5528, Precision: 0.4197, Recall: 0.5528, F1 Score: 0.4723, AUC: 0.7135, R² Score: 0.001514, MAE: 1.7803, MSE: 5.0123
+Training: Fold 3 - Total Loss: 2.2013, Cross Entropy: 1.055843, Accuracy: 0.5299, Precision: 0.6107, Recall: 0.5299, F1 Score: 0.4485, AUC: 0.7161, R² Score: -0.004909, MAE: 1.7411, MSE: 4.8739
+Training: Fold 4 - Total Loss: 2.3376, Cross Entropy: 1.043799, Accuracy: 0.5106, Precision: 0.3951, Recall: 0.5106, F1 Score: 0.4417, AUC: 0.7068, R² Score: -0.014835, MAE: 1.8432, MSE: 5.3565
+Training: Fold 5 - Total Loss: 2.2124, Cross Entropy: 0.894498, Accuracy: 0.5775, Precision: 0.4310, Recall: 0.5775, F1 Score: 0.4836, AUC: 0.7553, R2 Score: -0.023079, MAE: 1.8142, MSE: 5.2876
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 77/150
+Training: Fold 1 - Total Loss: 2.3334, Cross Entropy: 1.069602, Accuracy: 0.5246, Precision: 0.3979, Recall: 0.5246, F1 Score: 0.4499, AUC: 0.7000, R² Score: -0.004793, MAE: 1.8427, MSE: 5.2823
+Training: Fold 2 - Total Loss: 2.2253, Cross Entropy: 1.032402, Accuracy: 0.5335, Precision: 0.4008, Recall: 0.5335, F1 Score: 0.4553, AUC: 0.7078, R² Score: -0.005705, MAE: 1.7786, MSE: 5.0088
+Training: Fold 3 - Total Loss: 2.2251, Cross Entropy: 1.059784, Accuracy: 0.5317, Precision: 0.4327, Recall: 0.5317, F1 Score: 0.4503, AUC: 0.7096, R² Score: -0.017120, MAE: 1.7586, MSE: 4.9440
+Training: Fold 4 - Total Loss: 2.3882, Cross Entropy: 1.088958, Accuracy: 0.5352, Precision: 0.4148, Recall: 0.5352, F1 Score: 0.4584, AUC: 0.6854, R² Score: -0.021395, MAE: 1.8537, MSE: 5.4198
+Training: Fold 5 - Total Loss: 2.1882, Cross Entropy: 0.888445, Accuracy: 0.5775, Precision: 0.4170, Recall: 0.5775, F1 Score: 0.4800, AUC: 0.7720, R2 Score: 0.011720, MAE: 1.8131, MSE: 5.2211
+Avg Latency (ms): 9.04, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 78/150
+Training: Fold 1 - Total Loss: 2.3030, Cross Entropy: 1.035199, Accuracy: 0.5493, Precision: 0.4212, Recall: 0.5493, F1 Score: 0.4709, AUC: 0.7122, R² Score: -0.021319, MAE: 1.8387, MSE: 5.2613
+Training: Fold 2 - Total Loss: 2.2230, Cross Entropy: 1.025937, Accuracy: 0.5546, Precision: 0.4156, Recall: 0.5546, F1 Score: 0.4726, AUC: 0.7117, R² Score: -0.014317, MAE: 1.7827, MSE: 5.0162
+Training: Fold 3 - Total Loss: 2.2084, Cross Entropy: 1.054213, Accuracy: 0.5335, Precision: 0.3900, Recall: 0.5335, F1 Score: 0.4479, AUC: 0.7161, R² Score: -0.015583, MAE: 1.7535, MSE: 4.9014
+Training: Fold 4 - Total Loss: 2.3666, Cross Entropy: 1.071330, Accuracy: 0.5405, Precision: 0.4811, Recall: 0.5405, F1 Score: 0.4691, AUC: 0.7020, R² Score: -0.002960, MAE: 1.8443, MSE: 5.3891
+Training: Fold 5 - Total Loss: 2.2043, Cross Entropy: 0.898270, Accuracy: 0.5845, Precision: 0.4093, Recall: 0.5845, F1 Score: 0.4813, AUC: 0.7460, R2 Score: -0.018978, MAE: 1.8266, MSE: 5.2518
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 79/150
+Training: Fold 1 - Total Loss: 2.2939, Cross Entropy: 1.029835, Accuracy: 0.5335, Precision: 0.3949, Recall: 0.5335, F1 Score: 0.4538, AUC: 0.7233, R² Score: -0.016851, MAE: 1.8380, MSE: 5.2433
+Training: Fold 2 - Total Loss: 2.2192, Cross Entropy: 1.025863, Accuracy: 0.5458, Precision: 0.4065, Recall: 0.5458, F1 Score: 0.4641, AUC: 0.7167, R² Score: -0.005847, MAE: 1.7865, MSE: 5.0036
+Training: Fold 3 - Total Loss: 2.1924, Cross Entropy: 1.030932, Accuracy: 0.5440, Precision: 0.4000, Recall: 0.5440, F1 Score: 0.4582, AUC: 0.7162, R² Score: -0.017985, MAE: 1.7540, MSE: 4.9026
+Training: Fold 4 - Total Loss: 2.3221, Cross Entropy: 1.022297, Accuracy: 0.5317, Precision: 0.4234, Recall: 0.5317, F1 Score: 0.4603, AUC: 0.7246, R² Score: 0.002984, MAE: 1.8427, MSE: 5.3548
+Training: Fold 5 - Total Loss: 2.2151, Cross Entropy: 0.916084, Accuracy: 0.5493, Precision: 0.4335, Recall: 0.5493, F1 Score: 0.4654, AUC: 0.7583, R2 Score: -0.021128, MAE: 1.8237, MSE: 5.2462
+Avg Latency (ms): 8.99, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 80/150
+Training: Fold 1 - Total Loss: 2.3046, Cross Entropy: 1.024514, Accuracy: 0.5493, Precision: 0.4167, Recall: 0.5493, F1 Score: 0.4707, AUC: 0.7198, R² Score: -0.008684, MAE: 1.8479, MSE: 5.2916
+Training: Fold 2 - Total Loss: 2.2421, Cross Entropy: 1.042452, Accuracy: 0.5440, Precision: 0.4113, Recall: 0.5440, F1 Score: 0.4644, AUC: 0.7104, R² Score: -0.017726, MAE: 1.7855, MSE: 5.0412
+Training: Fold 3 - Total Loss: 2.2051, Cross Entropy: 1.023261, Accuracy: 0.5370, Precision: 0.4019, Recall: 0.5370, F1 Score: 0.4532, AUC: 0.7277, R² Score: -0.020082, MAE: 1.7706, MSE: 4.9627
+Training: Fold 4 - Total Loss: 2.3362, Cross Entropy: 1.041306, Accuracy: 0.5352, Precision: 0.4623, Recall: 0.5352, F1 Score: 0.4698, AUC: 0.7094, R² Score: -0.013866, MAE: 1.8441, MSE: 5.3575
+Training: Fold 5 - Total Loss: 2.1911, Cross Entropy: 0.894426, Accuracy: 0.5775, Precision: 0.4190, Recall: 0.5775, F1 Score: 0.4813, AUC: 0.7718, R2 Score: 0.000168, MAE: 1.8253, MSE: 5.2166
+Avg Latency (ms): 8.95, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 81/150
+Training: Fold 1 - Total Loss: 2.3215, Cross Entropy: 1.019672, Accuracy: 0.5493, Precision: 0.4772, Recall: 0.5493, F1 Score: 0.4729, AUC: 0.7349, R² Score: -0.016969, MAE: 1.8570, MSE: 5.3591
+Training: Fold 2 - Total Loss: 2.2617, Cross Entropy: 1.068390, Accuracy: 0.5317, Precision: 0.3942, Recall: 0.5317, F1 Score: 0.4518, AUC: 0.6985, R² Score: -0.022838, MAE: 1.7846, MSE: 5.0459
+Training: Fold 3 - Total Loss: 2.1856, Cross Entropy: 1.028925, Accuracy: 0.5440, Precision: 0.5110, Recall: 0.5440, F1 Score: 0.4602, AUC: 0.7155, R² Score: -0.012075, MAE: 1.7512, MSE: 4.8844
+Training: Fold 4 - Total Loss: 2.3587, Cross Entropy: 1.057148, Accuracy: 0.5370, Precision: 0.5372, Recall: 0.5370, F1 Score: 0.4679, AUC: 0.6989, R² Score: -0.027962, MAE: 1.8469, MSE: 5.3957
+Training: Fold 5 - Total Loss: 2.2172, Cross Entropy: 0.925188, Accuracy: 0.5915, Precision: 0.4353, Recall: 0.5915, F1 Score: 0.4923, AUC: 0.7212, R2 Score: 0.004655, MAE: 1.8109, MSE: 5.2319
+Avg Latency (ms): 9.21, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 82/150
+Training: Fold 1 - Total Loss: 2.3043, Cross Entropy: 1.024842, Accuracy: 0.5599, Precision: 0.4281, Recall: 0.5599, F1 Score: 0.4813, AUC: 0.7427, R² Score: -0.013237, MAE: 1.8493, MSE: 5.2896
+Training: Fold 2 - Total Loss: 2.2507, Cross Entropy: 1.063090, Accuracy: 0.5299, Precision: 0.3951, Recall: 0.5299, F1 Score: 0.4513, AUC: 0.6941, R² Score: -0.004686, MAE: 1.7839, MSE: 5.0219
+Training: Fold 3 - Total Loss: 2.2218, Cross Entropy: 1.049292, Accuracy: 0.5352, Precision: 0.3958, Recall: 0.5352, F1 Score: 0.4494, AUC: 0.7005, R² Score: -0.020372, MAE: 1.7635, MSE: 4.9576
+Training: Fold 4 - Total Loss: 2.3299, Cross Entropy: 1.030849, Accuracy: 0.5370, Precision: 0.4143, Recall: 0.5370, F1 Score: 0.4613, AUC: 0.7252, R² Score: -0.023037, MAE: 1.8433, MSE: 5.3610
+Training: Fold 5 - Total Loss: 2.2099, Cross Entropy: 0.884917, Accuracy: 0.5775, Precision: 0.4043, Recall: 0.5775, F1 Score: 0.4754, AUC: 0.7635, R2 Score: -0.011750, MAE: 1.8122, MSE: 5.3015
+Avg Latency (ms): 8.93, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 83/150
+Training: Fold 1 - Total Loss: 2.3225, Cross Entropy: 1.051545, Accuracy: 0.5282, Precision: 0.3941, Recall: 0.5282, F1 Score: 0.4513, AUC: 0.7123, R² Score: -0.013882, MAE: 1.8453, MSE: 5.2880
+Training: Fold 2 - Total Loss: 2.2106, Cross Entropy: 1.019323, Accuracy: 0.5546, Precision: 0.4336, Recall: 0.5546, F1 Score: 0.4779, AUC: 0.7389, R² Score: -0.009678, MAE: 1.7731, MSE: 4.9903
+Training: Fold 3 - Total Loss: 2.2006, Cross Entropy: 1.049814, Accuracy: 0.5405, Precision: 0.4755, Recall: 0.5405, F1 Score: 0.4588, AUC: 0.7172, R² Score: -0.012486, MAE: 1.7504, MSE: 4.8858
+Training: Fold 4 - Total Loss: 2.3712, Cross Entropy: 1.065487, Accuracy: 0.5246, Precision: 0.4449, Recall: 0.5246, F1 Score: 0.4507, AUC: 0.6983, R² Score: -0.013113, MAE: 1.8543, MSE: 5.4177
+Training: Fold 5 - Total Loss: 2.2300, Cross Entropy: 0.921121, Accuracy: 0.5563, Precision: 0.4104, Recall: 0.5563, F1 Score: 0.4662, AUC: 0.7537, R2 Score: -0.003578, MAE: 1.8120, MSE: 5.2842
+Avg Latency (ms): 9.34, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 84/150
+Training: Fold 1 - Total Loss: 2.3091, Cross Entropy: 1.031938, Accuracy: 0.5282, Precision: 0.3958, Recall: 0.5282, F1 Score: 0.4515, AUC: 0.7166, R² Score: -0.002092, MAE: 1.8434, MSE: 5.2890
+Training: Fold 2 - Total Loss: 2.2327, Cross Entropy: 1.041287, Accuracy: 0.5352, Precision: 0.4005, Recall: 0.5352, F1 Score: 0.4563, AUC: 0.7151, R² Score: -0.008878, MAE: 1.7825, MSE: 5.0125
+Training: Fold 3 - Total Loss: 2.1893, Cross Entropy: 1.006664, Accuracy: 0.5475, Precision: 0.4090, Recall: 0.5475, F1 Score: 0.4626, AUC: 0.7325, R² Score: -0.015274, MAE: 1.7641, MSE: 4.9489
+Training: Fold 4 - Total Loss: 2.3275, Cross Entropy: 1.036884, Accuracy: 0.5458, Precision: 0.4659, Recall: 0.5458, F1 Score: 0.4758, AUC: 0.7200, R² Score: -0.016259, MAE: 1.8402, MSE: 5.3390
+Training: Fold 5 - Total Loss: 2.2285, Cross Entropy: 0.910659, Accuracy: 0.5493, Precision: 0.3910, Recall: 0.5493, F1 Score: 0.4552, AUC: 0.7672, R2 Score: 0.001982, MAE: 1.8104, MSE: 5.3034
+Avg Latency (ms): 9.09, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 85/150
+Training: Fold 1 - Total Loss: 2.2990, Cross Entropy: 1.036934, Accuracy: 0.5475, Precision: 0.4072, Recall: 0.5475, F1 Score: 0.4665, AUC: 0.7103, R² Score: -0.010874, MAE: 1.8365, MSE: 5.2438
+Training: Fold 2 - Total Loss: 2.2162, Cross Entropy: 1.012123, Accuracy: 0.5651, Precision: 0.4324, Recall: 0.5651, F1 Score: 0.4837, AUC: 0.7199, R² Score: -0.015157, MAE: 1.7820, MSE: 5.0257
+Training: Fold 3 - Total Loss: 2.2123, Cross Entropy: 1.045310, Accuracy: 0.5475, Precision: 0.4160, Recall: 0.5475, F1 Score: 0.4635, AUC: 0.7107, R² Score: -0.013031, MAE: 1.7617, MSE: 4.9352
+Training: Fold 4 - Total Loss: 2.3516, Cross Entropy: 1.061099, Accuracy: 0.5511, Precision: 0.4776, Recall: 0.5511, F1 Score: 0.4757, AUC: 0.6921, R² Score: -0.003838, MAE: 1.8380, MSE: 5.3629
+Training: Fold 5 - Total Loss: 2.2068, Cross Entropy: 0.910213, Accuracy: 0.5423, Precision: 0.4006, Recall: 0.5423, F1 Score: 0.4540, AUC: 0.7524, R2 Score: -0.002176, MAE: 1.8202, MSE: 5.2321
+Avg Latency (ms): 9.20, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 86/150
+Training: Fold 1 - Total Loss: 2.3100, Cross Entropy: 1.031462, Accuracy: 0.5387, Precision: 0.4509, Recall: 0.5387, F1 Score: 0.4630, AUC: 0.7258, R² Score: -0.024553, MAE: 1.8500, MSE: 5.2933
+Training: Fold 2 - Total Loss: 2.2208, Cross Entropy: 1.035270, Accuracy: 0.5282, Precision: 0.4069, Recall: 0.5282, F1 Score: 0.4530, AUC: 0.7129, R² Score: -0.002804, MAE: 1.7749, MSE: 4.9872
+Training: Fold 3 - Total Loss: 2.1936, Cross Entropy: 1.018783, Accuracy: 0.5458, Precision: 0.3994, Recall: 0.5458, F1 Score: 0.4592, AUC: 0.7288, R² Score: 0.009699, MAE: 1.7600, MSE: 4.9347
+Training: Fold 4 - Total Loss: 2.3295, Cross Entropy: 1.030152, Accuracy: 0.5387, Precision: 0.4341, Recall: 0.5387, F1 Score: 0.4671, AUC: 0.7324, R² Score: -0.003424, MAE: 1.8366, MSE: 5.3612
+Training: Fold 5 - Total Loss: 2.1751, Cross Entropy: 0.870607, Accuracy: 0.5775, Precision: 0.4218, Recall: 0.5775, F1 Score: 0.4818, AUC: 0.7992, R2 Score: 0.017103, MAE: 1.8153, MSE: 5.2189
+Avg Latency (ms): 9.51, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 87/150
+Training: Fold 1 - Total Loss: 2.2868, Cross Entropy: 1.012282, Accuracy: 0.5599, Precision: 0.4808, Recall: 0.5599, F1 Score: 0.4799, AUC: 0.7259, R² Score: -0.011035, MAE: 1.8427, MSE: 5.2607
+Training: Fold 2 - Total Loss: 2.2244, Cross Entropy: 1.034548, Accuracy: 0.5405, Precision: 0.4760, Recall: 0.5405, F1 Score: 0.4647, AUC: 0.7037, R² Score: -0.011787, MAE: 1.7763, MSE: 5.0009
+Training: Fold 3 - Total Loss: 2.1945, Cross Entropy: 1.038255, Accuracy: 0.5370, Precision: 0.5056, Recall: 0.5370, F1 Score: 0.4575, AUC: 0.7208, R² Score: -0.009697, MAE: 1.7540, MSE: 4.8925
+Training: Fold 4 - Total Loss: 2.3234, Cross Entropy: 1.035437, Accuracy: 0.5616, Precision: 0.4628, Recall: 0.5616, F1 Score: 0.4864, AUC: 0.7174, R² Score: 0.001271, MAE: 1.8405, MSE: 5.3286
+Training: Fold 5 - Total Loss: 2.1945, Cross Entropy: 0.899044, Accuracy: 0.5775, Precision: 0.4457, Recall: 0.5775, F1 Score: 0.4887, AUC: 0.7663, R2 Score: 0.014823, MAE: 1.8114, MSE: 5.2172
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 88/150
+Training: Fold 1 - Total Loss: 2.3038, Cross Entropy: 1.021901, Accuracy: 0.5423, Precision: 0.4074, Recall: 0.5423, F1 Score: 0.4639, AUC: 0.7276, R² Score: -0.022488, MAE: 1.8480, MSE: 5.2948
+Training: Fold 2 - Total Loss: 2.2232, Cross Entropy: 1.020186, Accuracy: 0.5387, Precision: 0.4490, Recall: 0.5387, F1 Score: 0.4644, AUC: 0.7182, R² Score: -0.011544, MAE: 1.7803, MSE: 5.0302
+Training: Fold 3 - Total Loss: 2.1662, Cross Entropy: 0.999900, Accuracy: 0.5669, Precision: 0.4215, Recall: 0.5669, F1 Score: 0.4776, AUC: 0.7504, R² Score: -0.007460, MAE: 1.7454, MSE: 4.8877
+Training: Fold 4 - Total Loss: 2.3501, Cross Entropy: 1.049281, Accuracy: 0.5335, Precision: 0.4582, Recall: 0.5335, F1 Score: 0.4630, AUC: 0.7173, R² Score: -0.019466, MAE: 1.8459, MSE: 5.3854
+Training: Fold 5 - Total Loss: 2.1672, Cross Entropy: 0.860344, Accuracy: 0.5845, Precision: 0.5418, Recall: 0.5845, F1 Score: 0.4982, AUC: 0.7764, R2 Score: 0.002314, MAE: 1.8214, MSE: 5.2165
+Avg Latency (ms): 9.32, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 89/150
+Training: Fold 1 - Total Loss: 2.3516, Cross Entropy: 1.052166, Accuracy: 0.5370, Precision: 0.4581, Recall: 0.5370, F1 Score: 0.4773, AUC: 0.7132, R² Score: -0.035814, MAE: 1.8562, MSE: 5.3838
+Training: Fold 2 - Total Loss: 2.2136, Cross Entropy: 1.027135, Accuracy: 0.5493, Precision: 0.4252, Recall: 0.5493, F1 Score: 0.4728, AUC: 0.7264, R² Score: -0.010012, MAE: 1.7745, MSE: 4.9821
+Training: Fold 3 - Total Loss: 2.1714, Cross Entropy: 1.000032, Accuracy: 0.5634, Precision: 0.4512, Recall: 0.5634, F1 Score: 0.4779, AUC: 0.7510, R² Score: -0.007071, MAE: 1.7577, MSE: 4.9046
+Training: Fold 4 - Total Loss: 2.3339, Cross Entropy: 1.028155, Accuracy: 0.5387, Precision: 0.4769, Recall: 0.5387, F1 Score: 0.4840, AUC: 0.7314, R² Score: -0.012859, MAE: 1.8482, MSE: 5.3805
+Training: Fold 5 - Total Loss: 2.1904, Cross Entropy: 0.880119, Accuracy: 0.5845, Precision: 0.4966, Recall: 0.5845, F1 Score: 0.4966, AUC: 0.7546, R2 Score: -0.005542, MAE: 1.8166, MSE: 5.2476
+Avg Latency (ms): 9.40, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 90/150
+Training: Fold 1 - Total Loss: 2.2958, Cross Entropy: 1.024379, Accuracy: 0.5511, Precision: 0.4836, Recall: 0.5511, F1 Score: 0.4759, AUC: 0.7230, R² Score: -0.009222, MAE: 1.8450, MSE: 5.2624
+Training: Fold 2 - Total Loss: 2.2208, Cross Entropy: 1.030045, Accuracy: 0.5511, Precision: 0.4164, Recall: 0.5511, F1 Score: 0.4710, AUC: 0.7223, R² Score: -0.003138, MAE: 1.7754, MSE: 4.9992
+Training: Fold 3 - Total Loss: 2.1878, Cross Entropy: 1.015862, Accuracy: 0.5704, Precision: 0.4972, Recall: 0.5704, F1 Score: 0.4842, AUC: 0.7423, R² Score: -0.020540, MAE: 1.7576, MSE: 4.9224
+Training: Fold 4 - Total Loss: 2.3466, Cross Entropy: 1.034019, Accuracy: 0.5264, Precision: 0.4610, Recall: 0.5264, F1 Score: 0.4639, AUC: 0.7115, R² Score: -0.016694, MAE: 1.8503, MSE: 5.4092
+Training: Fold 5 - Total Loss: 2.1938, Cross Entropy: 0.873647, Accuracy: 0.5775, Precision: 0.5576, Recall: 0.5775, F1 Score: 0.5076, AUC: 0.7796, R2 Score: -0.020938, MAE: 1.8163, MSE: 5.2743
+Avg Latency (ms): 8.98, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 91/150
+Training: Fold 1 - Total Loss: 2.3169, Cross Entropy: 1.053546, Accuracy: 0.5352, Precision: 0.4966, Recall: 0.5352, F1 Score: 0.4598, AUC: 0.7018, R² Score: -0.025483, MAE: 1.8400, MSE: 5.2647
+Training: Fold 2 - Total Loss: 2.2394, Cross Entropy: 1.043366, Accuracy: 0.5282, Precision: 0.4122, Recall: 0.5282, F1 Score: 0.4557, AUC: 0.7068, R² Score: -0.024333, MAE: 1.7855, MSE: 5.0302
+Training: Fold 3 - Total Loss: 2.1706, Cross Entropy: 1.003197, Accuracy: 0.5669, Precision: 0.4875, Recall: 0.5669, F1 Score: 0.4792, AUC: 0.7393, R² Score: 0.001094, MAE: 1.7537, MSE: 4.8947
+Training: Fold 4 - Total Loss: 2.3334, Cross Entropy: 1.032104, Accuracy: 0.5317, Precision: 0.4131, Recall: 0.5317, F1 Score: 0.4568, AUC: 0.7108, R² Score: -0.017954, MAE: 1.8435, MSE: 5.3699
+Training: Fold 5 - Total Loss: 2.1644, Cross Entropy: 0.853793, Accuracy: 0.6056, Precision: 0.4451, Recall: 0.6056, F1 Score: 0.5055, AUC: 0.7836, R2 Score: 0.018660, MAE: 1.8090, MSE: 5.2224
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 92/150
+Training: Fold 1 - Total Loss: 2.3005, Cross Entropy: 1.012469, Accuracy: 0.5387, Precision: 0.4601, Recall: 0.5387, F1 Score: 0.4668, AUC: 0.7356, R² Score: -0.008664, MAE: 1.8463, MSE: 5.3059
+Training: Fold 2 - Total Loss: 2.2144, Cross Entropy: 1.019877, Accuracy: 0.5493, Precision: 0.4104, Recall: 0.5493, F1 Score: 0.4680, AUC: 0.7146, R² Score: -0.004381, MAE: 1.7791, MSE: 5.0017
+Training: Fold 3 - Total Loss: 2.2006, Cross Entropy: 1.035892, Accuracy: 0.5511, Precision: 0.5016, Recall: 0.5511, F1 Score: 0.4828, AUC: 0.7332, R² Score: 0.004807, MAE: 1.7520, MSE: 4.9182
+Training: Fold 4 - Total Loss: 2.3114, Cross Entropy: 1.017902, Accuracy: 0.5581, Precision: 0.5236, Recall: 0.5581, F1 Score: 0.4982, AUC: 0.7377, R² Score: -0.020892, MAE: 1.8368, MSE: 5.3297
+Training: Fold 5 - Total Loss: 2.1881, Cross Entropy: 0.899960, Accuracy: 0.5704, Precision: 0.4101, Recall: 0.5704, F1 Score: 0.4746, AUC: 0.7740, R2 Score: 0.009507, MAE: 1.8147, MSE: 5.1937
+Avg Latency (ms): 9.31, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 93/150
+Training: Fold 1 - Total Loss: 2.2914, Cross Entropy: 1.004663, Accuracy: 0.5810, Precision: 0.4332, Recall: 0.5810, F1 Score: 0.4956, AUC: 0.7313, R² Score: -0.018615, MAE: 1.8450, MSE: 5.2938
+Training: Fold 2 - Total Loss: 2.2059, Cross Entropy: 1.005009, Accuracy: 0.5387, Precision: 0.4116, Recall: 0.5387, F1 Score: 0.4626, AUC: 0.7267, R² Score: -0.006711, MAE: 1.7790, MSE: 5.0079
+Training: Fold 3 - Total Loss: 2.1990, Cross Entropy: 1.025059, Accuracy: 0.5563, Precision: 0.4530, Recall: 0.5563, F1 Score: 0.4818, AUC: 0.7335, R² Score: -0.021586, MAE: 1.7620, MSE: 4.9382
+Training: Fold 4 - Total Loss: 2.3191, Cross Entropy: 1.019917, Accuracy: 0.5405, Precision: 0.5182, Recall: 0.5405, F1 Score: 0.4807, AUC: 0.7268, R² Score: -0.008357, MAE: 1.8433, MSE: 5.3504
+Training: Fold 5 - Total Loss: 2.1805, Cross Entropy: 0.866160, Accuracy: 0.5704, Precision: 0.4109, Recall: 0.5704, F1 Score: 0.4748, AUC: 0.7677, R2 Score: 0.000075, MAE: 1.8166, MSE: 5.2473
+Avg Latency (ms): 9.00, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 94/150
+Training: Fold 1 - Total Loss: 2.3020, Cross Entropy: 1.039842, Accuracy: 0.5423, Precision: 0.5528, Recall: 0.5423, F1 Score: 0.4712, AUC: 0.7208, R² Score: -0.000661, MAE: 1.8381, MSE: 5.2471
+Training: Fold 2 - Total Loss: 2.2203, Cross Entropy: 1.023687, Accuracy: 0.5475, Precision: 0.4809, Recall: 0.5475, F1 Score: 0.4711, AUC: 0.7297, R² Score: -0.012997, MAE: 1.7787, MSE: 5.0124
+Training: Fold 3 - Total Loss: 2.1661, Cross Entropy: 0.987309, Accuracy: 0.5792, Precision: 0.4284, Recall: 0.5792, F1 Score: 0.4899, AUC: 0.7541, R² Score: -0.010616, MAE: 1.7508, MSE: 4.9165
+Training: Fold 4 - Total Loss: 2.3473, Cross Entropy: 1.046016, Accuracy: 0.5158, Precision: 0.4535, Recall: 0.5158, F1 Score: 0.4669, AUC: 0.7132, R² Score: -0.013295, MAE: 1.8506, MSE: 5.3835
+Training: Fold 5 - Total Loss: 2.1710, Cross Entropy: 0.869639, Accuracy: 0.5915, Precision: 0.4991, Recall: 0.5915, F1 Score: 0.5021, AUC: 0.7759, R2 Score: 0.017062, MAE: 1.8133, MSE: 5.2074
+Avg Latency (ms): 9.24, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 95/150
+Training: Fold 1 - Total Loss: 2.3217, Cross Entropy: 1.006363, Accuracy: 0.5317, Precision: 0.4022, Recall: 0.5317, F1 Score: 0.4560, AUC: 0.7341, R² Score: -0.024398, MAE: 1.8589, MSE: 5.3907
+Training: Fold 2 - Total Loss: 2.2185, Cross Entropy: 1.022759, Accuracy: 0.5475, Precision: 0.4470, Recall: 0.5475, F1 Score: 0.4716, AUC: 0.7100, R² Score: -0.007616, MAE: 1.7787, MSE: 5.0085
+Training: Fold 3 - Total Loss: 2.1887, Cross Entropy: 1.015168, Accuracy: 0.5335, Precision: 0.4369, Recall: 0.5335, F1 Score: 0.4557, AUC: 0.7380, R² Score: -0.009942, MAE: 1.7609, MSE: 4.9270
+Training: Fold 4 - Total Loss: 2.3082, Cross Entropy: 1.004777, Accuracy: 0.5581, Precision: 0.5163, Recall: 0.5581, F1 Score: 0.4934, AUC: 0.7362, R² Score: -0.005996, MAE: 1.8398, MSE: 5.3494
+Training: Fold 5 - Total Loss: 2.1583, Cross Entropy: 0.859094, Accuracy: 0.5986, Precision: 0.5603, Recall: 0.5986, F1 Score: 0.5131, AUC: 0.7870, R2 Score: 0.018764, MAE: 1.8126, MSE: 5.1898
+Avg Latency (ms): 9.01, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 96/150
+Training: Fold 1 - Total Loss: 2.2819, Cross Entropy: 1.004270, Accuracy: 0.5651, Precision: 0.4966, Recall: 0.5651, F1 Score: 0.4891, AUC: 0.7423, R² Score: -0.013144, MAE: 1.8362, MSE: 5.2629
+Training: Fold 2 - Total Loss: 2.1869, Cross Entropy: 0.984287, Accuracy: 0.5687, Precision: 0.5313, Recall: 0.5687, F1 Score: 0.4991, AUC: 0.7349, R² Score: -0.007636, MAE: 1.7770, MSE: 4.9929
+Training: Fold 3 - Total Loss: 2.1686, Cross Entropy: 1.016735, Accuracy: 0.5475, Precision: 0.4996, Recall: 0.5475, F1 Score: 0.4700, AUC: 0.7445, R² Score: -0.004574, MAE: 1.7456, MSE: 4.8562
+Training: Fold 4 - Total Loss: 2.3335, Cross Entropy: 1.031610, Accuracy: 0.5563, Precision: 0.4562, Recall: 0.5563, F1 Score: 0.4821, AUC: 0.7309, R² Score: -0.005873, MAE: 1.8422, MSE: 5.3713
+Training: Fold 5 - Total Loss: 2.1796, Cross Entropy: 0.869929, Accuracy: 0.5845, Precision: 0.6648, Recall: 0.5845, F1 Score: 0.4996, AUC: 0.7850, R2 Score: -0.010092, MAE: 1.8168, MSE: 5.2355
+Avg Latency (ms): 9.17, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 97/150
+Training: Fold 1 - Total Loss: 2.2807, Cross Entropy: 1.006966, Accuracy: 0.5335, Precision: 0.4307, Recall: 0.5335, F1 Score: 0.4609, AUC: 0.7379, R² Score: -0.012585, MAE: 1.8328, MSE: 5.2527
+Training: Fold 2 - Total Loss: 2.2203, Cross Entropy: 1.026676, Accuracy: 0.5440, Precision: 0.4133, Recall: 0.5440, F1 Score: 0.4657, AUC: 0.7172, R² Score: -0.000232, MAE: 1.7789, MSE: 5.0053
+Training: Fold 3 - Total Loss: 2.1886, Cross Entropy: 1.023715, Accuracy: 0.5440, Precision: 0.5015, Recall: 0.5440, F1 Score: 0.4943, AUC: 0.7264, R² Score: -0.012935, MAE: 1.7510, MSE: 4.9067
+Training: Fold 4 - Total Loss: 2.3413, Cross Entropy: 1.029098, Accuracy: 0.5528, Precision: 0.5114, Recall: 0.5528, F1 Score: 0.4859, AUC: 0.7235, R² Score: -0.014528, MAE: 1.8474, MSE: 5.4031
+Training: Fold 5 - Total Loss: 2.1863, Cross Entropy: 0.872790, Accuracy: 0.5775, Precision: 0.4273, Recall: 0.5775, F1 Score: 0.4839, AUC: 0.7719, R2 Score: 0.000942, MAE: 1.8130, MSE: 5.2513
+Avg Latency (ms): 9.15, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 98/150
+Training: Fold 1 - Total Loss: 2.3022, Cross Entropy: 1.029916, Accuracy: 0.5563, Precision: 0.4467, Recall: 0.5563, F1 Score: 0.4813, AUC: 0.7247, R² Score: -0.002304, MAE: 1.8385, MSE: 5.2709
+Training: Fold 2 - Total Loss: 2.2034, Cross Entropy: 1.014593, Accuracy: 0.5563, Precision: 0.4574, Recall: 0.5563, F1 Score: 0.4854, AUC: 0.7182, R² Score: -0.000171, MAE: 1.7731, MSE: 4.9773
+Training: Fold 3 - Total Loss: 2.1684, Cross Entropy: 1.003648, Accuracy: 0.5687, Precision: 0.5127, Recall: 0.5687, F1 Score: 0.4911, AUC: 0.7343, R² Score: -0.013128, MAE: 1.7502, MSE: 4.8861
+Training: Fold 4 - Total Loss: 2.3223, Cross Entropy: 1.024116, Accuracy: 0.5352, Precision: 0.4833, Recall: 0.5352, F1 Score: 0.4785, AUC: 0.7195, R² Score: -0.020120, MAE: 1.8435, MSE: 5.3516
+Training: Fold 5 - Total Loss: 2.1699, Cross Entropy: 0.865458, Accuracy: 0.5704, Precision: 0.4197, Recall: 0.5704, F1 Score: 0.4783, AUC: 0.7792, R2 Score: 0.006076, MAE: 1.8150, MSE: 5.2137
+Avg Latency (ms): 9.09, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 99/150
+Training: Fold 1 - Total Loss: 2.2814, Cross Entropy: 0.998913, Accuracy: 0.5546, Precision: 0.5114, Recall: 0.5546, F1 Score: 0.4913, AUC: 0.7455, R² Score: -0.007129, MAE: 1.8459, MSE: 5.2738
+Training: Fold 2 - Total Loss: 2.2256, Cross Entropy: 1.020871, Accuracy: 0.5423, Precision: 0.4011, Recall: 0.5423, F1 Score: 0.4607, AUC: 0.7246, R² Score: -0.005018, MAE: 1.7885, MSE: 5.0366
+Training: Fold 3 - Total Loss: 2.1752, Cross Entropy: 1.017387, Accuracy: 0.5352, Precision: 0.4551, Recall: 0.5352, F1 Score: 0.4694, AUC: 0.7289, R² Score: -0.024708, MAE: 1.7472, MSE: 4.8767
+Training: Fold 4 - Total Loss: 2.3293, Cross Entropy: 1.017973, Accuracy: 0.5493, Precision: 0.4852, Recall: 0.5493, F1 Score: 0.4872, AUC: 0.7332, R² Score: -0.010173, MAE: 1.8485, MSE: 5.3889
+Training: Fold 5 - Total Loss: 2.1738, Cross Entropy: 0.846631, Accuracy: 0.5634, Precision: 0.4942, Recall: 0.5634, F1 Score: 0.4940, AUC: 0.7980, R2 Score: -0.018843, MAE: 1.8141, MSE: 5.2706
+Avg Latency (ms): 9.25, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 100/150
+Training: Fold 1 - Total Loss: 2.2730, Cross Entropy: 0.988017, Accuracy: 0.5739, Precision: 0.5003, Recall: 0.5739, F1 Score: 0.5011, AUC: 0.7474, R² Score: -0.016860, MAE: 1.8440, MSE: 5.2712
+Training: Fold 2 - Total Loss: 2.1758, Cross Entropy: 0.971103, Accuracy: 0.5687, Precision: 0.4877, Recall: 0.5687, F1 Score: 0.4944, AUC: 0.7486, R² Score: -0.007866, MAE: 1.7740, MSE: 4.9867
+Training: Fold 3 - Total Loss: 2.1664, Cross Entropy: 0.993726, Accuracy: 0.5634, Precision: 0.5294, Recall: 0.5634, F1 Score: 0.4907, AUC: 0.7530, R² Score: -0.023210, MAE: 1.7546, MSE: 4.9027
+Training: Fold 4 - Total Loss: 2.3293, Cross Entropy: 1.039547, Accuracy: 0.5405, Precision: 0.4914, Recall: 0.5405, F1 Score: 0.4924, AUC: 0.7120, R² Score: -0.012784, MAE: 1.8368, MSE: 5.3387
+Training: Fold 5 - Total Loss: 2.1763, Cross Entropy: 0.852551, Accuracy: 0.6056, Precision: 0.5599, Recall: 0.6056, F1 Score: 0.5371, AUC: 0.7931, R2 Score: -0.018633, MAE: 1.8205, MSE: 5.2652
+Avg Latency (ms): 9.56, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 101/150
+Training: Fold 1 - Total Loss: 2.2881, Cross Entropy: 1.004727, Accuracy: 0.5423, Precision: 0.4736, Recall: 0.5423, F1 Score: 0.4918, AUC: 0.7300, R² Score: -0.015428, MAE: 1.8407, MSE: 5.2827
+Training: Fold 2 - Total Loss: 2.2516, Cross Entropy: 1.049122, Accuracy: 0.5317, Precision: 0.3950, Recall: 0.5317, F1 Score: 0.4524, AUC: 0.7133, R² Score: -0.025568, MAE: 1.7817, MSE: 5.0574
+Training: Fold 3 - Total Loss: 2.1882, Cross Entropy: 1.012433, Accuracy: 0.5405, Precision: 0.4316, Recall: 0.5405, F1 Score: 0.4660, AUC: 0.7427, R² Score: -0.004718, MAE: 1.7582, MSE: 4.9317
+Training: Fold 4 - Total Loss: 2.3090, Cross Entropy: 1.004932, Accuracy: 0.5475, Precision: 0.4883, Recall: 0.5475, F1 Score: 0.4999, AUC: 0.7318, R² Score: -0.015086, MAE: 1.8419, MSE: 5.3518
+Training: Fold 5 - Total Loss: 2.1623, Cross Entropy: 0.850306, Accuracy: 0.5986, Precision: 0.5755, Recall: 0.5986, F1 Score: 0.5376, AUC: 0.7789, R2 Score: 0.007602, MAE: 1.8180, MSE: 5.2236
+Avg Latency (ms): 9.18, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 102/150
+Training: Fold 1 - Total Loss: 2.2803, Cross Entropy: 0.995451, Accuracy: 0.5511, Precision: 0.4178, Recall: 0.5511, F1 Score: 0.4732, AUC: 0.7408, R² Score: -0.003862, MAE: 1.8411, MSE: 5.2783
+Training: Fold 2 - Total Loss: 2.2440, Cross Entropy: 1.005895, Accuracy: 0.5511, Precision: 0.4830, Recall: 0.5511, F1 Score: 0.4732, AUC: 0.7248, R² Score: -0.019993, MAE: 1.8051, MSE: 5.1329
+Training: Fold 3 - Total Loss: 2.2005, Cross Entropy: 1.021222, Accuracy: 0.5493, Precision: 0.4725, Recall: 0.5493, F1 Score: 0.4804, AUC: 0.7279, R² Score: -0.020884, MAE: 1.7602, MSE: 4.9523
+Training: Fold 4 - Total Loss: 2.3310, Cross Entropy: 1.018395, Accuracy: 0.5423, Precision: 0.4793, Recall: 0.5423, F1 Score: 0.4787, AUC: 0.7302, R² Score: -0.024663, MAE: 1.8467, MSE: 5.3937
+Training: Fold 5 - Total Loss: 2.1780, Cross Entropy: 0.841251, Accuracy: 0.6056, Precision: 0.4563, Recall: 0.6056, F1 Score: 0.5136, AUC: 0.8026, R2 Score: -0.006674, MAE: 1.8109, MSE: 5.2971
+Avg Latency (ms): 9.11, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 103/150
+Training: Fold 1 - Total Loss: 2.2872, Cross Entropy: 1.006562, Accuracy: 0.5511, Precision: 0.4481, Recall: 0.5511, F1 Score: 0.4797, AUC: 0.7413, R² Score: -0.015029, MAE: 1.8402, MSE: 5.2755
+Training: Fold 2 - Total Loss: 2.1952, Cross Entropy: 1.004092, Accuracy: 0.5493, Precision: 0.4632, Recall: 0.5493, F1 Score: 0.4772, AUC: 0.7329, R² Score: -0.004289, MAE: 1.7717, MSE: 4.9746
+Training: Fold 3 - Total Loss: 2.1678, Cross Entropy: 0.987627, Accuracy: 0.5651, Precision: 0.4655, Recall: 0.5651, F1 Score: 0.4858, AUC: 0.7548, R² Score: -0.014813, MAE: 1.7574, MSE: 4.9215
+Training: Fold 4 - Total Loss: 2.3060, Cross Entropy: 0.994889, Accuracy: 0.5387, Precision: 0.4697, Recall: 0.5387, F1 Score: 0.4805, AUC: 0.7366, R² Score: -0.005521, MAE: 1.8427, MSE: 5.3654
+Training: Fold 5 - Total Loss: 2.1720, Cross Entropy: 0.853240, Accuracy: 0.6056, Precision: 0.5494, Recall: 0.6056, F1 Score: 0.5374, AUC: 0.7852, R2 Score: -0.018786, MAE: 1.8232, MSE: 5.2491
+Avg Latency (ms): 9.00, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 104/150
+Training: Fold 1 - Total Loss: 2.2812, Cross Entropy: 0.991202, Accuracy: 0.5757, Precision: 0.4733, Recall: 0.5757, F1 Score: 0.4994, AUC: 0.7387, R² Score: -0.011485, MAE: 1.8404, MSE: 5.2913
+Training: Fold 2 - Total Loss: 2.2071, Cross Entropy: 1.011665, Accuracy: 0.5440, Precision: 0.4226, Recall: 0.5440, F1 Score: 0.4687, AUC: 0.7339, R² Score: 0.002434, MAE: 1.7759, MSE: 4.9964
+Training: Fold 3 - Total Loss: 2.1598, Cross Entropy: 0.982004, Accuracy: 0.5511, Precision: 0.4819, Recall: 0.5511, F1 Score: 0.4730, AUC: 0.7455, R² Score: -0.011495, MAE: 1.7576, MSE: 4.9078
+Training: Fold 4 - Total Loss: 2.2746, Cross Entropy: 0.964760, Accuracy: 0.5634, Precision: 0.4859, Recall: 0.5634, F1 Score: 0.5083, AUC: 0.7519, R² Score: -0.007702, MAE: 1.8389, MSE: 5.3310
+Training: Fold 5 - Total Loss: 2.1687, Cross Entropy: 0.848199, Accuracy: 0.5986, Precision: 0.5541, Recall: 0.5986, F1 Score: 0.5200, AUC: 0.8084, R2 Score: -0.026844, MAE: 1.8158, MSE: 5.2499
+Avg Latency (ms): 8.97, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 105/150
+Training: Fold 1 - Total Loss: 2.2901, Cross Entropy: 0.999672, Accuracy: 0.5563, Precision: 0.4517, Recall: 0.5563, F1 Score: 0.4813, AUC: 0.7421, R² Score: -0.012356, MAE: 1.8458, MSE: 5.3011
+Training: Fold 2 - Total Loss: 2.2379, Cross Entropy: 1.042763, Accuracy: 0.5317, Precision: 0.4983, Recall: 0.5317, F1 Score: 0.4581, AUC: 0.7135, R² Score: -0.004168, MAE: 1.7875, MSE: 5.0265
+Training: Fold 3 - Total Loss: 2.1592, Cross Entropy: 0.992035, Accuracy: 0.5827, Precision: 0.5172, Recall: 0.5827, F1 Score: 0.5117, AUC: 0.7559, R² Score: -0.010453, MAE: 1.7447, MSE: 4.8825
+Training: Fold 4 - Total Loss: 2.3235, Cross Entropy: 1.025098, Accuracy: 0.5475, Precision: 0.4972, Recall: 0.5475, F1 Score: 0.4923, AUC: 0.7234, R² Score: -0.012954, MAE: 1.8379, MSE: 5.3530
+Training: Fold 5 - Total Loss: 2.1398, Cross Entropy: 0.816268, Accuracy: 0.6197, Precision: 0.6809, Recall: 0.6197, F1 Score: 0.5358, AUC: 0.8051, R2 Score: 0.017855, MAE: 1.8170, MSE: 5.2280
+Avg Latency (ms): 9.03, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.6197
+
+Epoch 106/150
+Training: Fold 1 - Total Loss: 2.2759, Cross Entropy: 0.993453, Accuracy: 0.5739, Precision: 0.5014, Recall: 0.5739, F1 Score: 0.5131, AUC: 0.7474, R² Score: -0.000543, MAE: 1.8390, MSE: 5.2681
+Training: Fold 2 - Total Loss: 2.2412, Cross Entropy: 1.046919, Accuracy: 0.5546, Precision: 0.4828, Recall: 0.5546, F1 Score: 0.4810, AUC: 0.7229, R² Score: -0.000806, MAE: 1.7794, MSE: 5.0278
+Training: Fold 3 - Total Loss: 2.1753, Cross Entropy: 0.998884, Accuracy: 0.5493, Precision: 0.4706, Recall: 0.5493, F1 Score: 0.4750, AUC: 0.7389, R² Score: -0.036788, MAE: 1.7511, MSE: 4.9201
+Training: Fold 4 - Total Loss: 2.3131, Cross Entropy: 1.014189, Accuracy: 0.5123, Precision: 0.4530, Recall: 0.5123, F1 Score: 0.4571, AUC: 0.7243, R² Score: -0.002767, MAE: 1.8409, MSE: 5.3440
+Training: Fold 5 - Total Loss: 2.1685, Cross Entropy: 0.858569, Accuracy: 0.5915, Precision: 0.4978, Recall: 0.5915, F1 Score: 0.5151, AUC: 0.7916, R2 Score: 0.005413, MAE: 1.8093, MSE: 5.2251
+Avg Latency (ms): 9.26, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 107/150
+Training: Fold 1 - Total Loss: 2.2659, Cross Entropy: 0.986877, Accuracy: 0.5845, Precision: 0.5185, Recall: 0.5845, F1 Score: 0.5148, AUC: 0.7336, R² Score: -0.005602, MAE: 1.8372, MSE: 5.2503
+Training: Fold 2 - Total Loss: 2.2012, Cross Entropy: 0.997363, Accuracy: 0.5528, Precision: 0.4912, Recall: 0.5528, F1 Score: 0.4766, AUC: 0.7269, R² Score: -0.008530, MAE: 1.7782, MSE: 5.0103
+Training: Fold 3 - Total Loss: 2.1836, Cross Entropy: 1.006526, Accuracy: 0.5493, Precision: 0.4676, Recall: 0.5493, F1 Score: 0.4727, AUC: 0.7374, R² Score: -0.013457, MAE: 1.7527, MSE: 4.9302
+Training: Fold 4 - Total Loss: 2.3289, Cross Entropy: 0.998668, Accuracy: 0.5511, Precision: 0.4431, Recall: 0.5511, F1 Score: 0.4788, AUC: 0.7445, R² Score: -0.002351, MAE: 1.8540, MSE: 5.4327
+Training: Fold 5 - Total Loss: 2.1899, Cross Entropy: 0.857208, Accuracy: 0.5915, Precision: 0.5880, Recall: 0.5915, F1 Score: 0.5137, AUC: 0.7813, R2 Score: -0.007728, MAE: 1.8134, MSE: 5.2994
+Avg Latency (ms): 8.85, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 108/150
+Training: Fold 1 - Total Loss: 2.2610, Cross Entropy: 0.970196, Accuracy: 0.5757, Precision: 0.5143, Recall: 0.5757, F1 Score: 0.5004, AUC: 0.7607, R² Score: -0.000386, MAE: 1.8391, MSE: 5.2728
+Training: Fold 2 - Total Loss: 2.1987, Cross Entropy: 1.007640, Accuracy: 0.5352, Precision: 0.4424, Recall: 0.5352, F1 Score: 0.4659, AUC: 0.7199, R² Score: -0.024277, MAE: 1.7708, MSE: 4.9779
+Training: Fold 3 - Total Loss: 2.1762, Cross Entropy: 0.993744, Accuracy: 0.5493, Precision: 0.4705, Recall: 0.5493, F1 Score: 0.4751, AUC: 0.7522, R² Score: -0.004247, MAE: 1.7562, MSE: 4.9354
+Training: Fold 4 - Total Loss: 2.3180, Cross Entropy: 0.999428, Accuracy: 0.5493, Precision: 0.4577, Recall: 0.5493, F1 Score: 0.4803, AUC: 0.7428, R² Score: -0.027621, MAE: 1.8452, MSE: 5.3947
+Training: Fold 5 - Total Loss: 2.1693, Cross Entropy: 0.835317, Accuracy: 0.6197, Precision: 0.7318, Recall: 0.6197, F1 Score: 0.5378, AUC: 0.7985, R2 Score: 0.003002, MAE: 1.8161, MSE: 5.2819
+Avg Latency (ms): 8.93, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 109/150
+Training: Fold 1 - Total Loss: 2.2692, Cross Entropy: 0.980448, Accuracy: 0.5757, Precision: 0.5504, Recall: 0.5757, F1 Score: 0.5010, AUC: 0.7472, R² Score: -0.014874, MAE: 1.8440, MSE: 5.2762
+Training: Fold 2 - Total Loss: 2.1989, Cross Entropy: 0.976997, Accuracy: 0.5827, Precision: 0.5245, Recall: 0.5827, F1 Score: 0.5052, AUC: 0.7561, R² Score: -0.017965, MAE: 1.7824, MSE: 5.0499
+Training: Fold 3 - Total Loss: 2.1739, Cross Entropy: 1.004389, Accuracy: 0.5370, Precision: 0.4713, Recall: 0.5370, F1 Score: 0.4757, AUC: 0.7399, R² Score: -0.009435, MAE: 1.7552, MSE: 4.9028
+Training: Fold 4 - Total Loss: 2.3033, Cross Entropy: 0.991127, Accuracy: 0.5687, Precision: 0.5123, Recall: 0.5687, F1 Score: 0.5173, AUC: 0.7400, R² Score: -0.008418, MAE: 1.8412, MSE: 5.3649
+Training: Fold 5 - Total Loss: 2.1597, Cross Entropy: 0.838650, Accuracy: 0.6127, Precision: 0.5721, Recall: 0.6127, F1 Score: 0.5494, AUC: 0.7914, R2 Score: -0.010972, MAE: 1.8190, MSE: 5.2423
+Avg Latency (ms): 9.14, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 110/150
+Training: Fold 1 - Total Loss: 2.2800, Cross Entropy: 0.986629, Accuracy: 0.5827, Precision: 0.5633, Recall: 0.5827, F1 Score: 0.5023, AUC: 0.7575, R² Score: 0.001838, MAE: 1.8466, MSE: 5.2979
+Training: Fold 2 - Total Loss: 2.2011, Cross Entropy: 0.982841, Accuracy: 0.5827, Precision: 0.5271, Recall: 0.5827, F1 Score: 0.5046, AUC: 0.7459, R² Score: -0.020221, MAE: 1.7806, MSE: 5.0437
+Training: Fold 3 - Total Loss: 2.1573, Cross Entropy: 0.978495, Accuracy: 0.5511, Precision: 0.4809, Recall: 0.5511, F1 Score: 0.4942, AUC: 0.7600, R² Score: -0.007887, MAE: 1.7594, MSE: 4.9078
+Training: Fold 4 - Total Loss: 2.3191, Cross Entropy: 1.028083, Accuracy: 0.5651, Precision: 0.5287, Recall: 0.5651, F1 Score: 0.5167, AUC: 0.7209, R² Score: -0.004915, MAE: 1.8361, MSE: 5.3314
+Training: Fold 5 - Total Loss: 2.1667, Cross Entropy: 0.861677, Accuracy: 0.5986, Precision: 0.7051, Recall: 0.5986, F1 Score: 0.5191, AUC: 0.8038, R2 Score: 0.010814, MAE: 1.8154, MSE: 5.2117
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 111/150
+Training: Fold 1 - Total Loss: 2.2630, Cross Entropy: 0.958682, Accuracy: 0.5792, Precision: 0.4684, Recall: 0.5792, F1 Score: 0.5013, AUC: 0.7597, R² Score: -0.013990, MAE: 1.8512, MSE: 5.3063
+Training: Fold 2 - Total Loss: 2.2135, Cross Entropy: 1.003963, Accuracy: 0.5563, Precision: 0.4924, Recall: 0.5563, F1 Score: 0.4865, AUC: 0.7491, R² Score: -0.005769, MAE: 1.7820, MSE: 5.0359
+Training: Fold 3 - Total Loss: 2.1642, Cross Entropy: 0.974777, Accuracy: 0.5845, Precision: 0.5251, Recall: 0.5845, F1 Score: 0.5174, AUC: 0.7581, R² Score: -0.014781, MAE: 1.7640, MSE: 4.9395
+Training: Fold 4 - Total Loss: 2.3240, Cross Entropy: 0.990546, Accuracy: 0.5651, Precision: 0.5243, Recall: 0.5651, F1 Score: 0.5148, AUC: 0.7457, R² Score: -0.015378, MAE: 1.8558, MSE: 5.4355
+Training: Fold 5 - Total Loss: 2.1439, Cross Entropy: 0.817435, Accuracy: 0.5986, Precision: 0.6401, Recall: 0.5986, F1 Score: 0.5303, AUC: 0.8075, R2 Score: -0.010226, MAE: 1.8235, MSE: 5.2391
+Avg Latency (ms): 8.95, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 112/150
+Training: Fold 1 - Total Loss: 2.2846, Cross Entropy: 0.986980, Accuracy: 0.5634, Precision: 0.4945, Recall: 0.5634, F1 Score: 0.5147, AUC: 0.7509, R² Score: -0.013828, MAE: 1.8464, MSE: 5.3123
+Training: Fold 2 - Total Loss: 2.1778, Cross Entropy: 0.982740, Accuracy: 0.5722, Precision: 0.5267, Recall: 0.5722, F1 Score: 0.4992, AUC: 0.7347, R² Score: -0.000288, MAE: 1.7712, MSE: 4.9664
+Training: Fold 3 - Total Loss: 2.1686, Cross Entropy: 0.994683, Accuracy: 0.5651, Precision: 0.5112, Recall: 0.5651, F1 Score: 0.5078, AUC: 0.7490, R² Score: -0.009695, MAE: 1.7550, MSE: 4.9077
+Training: Fold 4 - Total Loss: 2.3192, Cross Entropy: 1.012235, Accuracy: 0.5335, Precision: 0.4662, Recall: 0.5335, F1 Score: 0.4803, AUC: 0.7356, R² Score: -0.011117, MAE: 1.8418, MSE: 5.3689
+Training: Fold 5 - Total Loss: 2.1896, Cross Entropy: 0.863683, Accuracy: 0.5986, Precision: 0.6080, Recall: 0.5986, F1 Score: 0.5253, AUC: 0.7604, R2 Score: -0.006687, MAE: 1.8204, MSE: 5.2834
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 113/150
+Training: Fold 1 - Total Loss: 2.2871, Cross Entropy: 0.980910, Accuracy: 0.5739, Precision: 0.5179, Recall: 0.5739, F1 Score: 0.5003, AUC: 0.7437, R² Score: -0.013796, MAE: 1.8516, MSE: 5.3347
+Training: Fold 2 - Total Loss: 2.2102, Cross Entropy: 0.992843, Accuracy: 0.5563, Precision: 0.4781, Recall: 0.5563, F1 Score: 0.4925, AUC: 0.7355, R² Score: 0.000004, MAE: 1.7856, MSE: 5.0507
+Training: Fold 3 - Total Loss: 2.1654, Cross Entropy: 0.989272, Accuracy: 0.5493, Precision: 0.4753, Recall: 0.5493, F1 Score: 0.4800, AUC: 0.7438, R² Score: -0.005041, MAE: 1.7542, MSE: 4.9097
+Training: Fold 4 - Total Loss: 2.3079, Cross Entropy: 1.005082, Accuracy: 0.5669, Precision: 0.5078, Recall: 0.5669, F1 Score: 0.5051, AUC: 0.7294, R² Score: -0.012324, MAE: 1.8452, MSE: 5.3477
+Training: Fold 5 - Total Loss: 2.1634, Cross Entropy: 0.846634, Accuracy: 0.5845, Precision: 0.5474, Recall: 0.5845, F1 Score: 0.4996, AUC: 0.7967, R2 Score: 0.022050, MAE: 1.8151, MSE: 5.2358
+Avg Latency (ms): 9.47, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 114/150
+Training: Fold 1 - Total Loss: 2.2623, Cross Entropy: 0.965232, Accuracy: 0.5880, Precision: 0.5268, Recall: 0.5880, F1 Score: 0.5176, AUC: 0.7703, R² Score: -0.008161, MAE: 1.8382, MSE: 5.2889
+Training: Fold 2 - Total Loss: 2.1902, Cross Entropy: 0.988560, Accuracy: 0.5669, Precision: 0.5420, Recall: 0.5669, F1 Score: 0.5036, AUC: 0.7459, R² Score: -0.007060, MAE: 1.7780, MSE: 4.9941
+Training: Fold 3 - Total Loss: 2.1483, Cross Entropy: 0.961787, Accuracy: 0.5827, Precision: 0.5437, Recall: 0.5827, F1 Score: 0.5176, AUC: 0.7590, R² Score: -0.024302, MAE: 1.7545, MSE: 4.9169
+Training: Fold 4 - Total Loss: 2.3136, Cross Entropy: 0.993840, Accuracy: 0.5599, Precision: 0.5122, Recall: 0.5599, F1 Score: 0.5078, AUC: 0.7505, R² Score: 0.001555, MAE: 1.8445, MSE: 5.3931
+Training: Fold 5 - Total Loss: 2.1706, Cross Entropy: 0.819688, Accuracy: 0.6338, Precision: 0.5740, Recall: 0.6338, F1 Score: 0.5568, AUC: 0.8074, R2 Score: -0.029044, MAE: 1.8207, MSE: 5.3226
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.6338
+
+Epoch 115/150
+Training: Fold 1 - Total Loss: 2.2679, Cross Entropy: 0.959905, Accuracy: 0.5739, Precision: 0.5244, Recall: 0.5739, F1 Score: 0.5092, AUC: 0.7581, R² Score: -0.007444, MAE: 1.8491, MSE: 5.3199
+Training: Fold 2 - Total Loss: 2.1966, Cross Entropy: 0.974854, Accuracy: 0.5827, Precision: 0.5241, Recall: 0.5827, F1 Score: 0.5141, AUC: 0.7477, R² Score: -0.008346, MAE: 1.7856, MSE: 5.0475
+Training: Fold 3 - Total Loss: 2.1312, Cross Entropy: 0.955549, Accuracy: 0.5898, Precision: 0.5354, Recall: 0.5898, F1 Score: 0.5236, AUC: 0.7557, R² Score: -0.014550, MAE: 1.7467, MSE: 4.8742
+Training: Fold 4 - Total Loss: 2.2844, Cross Entropy: 0.982530, Accuracy: 0.5634, Precision: 0.5206, Recall: 0.5634, F1 Score: 0.5236, AUC: 0.7483, R² Score: 0.004878, MAE: 1.8383, MSE: 5.3222
+Training: Fold 5 - Total Loss: 2.1575, Cross Entropy: 0.844130, Accuracy: 0.6127, Precision: 0.5950, Recall: 0.6127, F1 Score: 0.5608, AUC: 0.7976, R2 Score: 0.000939, MAE: 1.8157, MSE: 5.2222
+Avg Latency (ms): 9.23, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 116/150
+Training: Fold 1 - Total Loss: 2.2759, Cross Entropy: 0.981897, Accuracy: 0.5704, Precision: 0.5087, Recall: 0.5704, F1 Score: 0.4944, AUC: 0.7446, R² Score: -0.018052, MAE: 1.8454, MSE: 5.2953
+Training: Fold 2 - Total Loss: 2.2227, Cross Entropy: 0.999800, Accuracy: 0.5599, Precision: 0.4832, Recall: 0.5599, F1 Score: 0.4892, AUC: 0.7451, R² Score: -0.014354, MAE: 1.7946, MSE: 5.0762
+Training: Fold 3 - Total Loss: 2.1804, Cross Entropy: 1.007420, Accuracy: 0.5405, Precision: 0.4793, Recall: 0.5405, F1 Score: 0.4919, AUC: 0.7441, R² Score: -0.028415, MAE: 1.7622, MSE: 4.9172
+Training: Fold 4 - Total Loss: 2.2930, Cross Entropy: 0.965923, Accuracy: 0.5581, Precision: 0.4943, Recall: 0.5581, F1 Score: 0.5083, AUC: 0.7532, R² Score: -0.014372, MAE: 1.8431, MSE: 5.3895
+Training: Fold 5 - Total Loss: 2.1459, Cross Entropy: 0.821299, Accuracy: 0.5845, Precision: 0.5457, Recall: 0.5845, F1 Score: 0.5569, AUC: 0.8158, R2 Score: 0.003155, MAE: 1.8149, MSE: 5.2367
+Avg Latency (ms): 9.24, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 117/150
+Training: Fold 1 - Total Loss: 2.2658, Cross Entropy: 0.967484, Accuracy: 0.5845, Precision: 0.5006, Recall: 0.5845, F1 Score: 0.5114, AUC: 0.7686, R² Score: -0.015307, MAE: 1.8462, MSE: 5.2952
+Training: Fold 2 - Total Loss: 2.1955, Cross Entropy: 0.974126, Accuracy: 0.5757, Precision: 0.5264, Recall: 0.5757, F1 Score: 0.5045, AUC: 0.7552, R² Score: 0.000666, MAE: 1.7844, MSE: 5.0453
+Training: Fold 3 - Total Loss: 2.1446, Cross Entropy: 0.969086, Accuracy: 0.5599, Precision: 0.4948, Recall: 0.5599, F1 Score: 0.5105, AUC: 0.7652, R² Score: -0.019624, MAE: 1.7427, MSE: 4.8874
+Training: Fold 4 - Total Loss: 2.3067, Cross Entropy: 0.987640, Accuracy: 0.5475, Precision: 0.4665, Recall: 0.5475, F1 Score: 0.4836, AUC: 0.7416, R² Score: -0.004486, MAE: 1.8436, MSE: 5.3846
+Training: Fold 5 - Total Loss: 2.1445, Cross Entropy: 0.813851, Accuracy: 0.6620, Precision: 0.6346, Recall: 0.6620, F1 Score: 0.5995, AUC: 0.8224, R2 Score: -0.011365, MAE: 1.8163, MSE: 5.2492
+Avg Latency (ms): 9.17, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.6620
+
+Epoch 118/150
+Training: Fold 1 - Total Loss: 2.2413, Cross Entropy: 0.962295, Accuracy: 0.5827, Precision: 0.5187, Recall: 0.5827, F1 Score: 0.5118, AUC: 0.7587, R² Score: -0.014694, MAE: 1.8336, MSE: 5.2255
+Training: Fold 2 - Total Loss: 2.1922, Cross Entropy: 0.977680, Accuracy: 0.5739, Precision: 0.5643, Recall: 0.5739, F1 Score: 0.5113, AUC: 0.7499, R² Score: -0.002540, MAE: 1.7781, MSE: 5.0260
+Training: Fold 3 - Total Loss: 2.1451, Cross Entropy: 0.961823, Accuracy: 0.5775, Precision: 0.5211, Recall: 0.5775, F1 Score: 0.5204, AUC: 0.7560, R² Score: -0.018518, MAE: 1.7571, MSE: 4.9061
+Training: Fold 4 - Total Loss: 2.3031, Cross Entropy: 0.991653, Accuracy: 0.5493, Precision: 0.4908, Recall: 0.5493, F1 Score: 0.5001, AUC: 0.7411, R² Score: -0.011410, MAE: 1.8505, MSE: 5.3630
+Training: Fold 5 - Total Loss: 2.1634, Cross Entropy: 0.836138, Accuracy: 0.5915, Precision: 0.5310, Recall: 0.5915, F1 Score: 0.5404, AUC: 0.7901, R2 Score: -0.015282, MAE: 1.8164, MSE: 5.2603
+Avg Latency (ms): 9.47, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 119/150
+Training: Fold 1 - Total Loss: 2.2334, Cross Entropy: 0.939340, Accuracy: 0.5863, Precision: 0.5280, Recall: 0.5863, F1 Score: 0.5247, AUC: 0.7719, R² Score: -0.009562, MAE: 1.8424, MSE: 5.2530
+Training: Fold 2 - Total Loss: 2.1662, Cross Entropy: 0.944731, Accuracy: 0.5863, Precision: 0.5335, Recall: 0.5863, F1 Score: 0.5139, AUC: 0.7605, R² Score: -0.013558, MAE: 1.7779, MSE: 5.0163
+Training: Fold 3 - Total Loss: 2.1518, Cross Entropy: 0.974037, Accuracy: 0.5546, Precision: 0.4894, Recall: 0.5546, F1 Score: 0.5029, AUC: 0.7695, R² Score: -0.013315, MAE: 1.7536, MSE: 4.8999
+Training: Fold 4 - Total Loss: 2.2924, Cross Entropy: 0.980306, Accuracy: 0.5669, Precision: 0.5480, Recall: 0.5669, F1 Score: 0.5120, AUC: 0.7498, R² Score: -0.008833, MAE: 1.8439, MSE: 5.3539
+Training: Fold 5 - Total Loss: 2.1562, Cross Entropy: 0.816434, Accuracy: 0.6197, Precision: 0.6302, Recall: 0.6197, F1 Score: 0.5599, AUC: 0.8205, R2 Score: -0.026133, MAE: 1.8341, MSE: 5.2825
+Avg Latency (ms): 9.17, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 120/150
+Training: Fold 1 - Total Loss: 2.2598, Cross Entropy: 0.942164, Accuracy: 0.5687, Precision: 0.5061, Recall: 0.5687, F1 Score: 0.5030, AUC: 0.7658, R² Score: -0.030522, MAE: 1.8536, MSE: 5.3342
+Training: Fold 2 - Total Loss: 2.1531, Cross Entropy: 0.931780, Accuracy: 0.6092, Precision: 0.5608, Recall: 0.6092, F1 Score: 0.5360, AUC: 0.7754, R² Score: -0.012648, MAE: 1.7775, MSE: 5.0030
+Training: Fold 3 - Total Loss: 2.1452, Cross Entropy: 0.974128, Accuracy: 0.5722, Precision: 0.4899, Recall: 0.5722, F1 Score: 0.4969, AUC: 0.7510, R² Score: -0.006505, MAE: 1.7477, MSE: 4.8776
+Training: Fold 4 - Total Loss: 2.2800, Cross Entropy: 0.972055, Accuracy: 0.5968, Precision: 0.5577, Recall: 0.5968, F1 Score: 0.5434, AUC: 0.7604, R² Score: -0.017777, MAE: 1.8399, MSE: 5.3317
+Training: Fold 5 - Total Loss: 2.1353, Cross Entropy: 0.777009, Accuracy: 0.6479, Precision: 0.6874, Recall: 0.6479, F1 Score: 0.6105, AUC: 0.8284, R2 Score: -0.012802, MAE: 1.8176, MSE: 5.3045
+Avg Latency (ms): 8.90, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 121/150
+Training: Fold 1 - Total Loss: 2.2722, Cross Entropy: 0.987233, Accuracy: 0.5669, Precision: 0.5063, Recall: 0.5669, F1 Score: 0.5119, AUC: 0.7510, R² Score: -0.006982, MAE: 1.8393, MSE: 5.2703
+Training: Fold 2 - Total Loss: 2.1579, Cross Entropy: 0.930387, Accuracy: 0.5933, Precision: 0.5401, Recall: 0.5933, F1 Score: 0.5259, AUC: 0.7645, R² Score: -0.006616, MAE: 1.7810, MSE: 5.0221
+Training: Fold 3 - Total Loss: 2.1798, Cross Entropy: 1.003531, Accuracy: 0.5546, Precision: 0.5073, Recall: 0.5546, F1 Score: 0.4895, AUC: 0.7461, R² Score: -0.018790, MAE: 1.7592, MSE: 4.9245
+Training: Fold 4 - Total Loss: 2.3072, Cross Entropy: 0.994486, Accuracy: 0.5563, Precision: 0.5148, Recall: 0.5563, F1 Score: 0.5148, AUC: 0.7397, R² Score: -0.013624, MAE: 1.8404, MSE: 5.3702
+Training: Fold 5 - Total Loss: 2.1566, Cross Entropy: 0.838940, Accuracy: 0.6197, Precision: 0.6856, Recall: 0.6197, F1 Score: 0.5740, AUC: 0.8031, R2 Score: 0.019473, MAE: 1.8131, MSE: 5.2311
+Avg Latency (ms): 8.96, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 122/150
+Training: Fold 1 - Total Loss: 2.2864, Cross Entropy: 0.973542, Accuracy: 0.5599, Precision: 0.5073, Recall: 0.5599, F1 Score: 0.5118, AUC: 0.7509, R² Score: -0.007421, MAE: 1.8640, MSE: 5.3496
+Training: Fold 2 - Total Loss: 2.1796, Cross Entropy: 0.979989, Accuracy: 0.5528, Precision: 0.5274, Recall: 0.5528, F1 Score: 0.4859, AUC: 0.7504, R² Score: -0.018440, MAE: 1.7707, MSE: 4.9787
+Training: Fold 3 - Total Loss: 2.1765, Cross Entropy: 0.997060, Accuracy: 0.5651, Precision: 0.5228, Recall: 0.5651, F1 Score: 0.5132, AUC: 0.7538, R² Score: -0.017179, MAE: 1.7606, MSE: 4.9287
+Training: Fold 4 - Total Loss: 2.2932, Cross Entropy: 0.968028, Accuracy: 0.5581, Precision: 0.4930, Recall: 0.5581, F1 Score: 0.5057, AUC: 0.7528, R² Score: -0.016200, MAE: 1.8462, MSE: 5.3851
+Training: Fold 5 - Total Loss: 2.1674, Cross Entropy: 0.817571, Accuracy: 0.6056, Precision: 0.5369, Recall: 0.6056, F1 Score: 0.5513, AUC: 0.8106, R2 Score: -0.026018, MAE: 1.8211, MSE: 5.3172
+Avg Latency (ms): 9.14, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 123/150
+Training: Fold 1 - Total Loss: 2.2567, Cross Entropy: 0.959395, Accuracy: 0.5599, Precision: 0.4760, Recall: 0.5599, F1 Score: 0.4967, AUC: 0.7515, R² Score: 0.000952, MAE: 1.8386, MSE: 5.2838
+Training: Fold 2 - Total Loss: 2.1762, Cross Entropy: 0.975450, Accuracy: 0.5968, Precision: 0.5671, Recall: 0.5968, F1 Score: 0.5302, AUC: 0.7632, R² Score: -0.016963, MAE: 1.7738, MSE: 4.9781
+Training: Fold 3 - Total Loss: 2.1513, Cross Entropy: 0.972621, Accuracy: 0.5687, Precision: 0.5363, Recall: 0.5687, F1 Score: 0.5098, AUC: 0.7636, R² Score: -0.007693, MAE: 1.7548, MSE: 4.9016
+Training: Fold 4 - Total Loss: 2.2947, Cross Entropy: 0.982131, Accuracy: 0.5458, Precision: 0.5056, Recall: 0.5458, F1 Score: 0.5039, AUC: 0.7434, R² Score: -0.015320, MAE: 1.8421, MSE: 5.3574
+Training: Fold 5 - Total Loss: 2.1729, Cross Entropy: 0.842494, Accuracy: 0.5986, Precision: 0.5769, Recall: 0.5986, F1 Score: 0.5492, AUC: 0.7881, R2 Score: 0.005396, MAE: 1.8214, MSE: 5.2773
+Avg Latency (ms): 9.08, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 124/150
+Training: Fold 1 - Total Loss: 2.2522, Cross Entropy: 0.959997, Accuracy: 0.5651, Precision: 0.5039, Recall: 0.5651, F1 Score: 0.5076, AUC: 0.7571, R² Score: -0.019365, MAE: 1.8386, MSE: 5.2673
+Training: Fold 2 - Total Loss: 2.1796, Cross Entropy: 0.968445, Accuracy: 0.5845, Precision: 0.5683, Recall: 0.5845, F1 Score: 0.5159, AUC: 0.7514, R² Score: 0.002980, MAE: 1.7768, MSE: 5.0055
+Training: Fold 3 - Total Loss: 2.1256, Cross Entropy: 0.931415, Accuracy: 0.5792, Precision: 0.5261, Recall: 0.5792, F1 Score: 0.5176, AUC: 0.7742, R² Score: -0.004772, MAE: 1.7550, MSE: 4.9120
+Training: Fold 4 - Total Loss: 2.3017, Cross Entropy: 0.988394, Accuracy: 0.5563, Precision: 0.5024, Recall: 0.5563, F1 Score: 0.5165, AUC: 0.7474, R² Score: -0.006869, MAE: 1.8418, MSE: 5.3661
+Training: Fold 5 - Total Loss: 2.1322, Cross Entropy: 0.792816, Accuracy: 0.6127, Precision: 0.6653, Recall: 0.6127, F1 Score: 0.5645, AUC: 0.8206, R2 Score: -0.017812, MAE: 1.8200, MSE: 5.2576
+Avg Latency (ms): 9.04, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 125/150
+Training: Fold 1 - Total Loss: 2.2455, Cross Entropy: 0.950917, Accuracy: 0.5704, Precision: 0.5402, Recall: 0.5704, F1 Score: 0.5107, AUC: 0.7740, R² Score: -0.002827, MAE: 1.8394, MSE: 5.2661
+Training: Fold 2 - Total Loss: 2.1731, Cross Entropy: 0.945731, Accuracy: 0.5951, Precision: 0.5404, Recall: 0.5951, F1 Score: 0.5225, AUC: 0.7682, R² Score: -0.021702, MAE: 1.7833, MSE: 5.0368
+Training: Fold 3 - Total Loss: 2.1472, Cross Entropy: 0.956079, Accuracy: 0.5687, Precision: 0.5047, Recall: 0.5687, F1 Score: 0.5168, AUC: 0.7640, R² Score: 0.003935, MAE: 1.7581, MSE: 4.9266
+Training: Fold 4 - Total Loss: 2.2809, Cross Entropy: 0.967650, Accuracy: 0.5634, Precision: 0.5075, Recall: 0.5634, F1 Score: 0.5097, AUC: 0.7570, R² Score: -0.024116, MAE: 1.8367, MSE: 5.3450
+Training: Fold 5 - Total Loss: 2.1596, Cross Entropy: 0.822600, Accuracy: 0.6268, Precision: 0.6630, Recall: 0.6268, F1 Score: 0.5595, AUC: 0.7973, R2 Score: 0.010701, MAE: 1.8098, MSE: 5.2793
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 126/150
+Training: Fold 1 - Total Loss: 2.2566, Cross Entropy: 0.961600, Accuracy: 0.5827, Precision: 0.5507, Recall: 0.5827, F1 Score: 0.5186, AUC: 0.7771, R² Score: -0.002093, MAE: 1.8416, MSE: 5.2782
+Training: Fold 2 - Total Loss: 2.1925, Cross Entropy: 0.961398, Accuracy: 0.5669, Precision: 0.4743, Recall: 0.5669, F1 Score: 0.4918, AUC: 0.7621, R² Score: -0.024987, MAE: 1.7880, MSE: 5.0651
+Training: Fold 3 - Total Loss: 2.1511, Cross Entropy: 0.945268, Accuracy: 0.5792, Precision: 0.5249, Recall: 0.5792, F1 Score: 0.5269, AUC: 0.7808, R² Score: -0.011236, MAE: 1.7655, MSE: 4.9646
+Training: Fold 4 - Total Loss: 2.2741, Cross Entropy: 0.978811, Accuracy: 0.5634, Precision: 0.5147, Recall: 0.5634, F1 Score: 0.5139, AUC: 0.7454, R² Score: -0.022288, MAE: 1.8275, MSE: 5.2964
+Training: Fold 5 - Total Loss: 2.1413, Cross Entropy: 0.807222, Accuracy: 0.6127, Precision: 0.6257, Recall: 0.6127, F1 Score: 0.5559, AUC: 0.7993, R2 Score: 0.006963, MAE: 1.8122, MSE: 5.2541
+Avg Latency (ms): 9.01, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 127/150
+Training: Fold 1 - Total Loss: 2.2297, Cross Entropy: 0.933489, Accuracy: 0.5933, Precision: 0.5438, Recall: 0.5933, F1 Score: 0.5322, AUC: 0.7767, R² Score: 0.000184, MAE: 1.8333, MSE: 5.2541
+Training: Fold 2 - Total Loss: 2.1618, Cross Entropy: 0.939931, Accuracy: 0.6074, Precision: 0.5684, Recall: 0.6074, F1 Score: 0.5396, AUC: 0.7702, R² Score: -0.011820, MAE: 1.7772, MSE: 5.0127
+Training: Fold 3 - Total Loss: 2.1500, Cross Entropy: 0.965754, Accuracy: 0.5722, Precision: 0.5092, Recall: 0.5722, F1 Score: 0.5039, AUC: 0.7756, R² Score: -0.019432, MAE: 1.7539, MSE: 4.9133
+Training: Fold 4 - Total Loss: 2.2773, Cross Entropy: 0.950841, Accuracy: 0.5757, Precision: 0.5408, Recall: 0.5757, F1 Score: 0.5395, AUC: 0.7710, R² Score: -0.028091, MAE: 1.8481, MSE: 5.3725
+Training: Fold 5 - Total Loss: 2.1460, Cross Entropy: 0.795591, Accuracy: 0.6408, Precision: 0.6321, Recall: 0.6408, F1 Score: 0.6005, AUC: 0.8224, R2 Score: -0.003199, MAE: 1.8209, MSE: 5.2968
+Avg Latency (ms): 9.00, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 128/150
+Training: Fold 1 - Total Loss: 2.2488, Cross Entropy: 0.945329, Accuracy: 0.5704, Precision: 0.5095, Recall: 0.5704, F1 Score: 0.5191, AUC: 0.7720, R² Score: 0.001454, MAE: 1.8460, MSE: 5.2901
+Training: Fold 2 - Total Loss: 2.1549, Cross Entropy: 0.937514, Accuracy: 0.5968, Precision: 0.5534, Recall: 0.5968, F1 Score: 0.5331, AUC: 0.7805, R² Score: -0.010330, MAE: 1.7768, MSE: 4.9953
+Training: Fold 3 - Total Loss: 2.1447, Cross Entropy: 0.964800, Accuracy: 0.5616, Precision: 0.5183, Recall: 0.5616, F1 Score: 0.4960, AUC: 0.7806, R² Score: -0.002456, MAE: 1.7510, MSE: 4.8977
+Training: Fold 4 - Total Loss: 2.2940, Cross Entropy: 0.971664, Accuracy: 0.5458, Precision: 0.5048, Recall: 0.5458, F1 Score: 0.5162, AUC: 0.7665, R² Score: -0.025587, MAE: 1.8446, MSE: 5.3794
+Training: Fold 5 - Total Loss: 2.1412, Cross Entropy: 0.826228, Accuracy: 0.6127, Precision: 0.6006, Recall: 0.6127, F1 Score: 0.5656, AUC: 0.7979, R2 Score: 0.046897, MAE: 1.8080, MSE: 5.2094
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 129/150
+Training: Fold 1 - Total Loss: 2.2542, Cross Entropy: 0.953482, Accuracy: 0.5827, Precision: 0.5159, Recall: 0.5827, F1 Score: 0.5156, AUC: 0.7697, R² Score: -0.009320, MAE: 1.8420, MSE: 5.2890
+Training: Fold 2 - Total Loss: 2.1713, Cross Entropy: 0.935151, Accuracy: 0.5863, Precision: 0.5622, Recall: 0.5863, F1 Score: 0.5218, AUC: 0.7754, R² Score: -0.005356, MAE: 1.7886, MSE: 5.0555
+Training: Fold 3 - Total Loss: 2.1497, Cross Entropy: 0.956143, Accuracy: 0.5651, Precision: 0.5032, Recall: 0.5651, F1 Score: 0.5107, AUC: 0.7740, R² Score: -0.023474, MAE: 1.7601, MSE: 4.9348
+Training: Fold 4 - Total Loss: 2.2838, Cross Entropy: 0.978188, Accuracy: 0.5581, Precision: 0.4861, Recall: 0.5581, F1 Score: 0.5063, AUC: 0.7517, R² Score: 0.004030, MAE: 1.8341, MSE: 5.3303
+Training: Fold 5 - Total Loss: 2.1713, Cross Entropy: 0.819350, Accuracy: 0.6268, Precision: 0.5866, Recall: 0.6268, F1 Score: 0.5701, AUC: 0.7976, R2 Score: -0.009348, MAE: 1.8187, MSE: 5.3259
+Avg Latency (ms): 8.95, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 130/150
+Training: Fold 1 - Total Loss: 2.2592, Cross Entropy: 0.952732, Accuracy: 0.5880, Precision: 0.5284, Recall: 0.5880, F1 Score: 0.5393, AUC: 0.7724, R² Score: -0.000827, MAE: 1.8475, MSE: 5.3077
+Training: Fold 2 - Total Loss: 2.1442, Cross Entropy: 0.937741, Accuracy: 0.5915, Precision: 0.5476, Recall: 0.5915, F1 Score: 0.5376, AUC: 0.7720, R² Score: -0.003390, MAE: 1.7685, MSE: 4.9594
+Training: Fold 3 - Total Loss: 2.1420, Cross Entropy: 0.957700, Accuracy: 0.5810, Precision: 0.5507, Recall: 0.5810, F1 Score: 0.5263, AUC: 0.7723, R² Score: -0.010459, MAE: 1.7552, MSE: 4.9054
+Training: Fold 4 - Total Loss: 2.2922, Cross Entropy: 0.978380, Accuracy: 0.5669, Precision: 0.5297, Recall: 0.5669, F1 Score: 0.5240, AUC: 0.7616, R² Score: -0.016681, MAE: 1.8426, MSE: 5.3577
+Training: Fold 5 - Total Loss: 2.1312, Cross Entropy: 0.805204, Accuracy: 0.6268, Precision: 0.6082, Recall: 0.6268, F1 Score: 0.5837, AUC: 0.8248, R2 Score: 0.018380, MAE: 1.8128, MSE: 5.2252
+Avg Latency (ms): 9.21, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 131/150
+Training: Fold 1 - Total Loss: 2.2449, Cross Entropy: 0.941037, Accuracy: 0.6162, Precision: 0.5545, Recall: 0.6162, F1 Score: 0.5654, AUC: 0.7851, R² Score: -0.009683, MAE: 1.8445, MSE: 5.2874
+Training: Fold 2 - Total Loss: 2.1377, Cross Entropy: 0.921352, Accuracy: 0.6021, Precision: 0.5485, Recall: 0.6021, F1 Score: 0.5392, AUC: 0.7784, R² Score: -0.012465, MAE: 1.7726, MSE: 4.9760
+Training: Fold 3 - Total Loss: 2.1208, Cross Entropy: 0.930865, Accuracy: 0.5810, Precision: 0.5278, Recall: 0.5810, F1 Score: 0.5292, AUC: 0.7757, R² Score: -0.000386, MAE: 1.7550, MSE: 4.8974
+Training: Fold 4 - Total Loss: 2.2599, Cross Entropy: 0.931666, Accuracy: 0.5827, Precision: 0.5423, Recall: 0.5827, F1 Score: 0.5488, AUC: 0.7740, R² Score: -0.006470, MAE: 1.8432, MSE: 5.3591
+Training: Fold 5 - Total Loss: 2.1369, Cross Entropy: 0.802138, Accuracy: 0.5915, Precision: 0.5765, Recall: 0.5915, F1 Score: 0.5504, AUC: 0.8317, R2 Score: 0.009823, MAE: 1.8168, MSE: 5.2514
+Avg Latency (ms): 9.04, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 132/150
+Training: Fold 1 - Total Loss: 2.2556, Cross Entropy: 0.931437, Accuracy: 0.5933, Precision: 0.5455, Recall: 0.5933, F1 Score: 0.5391, AUC: 0.7756, R² Score: -0.009992, MAE: 1.8588, MSE: 5.3454
+Training: Fold 2 - Total Loss: 2.1435, Cross Entropy: 0.916909, Accuracy: 0.5863, Precision: 0.5318, Recall: 0.5863, F1 Score: 0.5304, AUC: 0.7794, R² Score: -0.017936, MAE: 1.7777, MSE: 5.0057
+Training: Fold 3 - Total Loss: 2.1414, Cross Entropy: 0.938467, Accuracy: 0.5915, Precision: 0.5317, Recall: 0.5915, F1 Score: 0.5168, AUC: 0.7729, R² Score: -0.011898, MAE: 1.7600, MSE: 4.9484
+Training: Fold 4 - Total Loss: 2.2936, Cross Entropy: 0.982371, Accuracy: 0.5722, Precision: 0.5336, Recall: 0.5722, F1 Score: 0.5339, AUC: 0.7560, R² Score: -0.006621, MAE: 1.8359, MSE: 5.3532
+Training: Fold 5 - Total Loss: 2.1328, Cross Entropy: 0.816261, Accuracy: 0.6056, Precision: 0.5999, Recall: 0.6056, F1 Score: 0.5812, AUC: 0.8153, R2 Score: 0.033576, MAE: 1.8182, MSE: 5.2049
+Avg Latency (ms): 10.43, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 133/150
+Training: Fold 1 - Total Loss: 2.2394, Cross Entropy: 0.941363, Accuracy: 0.5845, Precision: 0.5159, Recall: 0.5845, F1 Score: 0.5308, AUC: 0.7653, R² Score: -0.013786, MAE: 1.8383, MSE: 5.2681
+Training: Fold 2 - Total Loss: 2.1202, Cross Entropy: 0.887633, Accuracy: 0.6144, Precision: 0.5774, Recall: 0.6144, F1 Score: 0.5630, AUC: 0.7920, R² Score: -0.001377, MAE: 1.7816, MSE: 4.9962
+Training: Fold 3 - Total Loss: 2.1281, Cross Entropy: 0.933704, Accuracy: 0.5651, Precision: 0.5199, Recall: 0.5651, F1 Score: 0.5140, AUC: 0.7769, R² Score: -0.034871, MAE: 1.7616, MSE: 4.9152
+Training: Fold 4 - Total Loss: 2.2859, Cross Entropy: 0.946189, Accuracy: 0.5475, Precision: 0.5044, Recall: 0.5475, F1 Score: 0.5132, AUC: 0.7730, R² Score: -0.005655, MAE: 1.8435, MSE: 5.4118
+Training: Fold 5 - Total Loss: 2.1222, Cross Entropy: 0.776549, Accuracy: 0.6408, Precision: 0.6609, Recall: 0.6408, F1 Score: 0.5976, AUC: 0.8343, R2 Score: -0.027726, MAE: 1.8281, MSE: 5.2620
+Avg Latency (ms): 9.14, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 134/150
+Training: Fold 1 - Total Loss: 2.2653, Cross Entropy: 0.966706, Accuracy: 0.5845, Precision: 0.5302, Recall: 0.5845, F1 Score: 0.5244, AUC: 0.7697, R² Score: -0.017236, MAE: 1.8410, MSE: 5.2955
+Training: Fold 2 - Total Loss: 2.1865, Cross Entropy: 0.961763, Accuracy: 0.5915, Precision: 0.5378, Recall: 0.5915, F1 Score: 0.5238, AUC: 0.7546, R² Score: -0.016742, MAE: 1.7799, MSE: 5.0444
+Training: Fold 3 - Total Loss: 2.1398, Cross Entropy: 0.956005, Accuracy: 0.5563, Precision: 0.5665, Recall: 0.5563, F1 Score: 0.5128, AUC: 0.7585, R² Score: -0.009272, MAE: 1.7501, MSE: 4.9020
+Training: Fold 4 - Total Loss: 2.2656, Cross Entropy: 0.931362, Accuracy: 0.5915, Precision: 0.5592, Recall: 0.5915, F1 Score: 0.5525, AUC: 0.7774, R² Score: -0.007022, MAE: 1.8516, MSE: 5.3788
+Training: Fold 5 - Total Loss: 2.1417, Cross Entropy: 0.788978, Accuracy: 0.6056, Precision: 0.5826, Recall: 0.6056, F1 Score: 0.5619, AUC: 0.8230, R2 Score: -0.017928, MAE: 1.8198, MSE: 5.2981
+Avg Latency (ms): 9.23, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 135/150
+Training: Fold 1 - Total Loss: 2.2505, Cross Entropy: 0.946875, Accuracy: 0.5968, Precision: 0.5136, Recall: 0.5968, F1 Score: 0.5361, AUC: 0.7727, R² Score: -0.001630, MAE: 1.8392, MSE: 5.2924
+Training: Fold 2 - Total Loss: 2.1623, Cross Entropy: 0.927588, Accuracy: 0.5810, Precision: 0.4970, Recall: 0.5810, F1 Score: 0.5160, AUC: 0.7838, R² Score: -0.027512, MAE: 1.7881, MSE: 5.0434
+Training: Fold 3 - Total Loss: 2.1339, Cross Entropy: 0.934435, Accuracy: 0.5810, Precision: 0.5880, Recall: 0.5810, F1 Score: 0.5217, AUC: 0.7803, R² Score: -0.012562, MAE: 1.7558, MSE: 4.9325
+Training: Fold 4 - Total Loss: 2.2750, Cross Entropy: 0.950311, Accuracy: 0.5546, Precision: 0.4952, Recall: 0.5546, F1 Score: 0.5122, AUC: 0.7676, R² Score: -0.026061, MAE: 1.8437, MSE: 5.3659
+Training: Fold 5 - Total Loss: 2.1584, Cross Entropy: 0.789975, Accuracy: 0.6549, Precision: 0.5975, Recall: 0.6549, F1 Score: 0.6176, AUC: 0.8286, R2 Score: -0.017949, MAE: 1.8243, MSE: 5.3513
+Avg Latency (ms): 9.06, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 136/150
+Training: Fold 1 - Total Loss: 2.2475, Cross Entropy: 0.942753, Accuracy: 0.5792, Precision: 0.5195, Recall: 0.5792, F1 Score: 0.5235, AUC: 0.7750, R² Score: -0.002607, MAE: 1.8469, MSE: 5.2920
+Training: Fold 2 - Total Loss: 2.1362, Cross Entropy: 0.912191, Accuracy: 0.6021, Precision: 0.6063, Recall: 0.6021, F1 Score: 0.5389, AUC: 0.7780, R² Score: 0.000978, MAE: 1.7772, MSE: 4.9923
+Training: Fold 3 - Total Loss: 2.1542, Cross Entropy: 0.940044, Accuracy: 0.5863, Precision: 0.5343, Recall: 0.5863, F1 Score: 0.5369, AUC: 0.7828, R² Score: -0.018936, MAE: 1.7688, MSE: 4.9873
+Training: Fold 4 - Total Loss: 2.2569, Cross Entropy: 0.940572, Accuracy: 0.5827, Precision: 0.5397, Recall: 0.5827, F1 Score: 0.5369, AUC: 0.7622, R² Score: 0.002355, MAE: 1.8348, MSE: 5.3282
+Training: Fold 5 - Total Loss: 2.1292, Cross Entropy: 0.783204, Accuracy: 0.6549, Precision: 0.6845, Recall: 0.6549, F1 Score: 0.6134, AUC: 0.8218, R2 Score: -0.005826, MAE: 1.8297, MSE: 5.2698
+Avg Latency (ms): 9.46, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 137/150
+Training: Fold 1 - Total Loss: 2.2391, Cross Entropy: 0.927806, Accuracy: 0.5827, Precision: 0.5423, Recall: 0.5827, F1 Score: 0.5215, AUC: 0.7754, R² Score: -0.022998, MAE: 1.8457, MSE: 5.2988
+Training: Fold 2 - Total Loss: 2.1518, Cross Entropy: 0.908962, Accuracy: 0.6039, Precision: 0.5585, Recall: 0.6039, F1 Score: 0.5540, AUC: 0.7851, R² Score: -0.011770, MAE: 1.7898, MSE: 5.0519
+Training: Fold 3 - Total Loss: 2.1215, Cross Entropy: 0.924306, Accuracy: 0.5951, Precision: 0.5358, Recall: 0.5951, F1 Score: 0.5480, AUC: 0.7853, R² Score: -0.016976, MAE: 1.7602, MSE: 4.9149
+Training: Fold 4 - Total Loss: 2.2797, Cross Entropy: 0.953019, Accuracy: 0.5722, Precision: 0.5292, Recall: 0.5722, F1 Score: 0.5314, AUC: 0.7717, R² Score: -0.011376, MAE: 1.8441, MSE: 5.3754
+Training: Fold 5 - Total Loss: 2.1419, Cross Entropy: 0.795615, Accuracy: 0.6408, Precision: 0.6849, Recall: 0.6408, F1 Score: 0.5854, AUC: 0.8258, R2 Score: -0.015111, MAE: 1.8244, MSE: 5.2831
+Avg Latency (ms): 9.50, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 138/150
+Training: Fold 1 - Total Loss: 2.2497, Cross Entropy: 0.948738, Accuracy: 0.5792, Precision: 0.5164, Recall: 0.5792, F1 Score: 0.5249, AUC: 0.7627, R² Score: -0.014523, MAE: 1.8462, MSE: 5.2854
+Training: Fold 2 - Total Loss: 2.1476, Cross Entropy: 0.910604, Accuracy: 0.6004, Precision: 0.5609, Recall: 0.6004, F1 Score: 0.5485, AUC: 0.7865, R² Score: -0.020816, MAE: 1.7877, MSE: 5.0340
+Training: Fold 3 - Total Loss: 2.1456, Cross Entropy: 0.968622, Accuracy: 0.5775, Precision: 0.6025, Recall: 0.5775, F1 Score: 0.5255, AUC: 0.7760, R² Score: -0.011593, MAE: 1.7471, MSE: 4.8919
+Training: Fold 4 - Total Loss: 2.2474, Cross Entropy: 0.912653, Accuracy: 0.5775, Precision: 0.5363, Recall: 0.5775, F1 Score: 0.5253, AUC: 0.7896, R² Score: -0.015381, MAE: 1.8439, MSE: 5.3619
+Training: Fold 5 - Total Loss: 2.1304, Cross Entropy: 0.791418, Accuracy: 0.6268, Precision: 0.6414, Recall: 0.6268, F1 Score: 0.5695, AUC: 0.8135, R2 Score: 0.002009, MAE: 1.8261, MSE: 5.2545
+Avg Latency (ms): 9.52, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 139/150
+Training: Fold 1 - Total Loss: 2.2258, Cross Entropy: 0.916394, Accuracy: 0.6162, Precision: 0.5670, Recall: 0.6162, F1 Score: 0.5540, AUC: 0.7875, R² Score: -0.010689, MAE: 1.8459, MSE: 5.2812
+Training: Fold 2 - Total Loss: 2.1316, Cross Entropy: 0.909346, Accuracy: 0.5915, Precision: 0.5350, Recall: 0.5915, F1 Score: 0.5463, AUC: 0.7729, R² Score: 0.000799, MAE: 1.7733, MSE: 4.9835
+Training: Fold 3 - Total Loss: 2.1218, Cross Entropy: 0.935124, Accuracy: 0.5739, Precision: 0.5205, Recall: 0.5739, F1 Score: 0.5022, AUC: 0.7813, R² Score: -0.005943, MAE: 1.7477, MSE: 4.8908
+Training: Fold 4 - Total Loss: 2.2595, Cross Entropy: 0.938060, Accuracy: 0.5792, Precision: 0.5219, Recall: 0.5792, F1 Score: 0.5253, AUC: 0.7681, R² Score: 0.000268, MAE: 1.8375, MSE: 5.3427
+Training: Fold 5 - Total Loss: 2.1312, Cross Entropy: 0.799480, Accuracy: 0.6197, Precision: 0.7043, Recall: 0.6197, F1 Score: 0.5595, AUC: 0.8305, R2 Score: 0.014652, MAE: 1.8142, MSE: 5.2386
+Avg Latency (ms): 8.86, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 140/150
+Training: Fold 1 - Total Loss: 2.2410, Cross Entropy: 0.931027, Accuracy: 0.5792, Precision: 0.5040, Recall: 0.5792, F1 Score: 0.5250, AUC: 0.7813, R² Score: -0.009800, MAE: 1.8513, MSE: 5.2977
+Training: Fold 2 - Total Loss: 2.1506, Cross Entropy: 0.906449, Accuracy: 0.6127, Precision: 0.6360, Recall: 0.6127, F1 Score: 0.5567, AUC: 0.7863, R² Score: -0.006111, MAE: 1.7855, MSE: 5.0537
+Training: Fold 3 - Total Loss: 2.1365, Cross Entropy: 0.945590, Accuracy: 0.5722, Precision: 0.5296, Recall: 0.5722, F1 Score: 0.5129, AUC: 0.7760, R² Score: -0.011413, MAE: 1.7562, MSE: 4.9152
+Training: Fold 4 - Total Loss: 2.2387, Cross Entropy: 0.916165, Accuracy: 0.6021, Precision: 0.5897, Recall: 0.6021, F1 Score: 0.5566, AUC: 0.7880, R² Score: -0.022063, MAE: 1.8370, MSE: 5.3246
+Training: Fold 5 - Total Loss: 2.1021, Cross Entropy: 0.753997, Accuracy: 0.6408, Precision: 0.6617, Recall: 0.6408, F1 Score: 0.5887, AUC: 0.8350, R2 Score: 0.007868, MAE: 1.8173, MSE: 5.2476
+Avg Latency (ms): 9.62, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 141/150
+Training: Fold 1 - Total Loss: 2.2446, Cross Entropy: 0.937354, Accuracy: 0.6074, Precision: 0.5704, Recall: 0.6074, F1 Score: 0.5374, AUC: 0.7759, R² Score: -0.008213, MAE: 1.8432, MSE: 5.2947
+Training: Fold 2 - Total Loss: 2.1572, Cross Entropy: 0.931269, Accuracy: 0.6162, Precision: 0.5913, Recall: 0.6162, F1 Score: 0.5534, AUC: 0.7797, R² Score: -0.014864, MAE: 1.7848, MSE: 5.0178
+Training: Fold 3 - Total Loss: 2.1167, Cross Entropy: 0.911408, Accuracy: 0.6004, Precision: 0.5487, Recall: 0.6004, F1 Score: 0.5661, AUC: 0.7783, R² Score: -0.020296, MAE: 1.7620, MSE: 4.9291
+Training: Fold 4 - Total Loss: 2.2684, Cross Entropy: 0.927589, Accuracy: 0.5933, Precision: 0.5524, Recall: 0.5933, F1 Score: 0.5452, AUC: 0.7807, R² Score: 0.005396, MAE: 1.8465, MSE: 5.3969
+Training: Fold 5 - Total Loss: 2.1033, Cross Entropy: 0.757071, Accuracy: 0.6620, Precision: 0.7037, Recall: 0.6620, F1 Score: 0.6048, AUC: 0.8264, R2 Score: -0.009585, MAE: 1.8328, MSE: 5.2446
+Avg Latency (ms): 8.92, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 142/150
+Training: Fold 1 - Total Loss: 2.2267, Cross Entropy: 0.918054, Accuracy: 0.5863, Precision: 0.5418, Recall: 0.5863, F1 Score: 0.5206, AUC: 0.7845, R² Score: -0.014034, MAE: 1.8432, MSE: 5.2803
+Training: Fold 2 - Total Loss: 2.1463, Cross Entropy: 0.906569, Accuracy: 0.6074, Precision: 0.5662, Recall: 0.6074, F1 Score: 0.5440, AUC: 0.7787, R² Score: -0.004620, MAE: 1.7820, MSE: 5.0391
+Training: Fold 3 - Total Loss: 2.1018, Cross Entropy: 0.937805, Accuracy: 0.5634, Precision: 0.5113, Recall: 0.5634, F1 Score: 0.5124, AUC: 0.7763, R² Score: -0.013339, MAE: 1.7345, MSE: 4.8178
+Training: Fold 4 - Total Loss: 2.2699, Cross Entropy: 0.953041, Accuracy: 0.5792, Precision: 0.6175, Recall: 0.5792, F1 Score: 0.5445, AUC: 0.7660, R² Score: -0.006206, MAE: 1.8381, MSE: 5.3424
+Training: Fold 5 - Total Loss: 2.1461, Cross Entropy: 0.811334, Accuracy: 0.6479, Precision: 0.7244, Recall: 0.6479, F1 Score: 0.6236, AUC: 0.8252, R2 Score: -0.014346, MAE: 1.8322, MSE: 5.2607
+Avg Latency (ms): 9.12, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 143/150
+Training: Fold 1 - Total Loss: 2.2365, Cross Entropy: 0.932114, Accuracy: 0.5951, Precision: 0.5526, Recall: 0.5951, F1 Score: 0.5452, AUC: 0.7833, R² Score: -0.017394, MAE: 1.8401, MSE: 5.2800
+Training: Fold 2 - Total Loss: 2.1280, Cross Entropy: 0.891537, Accuracy: 0.6250, Precision: 0.6555, Recall: 0.6250, F1 Score: 0.5677, AUC: 0.8004, R² Score: -0.015159, MAE: 1.7786, MSE: 5.0130
+Training: Fold 3 - Total Loss: 2.1143, Cross Entropy: 0.934192, Accuracy: 0.5827, Precision: 0.5439, Recall: 0.5827, F1 Score: 0.5324, AUC: 0.7926, R² Score: 0.001832, MAE: 1.7455, MSE: 4.8680
+Training: Fold 4 - Total Loss: 2.2348, Cross Entropy: 0.901397, Accuracy: 0.5792, Precision: 0.5767, Recall: 0.5792, F1 Score: 0.5490, AUC: 0.7944, R² Score: -0.009969, MAE: 1.8416, MSE: 5.3462
+Training: Fold 5 - Total Loss: 2.1090, Cross Entropy: 0.766361, Accuracy: 0.6268, Precision: 0.6494, Recall: 0.6268, F1 Score: 0.5916, AUC: 0.8402, R2 Score: 0.031784, MAE: 1.8156, MSE: 5.2418
+Avg Latency (ms): 9.07, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 144/150
+Training: Fold 1 - Total Loss: 2.2496, Cross Entropy: 0.921351, Accuracy: 0.6004, Precision: 0.5516, Recall: 0.6004, F1 Score: 0.5426, AUC: 0.7875, R² Score: -0.022056, MAE: 1.8542, MSE: 5.3490
+Training: Fold 2 - Total Loss: 2.1527, Cross Entropy: 0.928011, Accuracy: 0.6021, Precision: 0.5738, Recall: 0.6021, F1 Score: 0.5541, AUC: 0.7917, R² Score: 0.007787, MAE: 1.7815, MSE: 5.0103
+Training: Fold 3 - Total Loss: 2.1320, Cross Entropy: 0.936363, Accuracy: 0.5915, Precision: 0.5938, Recall: 0.5915, F1 Score: 0.5409, AUC: 0.7794, R² Score: -0.020875, MAE: 1.7660, MSE: 4.9218
+Training: Fold 4 - Total Loss: 2.2919, Cross Entropy: 0.926528, Accuracy: 0.5933, Precision: 0.5494, Recall: 0.5933, F1 Score: 0.5561, AUC: 0.7889, R² Score: -0.012542, MAE: 1.8573, MSE: 5.4776
+Training: Fold 5 - Total Loss: 2.1321, Cross Entropy: 0.775286, Accuracy: 0.6479, Precision: 0.6559, Recall: 0.6479, F1 Score: 0.5982, AUC: 0.8396, R2 Score: -0.014336, MAE: 1.8245, MSE: 5.2981
+Avg Latency (ms): 9.18, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 145/150
+Training: Fold 1 - Total Loss: 2.2114, Cross Entropy: 0.898315, Accuracy: 0.6215, Precision: 0.5708, Recall: 0.6215, F1 Score: 0.5705, AUC: 0.7913, R² Score: -0.011721, MAE: 1.8477, MSE: 5.2754
+Training: Fold 2 - Total Loss: 2.1597, Cross Entropy: 0.927056, Accuracy: 0.6039, Precision: 0.5637, Recall: 0.6039, F1 Score: 0.5472, AUC: 0.7816, R² Score: -0.020702, MAE: 1.7849, MSE: 5.0358
+Training: Fold 3 - Total Loss: 2.1080, Cross Entropy: 0.910207, Accuracy: 0.6004, Precision: 0.5447, Recall: 0.6004, F1 Score: 0.5496, AUC: 0.7866, R² Score: -0.003891, MAE: 1.7519, MSE: 4.9027
+Training: Fold 4 - Total Loss: 2.2315, Cross Entropy: 0.907296, Accuracy: 0.5968, Precision: 0.5468, Recall: 0.5968, F1 Score: 0.5560, AUC: 0.7860, R² Score: 0.003026, MAE: 1.8359, MSE: 5.3214
+Training: Fold 5 - Total Loss: 2.1858, Cross Entropy: 0.859740, Accuracy: 0.5845, Precision: 0.5907, Recall: 0.5845, F1 Score: 0.5693, AUC: 0.7766, R2 Score: -0.012597, MAE: 1.8317, MSE: 5.2798
+Avg Latency (ms): 9.18, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 146/150
+Training: Fold 1 - Total Loss: 2.1944, Cross Entropy: 0.870740, Accuracy: 0.6215, Precision: 0.5705, Recall: 0.6215, F1 Score: 0.5634, AUC: 0.8078, R² Score: -0.026154, MAE: 1.8454, MSE: 5.2829
+Training: Fold 2 - Total Loss: 2.1793, Cross Entropy: 0.933874, Accuracy: 0.5968, Precision: 0.5349, Recall: 0.5968, F1 Score: 0.5363, AUC: 0.7735, R² Score: -0.014794, MAE: 1.7936, MSE: 5.0853
+Training: Fold 3 - Total Loss: 2.1219, Cross Entropy: 0.934720, Accuracy: 0.5845, Precision: 0.6084, Recall: 0.5845, F1 Score: 0.5369, AUC: 0.7915, R² Score: -0.007807, MAE: 1.7508, MSE: 4.8920
+Training: Fold 4 - Total Loss: 2.2378, Cross Entropy: 0.916827, Accuracy: 0.5898, Precision: 0.5339, Recall: 0.5898, F1 Score: 0.5465, AUC: 0.7821, R² Score: -0.000591, MAE: 1.8375, MSE: 5.3202
+Training: Fold 5 - Total Loss: 2.1425, Cross Entropy: 0.802253, Accuracy: 0.6690, Precision: 0.6291, Recall: 0.6690, F1 Score: 0.6102, AUC: 0.8169, R2 Score: -0.001038, MAE: 1.8196, MSE: 5.2696
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+Best model saved with Accuracy: 0.6690
+
+Epoch 147/150
+Training: Fold 1 - Total Loss: 2.1998, Cross Entropy: 0.888122, Accuracy: 0.6232, Precision: 0.6427, Recall: 0.6232, F1 Score: 0.5725, AUC: 0.7962, R² Score: -0.021066, MAE: 1.8371, MSE: 5.2604
+Training: Fold 2 - Total Loss: 2.1263, Cross Entropy: 0.894488, Accuracy: 0.6092, Precision: 0.5962, Recall: 0.6092, F1 Score: 0.5466, AUC: 0.7900, R² Score: -0.005185, MAE: 1.7753, MSE: 5.0006
+Training: Fold 3 - Total Loss: 2.0868, Cross Entropy: 0.871682, Accuracy: 0.6144, Precision: 0.6230, Recall: 0.6144, F1 Score: 0.5613, AUC: 0.8047, R² Score: -0.006485, MAE: 1.7517, MSE: 4.9221
+Training: Fold 4 - Total Loss: 2.2602, Cross Entropy: 0.904685, Accuracy: 0.6074, Precision: 0.5572, Recall: 0.6074, F1 Score: 0.5563, AUC: 0.7906, R² Score: -0.027742, MAE: 1.8489, MSE: 5.4231
+Training: Fold 5 - Total Loss: 2.1381, Cross Entropy: 0.759055, Accuracy: 0.6408, Precision: 0.5865, Recall: 0.6408, F1 Score: 0.5834, AUC: 0.8261, R2 Score: -0.024845, MAE: 1.8232, MSE: 5.3557
+Avg Latency (ms): 9.09, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 148/150
+Training: Fold 1 - Total Loss: 2.2430, Cross Entropy: 0.946188, Accuracy: 0.5845, Precision: 0.5223, Recall: 0.5845, F1 Score: 0.5347, AUC: 0.7730, R² Score: -0.019079, MAE: 1.8388, MSE: 5.2689
+Training: Fold 2 - Total Loss: 2.1251, Cross Entropy: 0.888804, Accuracy: 0.6180, Precision: 0.6423, Recall: 0.6180, F1 Score: 0.5650, AUC: 0.7954, R² Score: -0.000639, MAE: 1.7813, MSE: 5.0099
+Training: Fold 3 - Total Loss: 2.1307, Cross Entropy: 0.926874, Accuracy: 0.5898, Precision: 0.5360, Recall: 0.5898, F1 Score: 0.5434, AUC: 0.7796, R² Score: -0.023330, MAE: 1.7630, MSE: 4.9398
+Training: Fold 4 - Total Loss: 2.2543, Cross Entropy: 0.918566, Accuracy: 0.6092, Precision: 0.5701, Recall: 0.6092, F1 Score: 0.5783, AUC: 0.7973, R² Score: -0.005913, MAE: 1.8402, MSE: 5.3710
+Training: Fold 5 - Total Loss: 2.1224, Cross Entropy: 0.784469, Accuracy: 0.6338, Precision: 0.6152, Recall: 0.6338, F1 Score: 0.5861, AUC: 0.8266, R2 Score: 0.012328, MAE: 1.8213, MSE: 5.2443
+Avg Latency (ms): 9.82, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 149/150
+Training: Fold 1 - Total Loss: 2.2142, Cross Entropy: 0.909315, Accuracy: 0.6144, Precision: 0.5554, Recall: 0.6144, F1 Score: 0.5608, AUC: 0.7989, R² Score: 0.008056, MAE: 1.8409, MSE: 5.2591
+Training: Fold 2 - Total Loss: 2.1592, Cross Entropy: 0.915918, Accuracy: 0.6039, Precision: 0.5487, Recall: 0.6039, F1 Score: 0.5449, AUC: 0.7858, R² Score: -0.022627, MAE: 1.7897, MSE: 5.0603
+Training: Fold 3 - Total Loss: 2.1430, Cross Entropy: 0.953455, Accuracy: 0.5863, Precision: 0.5437, Recall: 0.5863, F1 Score: 0.5334, AUC: 0.7752, R² Score: -0.006742, MAE: 1.7576, MSE: 4.9187
+Training: Fold 4 - Total Loss: 2.2556, Cross Entropy: 0.950043, Accuracy: 0.5651, Precision: 0.5764, Recall: 0.5651, F1 Score: 0.5186, AUC: 0.7836, R² Score: -0.008401, MAE: 1.8306, MSE: 5.3019
+Training: Fold 5 - Total Loss: 2.1354, Cross Entropy: 0.783145, Accuracy: 0.6549, Precision: 0.6203, Recall: 0.6549, F1 Score: 0.6253, AUC: 0.8383, R2 Score: -0.019890, MAE: 1.8267, MSE: 5.2906
+Avg Latency (ms): 9.53, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Epoch 150/150
+Training: Fold 1 - Total Loss: 2.2353, Cross Entropy: 0.912650, Accuracy: 0.5933, Precision: 0.5877, Recall: 0.5933, F1 Score: 0.5537, AUC: 0.7978, R² Score: -0.013107, MAE: 1.8517, MSE: 5.3214
+Training: Fold 2 - Total Loss: 2.1182, Cross Entropy: 0.855189, Accuracy: 0.6303, Precision: 0.5863, Recall: 0.6303, F1 Score: 0.5771, AUC: 0.8189, R² Score: -0.011418, MAE: 1.7828, MSE: 5.0653
+Training: Fold 3 - Total Loss: 2.1199, Cross Entropy: 0.934746, Accuracy: 0.5810, Precision: 0.5654, Recall: 0.5810, F1 Score: 0.5416, AUC: 0.7824, R² Score: -0.011223, MAE: 1.7520, MSE: 4.8853
+Training: Fold 4 - Total Loss: 2.2493, Cross Entropy: 0.924910, Accuracy: 0.5968, Precision: 0.5619, Recall: 0.5968, F1 Score: 0.5491, AUC: 0.7889, R² Score: -0.019347, MAE: 1.8397, MSE: 5.3397
+Training: Fold 5 - Total Loss: 2.1369, Cross Entropy: 0.763177, Accuracy: 0.6690, Precision: 0.6864, Recall: 0.6690, F1 Score: 0.6213, AUC: 0.8199, R2 Score: -0.012346, MAE: 1.8201, MSE: 5.3423
+Avg Latency (ms): 9.16, Avg Memory Before (MB): 95.53, Avg Memory After (MB): 95.54, Avg Max Memory (MB): 160.77
+
+Fine-tuned Model Size: 2.03 MB
+====================================================================================================
