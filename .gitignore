@@ -2,6 +2,7 @@
 # *.png
 # *.jpeg
 # *.jpg 
+*.pth
 
 # Notebooks to ignore
 *notebooks/AnemiaDetection_ONNX.ipynb
