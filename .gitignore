@@ -2,6 +2,7 @@
 # *.png
 # *.jpeg
 # *.jpg 
+*.pth
 
 # Notebooks to ignore
 *notebooks/AnemiaDetection_ONNX.ipynb
@@ -140,6 +141,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+cawt/*
 
 # Spyder project settings
 .spyderproject
