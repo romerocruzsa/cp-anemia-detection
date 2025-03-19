@@ -1,0 +1,61 @@
+<!-- 
+
+Work In Progress:
+
+patient
+1.⁠ ⁠login
+2.⁠ ⁠⁠dashboard -results and medic appointment (contact o proxima cita) *notification pop-up
+    ** tabla de resultados tipo Google Drive
+    ** Agendar cita/No has agendado cita
+3.⁠ Upload images and send to medic
+
+doctor
+1.⁠ ⁠login similar a student
+    ** authentication
+2.⁠ ⁠⁠dashboard- patients, stats, and search
+    ** todas citas medicas y resultados
+    ** instead of pop-up: calendario de próximas citas
+    ** top: patients not attended/Patients this week / Patients that need follow-up
+        ** global/local statistics of db
+    ** table (todas citas médicas)
+3.⁠ ⁠⁠individual patient summary
+    ** research patient's relevant info similar to Hospital
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Anemicare Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="assets/images/logo.png" alt="Anemicare Logo" class="logo">
+            <h1>Anemicare Dashboard</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="upload-section">
+            <h2>Upload Image of Your Eye</h2>
+            <input type="file" id="imageUpload" accept="image/*" class="file-input">
+            <button id="submitButton">Submit</button>
+        </section>
+
+        <section class="prediction-results">
+            <h2>Prediction Results</h2>
+            <p id="predictionStatus">Please upload an image for analysis.</p>
+            <p id="hemoglobinLevel"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anemicare. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
