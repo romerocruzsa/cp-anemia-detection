@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anemicare Dashboard</title>
+    <link rel="stylesheet" href="website/css/home.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="website/assets/images/logo.png" alt="Company Logo" class="header-logo", width="100">
+            <h1>Anemicare Dashboard</h1>
+        </div>
+        <button id="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <main>
+        <aside>
+            <div class="user-info">
+                <img src="website/assets/images/profile-placeholder.png" alt="User Profile" class="profile-pic">
+                <p id="user-name">Loading...</p>
+                <p id="user-id">ID: ####</p>
+            </div>
+            <h3>Menu</h3>
+            <ul>
+                <li>Dashboard</li>
+                <li>Appointments</li>
+                <li>Upload</li>
+                <li>Stats</li>
+                <li>Patients</li>
+            </ul>
+        </aside>
+
+        <section class="dashboard">
+            <h2>Patient Dashboard</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Next Appointment</h3>
+                    <p>No appointment scheduled.</p>
+                </div>
+                <div class="card">
+                    <h3>Notifications</h3>
+                    <p>You have 1 new message from your doctor.</p>
+                </div>
+                <div class="card">
+                    <h3>Lab Results</h3>
+                    <p>View your latest hemoglobin reports.</p>
+                </div>
+                <div class="card">
+                    <h3>Contact Doctor</h3>
+                    <p>Request or message your primary physician.</p>
+                </div>
+            </div>
+
+            <div class="upload-section">
+                <h3>Upload Eye Image</h3>
+                <input type="file" id="imageUpload" accept="image/*">
+                <button id="submitButton">Submit</button>
+            </div>
+
+            <div class="results-section">
+                <h3>Hemoglobin Prediction Results</h3>
+                <p id="predictionStatus">Please upload an image for analysis.</p>
+                <p id="hemoglobinLevel"></p>
+            </div>
+
+            <div class="results-table">
+                <h3>Recent Test Results</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Hemoglobin Level</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-03-20</td>
+                            <td>13.2 g/dL</td>
+                            <td>Normal</td>
+                        </tr>
+                        <tr>
+                            <td>2025-02-10</td>
+                            <td>11.0 g/dL</td>
+                            <td>Low</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025 Anemicare. All Rights Reserved.
+    </footer>
+
+    <script src="website/js/home.js"></script>
+</body>
+</html>
