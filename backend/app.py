@@ -9,4 +9,4 @@ def hello_world():
 
 @app.route("/load_tables")
 def load_tables():
-    return t
+    return "<p>Hello, World!</p>"
