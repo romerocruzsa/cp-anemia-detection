@@ -23,7 +23,7 @@ class DatasetHandler():
 
     def load_data_sheet(self):
         print(f"{self.tag} Loading data sheet...")
-        self.data_sheet = pd.read_csv(self.sheet_path)
+        self.data_sheet = pd.read_csv(self.sheet_path)[:3]
         severity_mapping = {"Non-anemic": 0, "Mild": 1, "Moderate": 2, "Severe": 3}
         self.data_sheet["SEVERITY_CLASS"] = self.data_sheet["Severity"].map(severity_mapping)
 

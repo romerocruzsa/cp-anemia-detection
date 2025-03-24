@@ -1,4 +1,5 @@
 /cawt/*
+.venv
 *.pth
 *onnx
 data/cp-anemia/preprocessed.json
