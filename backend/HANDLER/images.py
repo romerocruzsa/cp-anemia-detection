@@ -1,13 +1,13 @@
 import json
-from DAO.images import Images  # Import the Images class from the DAO module
+from DAO.images import ImagesDAO  # Import the Images class from the DAO module
 
 class DataHandler:
 
     def __init__(self, json_file_path):
         self.json_file_path = json_file_path
-        self.dao = Images()  # Create an instance of the Images class, not the module
+        self.dao = ImagesDAO()  # Create an instance of the Images class, not the module
 
-    def load_and_insert_data(self):
+    async def load_and_insert_data(self):
         """
         Load data from JSON and insert it into the database.
         """
@@ -17,7 +17,7 @@ class DataHandler:
 
             inserted_ids = []
             for entry in data:
-                image_id = self.dao.insert_image(entry)
+                image_id = await self.dao.insert_image(entry)
                 if image_id:
                     inserted_ids.append(image_id)
             return {"message": "Data inserted successfully!", "inserted_ids": inserted_ids}

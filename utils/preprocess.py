@@ -53,7 +53,7 @@ class DatasetHandler():
                 multiclass_label = torch.tensor(row['SEVERITY_CLASS'])
                 hb_level = torch.tensor(row['HB_LEVEL'])
 
-                return img, multiclass_label, hb_level
+                return img_id, img, multiclass_label, hb_level
 
         return FeatureDataset(self.data_dir, self.data_sheet, self.transform)
 
@@ -75,30 +75,30 @@ class DatasetHandler():
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
     
-    def save_to_json(self, output_path=" "):
-        if self.data_sheet is None:
-            self.load_data_sheet()
+    # def save_to_json(self, output_path=" "):
+    #     if self.data_sheet is None:
+    #         self.load_data_sheet()
 
-        output_path += "/preprocessed.json"
-        data_to_save = []
+    #     output_path += "/preprocessed.json"
+    #     data_to_save = []
 
-        for idx, row in self.data_sheet.iterrows():
-            row_dict = row.to_dict()
+    #     for idx, row in self.data_sheet.iterrows():
+    #         row_dict = row.to_dict()
 
-            # Get image and labels from dataset
-            dataset = self.get_features()
-            image_tensor, severity_class, hb_level = dataset[idx]
+    #         # Get image and labels from dataset
+    #         dataset = self.get_features()
+    #         image_tensor, severity_class, hb_level = dataset[idx]
 
-            # Convert tensors to JSON-serializable formats
-            row_dict["IMAGE_PATH"] = os.path.join(self.data_dir, row['REMARK'], row['IMAGE_ID'] + ".png")
-            row_dict["IMAGE_VECTOR"] = image_tensor.tolist()
-            row_dict["SEVERITY_CLASS"] = float(severity_class.item())
-            row_dict["HB_LEVEL"] = float(hb_level.item())
+    #         # Convert tensors to JSON-serializable formats
+    #         row_dict["IMAGE_PATH"] = os.path.join(self.data_dir, row['REMARK'], row['IMAGE_ID'] + ".png")
+    #         row_dict["IMAGE_VECTOR"] = image_tensor.tolist()
+    #         row_dict["SEVERITY_CLASS"] = float(severity_class.item())
+    #         row_dict["HB_LEVEL"] = float(hb_level.item())
 
-            data_to_save.append(row_dict)
+    #         data_to_save.append(row_dict)
 
-        with open(output_path, "w") as f:
-            json.dump(data_to_save, f, indent=4)
+    #     with open(output_path, "w") as f:
+    #         json.dump(data_to_save, f, indent=4)
 
-        print(f"{self.tag} Saved {len(data_to_save)} entries to {output_path}")
+    #     print(f"{self.tag} Saved {len(data_to_save)} entries to {output_path}")
 

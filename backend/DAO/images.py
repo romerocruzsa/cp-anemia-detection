@@ -1,70 +1,69 @@
 from CONFIG.db_config import pg_config
-import psycopg2
+import asyncpg
 import json
+import numpy as np
 
-class Images: 
-
+class ImagesDAO: 
     def __init__(self):
-        try:
-            self.conn = psycopg2.connect(
-                host=pg_config['host'],
-                database=pg_config['dbname'],
-                user=pg_config['user'],
-                password=pg_config['password'],
-                port=pg_config['port']
-            )
-        except Exception as e:
-            print("Error while connecting to PostgreSQL", e)
-            self.conn = None
+        self.db_config = pg_config
+        self.pool = None  # Asyncpg connection pool
 
-    def insert_image(self, image_data):
+    async def connect(self):
+        """Initialize connection pool if not already created."""
+        if self.pool is None:
+            self.pool = await asyncpg.create_pool(
+                host=self.db_config['host'],
+                database=self.db_config['dbname'],
+                user=self.db_config['user'],
+                password=self.db_config['password'],
+                port=self.db_config['port']
+            )
+
+    async def insert_image(self, image_data):
         """
-        Insert a single image record into the database.
+        Insert a single image record asynchronously into the database.
         """
-        if self.conn is None:
-            return "Database connection failed"
+        if self.pool is None:
+            await self.connect()  # Ensure connection pool is available
         
         try:
-            cursor = self.conn.cursor()
-            query = """
-            INSERT INTO anemia_data(
-                IMAGE_ID, HB_LEVEL, Severity, Age_Months, GENDER, REMARK, HOSPITAL, 
-                CITY_TOWN, MUNICIPALITY_DISTRICT, REGION, COUNTRY, SEVERITY_CLASS, 
-                IMAGE_PATH, IMAGE_VECTOR
-            ) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
-            RETURNING I_ID;
-            """
-            values = (
-                image_data['IMAGE_ID'],
-                image_data['HB_LEVEL'],
-                image_data['Severity'],
-                image_data['Age(Months)'],
-                image_data['GENDER'],
-                image_data['REMARK'],
-                image_data['HOSPITAL'],
-                image_data['CITY/TOWN'],
-                image_data['MUNICIPALITY/DISTRICT'],
-                image_data['REGION'],
-                image_data['COUNTRY'],
-                image_data['SEVERITY_CLASS'],
-                image_data['IMAGE_PATH'],
-                image_data['IMAGE_VECTOR']
-            )
-            
-            cursor.execute(query, values)
-            I_ID = cursor.fetchone()[0]  # Get the inserted I_ID
-            self.conn.commit()
-            cursor.close()
-            return I_ID
+            async with self.pool.acquire() as conn:
+                image_vector = np.array(image_data['IMAGE_VECTOR'], dtype=float).tolist()
+
+                query = """
+                INSERT INTO anemia_data(
+                    IMAGE_ID, HB_LEVEL, SEVERITY, AGE_MONTHS, GENDER, REMARK, HOSPITAL, 
+                    CITY_TOWN, MUNICIPALITY_DISTRICT, REGION, COUNTRY, SEVERITY_CLASS, 
+                    IMAGE_PATH, IMAGE_VECTOR
+                ) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) 
+                RETURNING I_ID;
+                """
+                
+                I_ID = await conn.fetchval(query, 
+                    image_data['IMAGE_ID'],
+                    image_data['HB_LEVEL'],
+                    image_data['SEVERITY'],
+                    image_data['AGE_MONTHS'],
+                    image_data['GENDER'],
+                    image_data['REMARK'],
+                    image_data['HOSPITAL'],
+                    image_data['CITY_TOWN'],
+                    image_data['MUNICIPALITY_DISTRICT'],
+                    image_data['REGION'],
+                    image_data['COUNTRY'],
+                    image_data['SEVERITY_CLASS'],
+                    image_data['IMAGE_PATH'],
+                    image_vector
+                )
+                return I_ID
         except Exception as e:
-            print("Error during insert operation:", e)
-            self.conn.rollback()
+            print(f"Error during insert operation: {e}")
             return None
 
-    def insert_images_from_json(self, json_file_path):
+    async def insert_images_from_json(self, json_file_path):
         """
-        Insert multiple image records from a JSON file into the database.
+        Insert multiple image records from a JSON file into the database asynchronously.
         """
         try:
             with open(json_file_path, 'r') as f:
@@ -72,7 +71,7 @@ class Images:
             
             inserted_ids = []
             for entry in data:
-                image_id = self.insert_image(entry)
+                image_id = await self.insert_image(entry)
                 if image_id:
                     inserted_ids.append(image_id)
             
@@ -81,22 +80,21 @@ class Images:
             print("Error loading or inserting data:", e)
             return {"message": "Error occurred during insertion."}
 
-    def get_images(self):
-        """Retrieve all images from the database."""
-        if self.conn is None:
-            return "Database connection failed"
+    async def get_images(self):
+        """Retrieve all images from the database asynchronously."""
+        if self.pool is None:
+            await self.connect()
+        
         try:
-            cursor = self.conn.cursor()
-            query = "SELECT * FROM incoming_images"
-            cursor.execute(query)
-            images = cursor.fetchall()
-            cursor.close()
-            return images
+            async with self.pool.acquire() as conn:
+                query = "SELECT * FROM anemia_data"
+                images = await conn.fetch(query)
+                return [dict(image) for image in images]  # Convert to list of dicts
         except Exception as e:
             print("Error during select operation:", e)
             return None
 
-    def close_connection(self):
-        """Ensure the connection is properly closed."""
-        if self.conn:
-            self.conn.close()
+    async def close_connection(self):
+        """Close the connection pool."""
+        if self.pool:
+            await self.pool.close()

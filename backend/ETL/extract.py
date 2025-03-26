@@ -18,5 +18,14 @@ cpanemic_path = os.path.abspath(os.path.join(os.getcwd(), "data/cp-anemia/"))
 handler = DatasetHandler(data_dir=cpanemic_path,
                               transform=transform, tag="[ETL]")
 
+train_dataset, test_dataset = handler.get_datasets()
+for data in train_dataset:
+    print(data)
+
 train_loader, test_loader = handler.get_dataloaders(batch_size=1)
-handler.save_to_json(cpanemic_path)
+
+for img_id ,img, label, hb  in train_loader:
+    # import pdb; pdb.set_trace()
+    print(f"This is the image id: {img_id[0]}")
+    print(f"This is the image vector {img}")
+# handler.save_to_json(cpanemic_path)
