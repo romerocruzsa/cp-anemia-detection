@@ -1,6 +1,11 @@
 # Efficient Neural Compression for Biomedical AI: Enabling Low-Power Non-Invasive Anemia Screening
 *Alt. Project Titles: Addressing Memory Consumption through Data Quantization; Development of a Hemoglobin Estimation & Point-of-Care Diagnostic Tool for Anemia Detection*
 
+<p align="center">
+  <img width="700" alt="Screenshot 2025-03-18 at 4 52 41 PM" 
+  src="https://github.com/user-attachments/assets/e37ca802-d01b-4b1a-9f1e-c00ffb46124c">
+</p>
+
 ## 📖 **Project Overview**  
 
 Anemia is a prevalent and debilitating condition that affects approximately 1.62 billion people worldwide, with a disproportionate impact on individuals in low- and middle-income countries (LMICs). It is characterized by a deficiency of red blood cells or hemoglobin, leading to reduced oxygen transport and systemic hypoxia, which can contribute to the development of various chronic conditions. Moreover, the burden of anemia is significantly higher in LMICs due to malnutrition, infectious diseases such as malaria and hookworm infections, and limited access to healthcare service.
@@ -28,12 +33,7 @@ By optimizing existing mobile devices and embedded systems for medical diagnosti
   src="https://github.com/user-attachments/assets/ac66e01f-11d7-4bfe-bf0d-52c812aae1db">
 </p>
 
-Aditionally, our web-based patient monitoring & telemedicine service adopts a modular client–server architecture, emulating cloud-based solutions, for scalability and maintainability, comprising of a 1) Front-end (Client-side), 2) Back-end (Server side), 3) AI Processing Module, 4) Data Management Layer, and 5) ETL Pipeline that is accessed solely through a wireless-connection to the host device in close proximity. This enables the device to be accessed in real-time environments in remote locations for situations like: disaster relief & rescue, emergency medical treatments, and more. Moreover, we ensure compliance for mobile health platform & electronic health records (EHRs) management standards with HIPAA & GDPR for data privacy. This enables integration with large-scale healthcare services & medical teams that need a modular and mobile support tool for patient care. Below an overview of the whole system overview, interplay between modules and services, and core components for development.
-
-<p align="center">
-  <img width="700" alt="Screenshot 2025-03-18 at 4 52 41 PM" 
-  src="https://github.com/user-attachments/assets/e52a32a0-94ff-4ddf-a13f-09a2b2d0ea27">
-</p>
+Aditionally, our web-based patient monitoring & telemedicine service adopts a modular client–server architecture, emulating cloud-based solutions, for scalability and maintainability, comprising of a 1) Front-end (Client-side), 2) Back-end (Server side), 3) AI Processing Module, 4) Data Management Layer, and 5) ETL Pipeline that is accessed solely through a wireless-connection to the host device in close proximity. This enables the device to be accessed in real-time environments in remote locations for situations like: disaster relief & rescue, emergency medical treatments, and more. Moreover, we ensure compliance for mobile health platform & electronic health records (EHRs) management standards with HIPAA & GDPR for data privacy. This enables integration with large-scale healthcare services & medical teams that need a modular and mobile support tool for patient care.
 
 ---
 
