@@ -62,14 +62,14 @@ time.sleep(5)
 
 # Step 6 — Send result to receiver
 print("[6] Sending final result to receiver...")
-final_payload = {"accuracy": 0.89, "loss": 0.13}
+final_payload = response.json()["results"][0]
 try:
     res = requests.post(f"{receiver_url}/receive", json=final_payload)
     print("→ Receiver response:", res.json())
 except Exception as e:
-    print("❌ Error contacting receiver:", e)
+    print("Error contacting receiver:", e)
 
-print("✅ Simulation complete!")
+print("Simulation complete!")
 
 time.sleep(60*5)
 
