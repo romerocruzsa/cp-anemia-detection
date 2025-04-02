@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results Summary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Log Out Button -->
+    <button id="logout-btn" class="logout-button">Log Out</button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Sidebar Top Navigation -->
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="account.html" class="nav-link">Account</a>
+        <a href="results-summary.html" class="nav-link active">Summary</a>
+      </nav>
+      <!-- Horizontal Divider -->
+      <div class="sidebar-header">
+        <img src="images/profile-placeholder.jpg" alt="Profile Picture" class="profile-pic">
+        <h1>Andrea Rivera</h1>
+        <h2>Non-Anemic: 10 g/dL</h2>
+        <p><strong>Patient ID:</strong> 789087</p>
+        <button id="more-info-btn">More patient info</button>
+        <div id="patient-info" class="hidden">
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Blood Type:</strong> O+</p>
+          <p><strong>Condition:</strong> Non-Anemic</p>
+        </div>
+      </div>
+      <!-- Notification Banner -->
+      <div class="notification-banner">
+        <p><strong>Message from Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+      </div>
+      <button id="contact-pmp-btn" class="sidebar-button">Contact PMP</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="results-summary">
+      <!-- Combined Search, Filter, Sort, and Table Card -->
+      <div class="card combined-results-card">
+        <div class="results-controls">
+          <input type="text" placeholder="Search results..." class="search-bar" id="search-input">
+        </div>
+        <div class="filter-controls">
+          <label for="date-filter">Date:</label>
+          <input type="date" id="date-filter">
+          <label for="anemia-filter">Anemia:</label>
+          <select id="anemia-filter">
+            <option value="">All</option>
+            <option value="No">No</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Severe">Severe</option>
+          </select>
+          <label for="sort-by">Sort By:</label>
+          <select id="sort-by">
+            <option value="date-asc">Date (Ascending)</option>
+            <option value="date-desc">Date (Descending)</option>
+            <option value="hg-asc">Hg (Ascending)</option>
+            <option value="hg-desc">Hg (Descending)</option>
+          </select>
+          <button id="apply-filters" class="filter-button">Apply Filters</button>
+        </div>
+        <table class="results-table single-column" id="results-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Hg</th>
+              <th>Anemia</th>
+              <th>Doctor</th>
+              <th>Hospital</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-04-05</td>
+              <td>09:15 AM</td>
+              <td>13.1</td>
+              <td>No</td>
+              <td>Dr. Santos</td>
+              <td>San Juan Medical Center</td>
+            </tr>
+            <tr>
+              <td>2024-04-01</td>
+              <td>01:30 PM</td>
+              <td>7.2</td>
+              <td>Severe</td>
+              <td>Dr. Vega</td>
+              <td>Bayamón General Hospital</td>
+            </tr>
+            <tr>
+              <td>2024-03-30</td>
+              <td>07:45 AM</td>
+              <td>6.9</td>
+              <td>Severe</td>
+              <td>Dr. Torres</td>
+              <td>Arecibo General Hospital</td>
+            </tr>
+            <tr>
+              <td>2024-03-25</td>
+              <td>03:00 PM</td>
+              <td>8.3</td>
+              <td>Moderate</td>
+              <td>Dr. Rodríguez</td>
+              <td>Caguas Regional Hospital</td>
+            </tr>
+            <tr>
+              <td>2024-03-20</td>
+              <td>11:30 AM</td>
+              <td>11.8</td>
+              <td>No</td>
+              <td>Dr. Fernández</td>
+              <td>Mayagüez Medical Center</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Contact PMP Modal -->
+  <div id="contact-pmp-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Contact PMP</h2>
+      <p>Please provide your message or inquiry below:</p>
+      <textarea placeholder="Type your message here..."></textarea>
+      <button class="modal-submit-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = 'login.html'; // Redirect to the login page
+    });
+
+    const searchInput = document.getElementById('search-input');
+    const dateFilter = document.getElementById('date-filter');
+    const anemiaFilter = document.getElementById('anemia-filter');
+    const sortBy = document.getElementById('sort-by');
+    const applyFiltersButton = document.getElementById('apply-filters');
+    const resultsTable = document.getElementById('results-table');
+    const rows = Array.from(resultsTable.querySelectorAll('tbody tr'));
+
+    function filterTable() {
+      const searchValue = searchInput.value.toLowerCase();
+      const dateValue = dateFilter.value;
+      const anemiaValue = anemiaFilter.value;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const date = cells[0].textContent.trim();
+        const anemia = cells[3].textContent.trim().toLowerCase();
+        const matchesSearch = cells[0].textContent.toLowerCase().includes(searchValue) ||
+                              cells[1].textContent.toLowerCase().includes(searchValue) ||
+                              cells[2].textContent.toLowerCase().includes(searchValue) ||
+                              cells[3].textContent.toLowerCase().includes(searchValue) ||
+                              cells[4].textContent.toLowerCase().includes(searchValue) ||
+                              cells[5].textContent.toLowerCase().includes(searchValue);
+        const matchesDate = !dateValue || date === dateValue;
+        const matchesAnemia = !anemiaValue || anemia === anemiaValue.toLowerCase();
+
+        if (matchesSearch && matchesDate && matchesAnemia) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function sortTable() {
+      const sortValue = sortBy.value;
+      const tbody = resultsTable.querySelector('tbody');
+      const sortedRows = rows.slice().sort((a, b) => {
+        const aCells = a.querySelectorAll('td');
+        const bCells = b.querySelectorAll('td');
+        if (sortValue === 'date-asc') {
+          return new Date(aCells[0].textContent) - new Date(bCells[0].textContent);
+        } else if (sortValue === 'date-desc') {
+          return new Date(bCells[0].textContent) - new Date(aCells[0].textContent);
+        } else if (sortValue === 'hg-asc') {
+          return parseFloat(aCells[2].textContent) - parseFloat(bCells[2].textContent);
+        } else if (sortValue === 'hg-desc') {
+          return parseFloat(bCells[2].textContent) - parseFloat(aCells[2].textContent);
+        }
+        return 0;
+      });
+
+      tbody.innerHTML = '';
+      sortedRows.forEach(row => tbody.appendChild(row));
+    }
+
+    searchInput.addEventListener('input', filterTable);
+    applyFiltersButton.addEventListener('click', () => {
+      filterTable();
+      sortTable();
+    });
+
+    const contactPmpModal = document.getElementById('contact-pmp-modal');
+    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+    const closeBtns = document.querySelectorAll('.close-btn');
+    const moreInfoBtn = document.getElementById('more-info-btn');
+    const patientInfo = document.getElementById('patient-info');
+
+    contactPmpBtn.addEventListener('click', () => {
+      contactPmpModal.style.display = 'block';
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        contactPmpModal.style.display = 'none';
+      });
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === contactPmpModal) {
+        contactPmpModal.style.display = 'none';
+      }
+    });
+
+    moreInfoBtn.addEventListener('click', () => {
+      if (patientInfo.classList.contains('hidden')) {
+        patientInfo.classList.remove('hidden');
+        moreInfoBtn.textContent = 'Hide patient info';
+      } else {
+        patientInfo.classList.add('hidden');
+        moreInfoBtn.textContent = 'More patient info';
+      }
+    });
+  </script>
+</body>
+</html>
