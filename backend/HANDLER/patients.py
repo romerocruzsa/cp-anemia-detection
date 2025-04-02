@@ -24,3 +24,12 @@ class PatientsHandler:
         except Exception as e:
             print(f"An error occurred while getting all patients: {e}")
             return JSONResponse(content={'error': 'An error occurred while retrieving patients'}, status_code=500)
+        
+
+    def getPatientsByID(self , pid):
+        dao = PatientsDAO()
+        result = dao.getPatientsByID(pid)
+        if result :
+            return JSONResponse(self.mapToDict(result))
+        else:
+            return JSONResponse("Not found"), 404
