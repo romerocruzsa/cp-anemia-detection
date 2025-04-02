@@ -1,97 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Healthcare Portal</title>
-    <link rel="stylesheet" href="website/css/login.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Anemi-Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <img src="website/assets/images/logo.png" alt="Company Logo" class="logo", width="250">
-            <h2 id="form-title">Anemicare Portal</h2>
-            <form id="auth-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <button type="submit" id="submit-btn">Login</button>
-            </form>
-            <!-- <p id="error-message" class="hidden">Invalid credentials. Please try again.</p> -->
-            <p id="toggle-auth">Don't have an account? <a href="#" onclick="toggleAuth()">Sign up here</a></p>
-        </div>
+  <div class="login-container">
+    <div class="login-card">
+      <img src="images/eye-logo.png" alt="Anemi-Care Logo" class="login-logo">
+      <h1 class="login-title">Anemi-Care</h1>
+      <p class="login-subtitle">University of Puerto Rico - Mayagüez</p>
+      <form class="login-form" id="login-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <button type="submit" class="login-button">Log In</button>
+      </form>
+      <div class="login-links">
+        <a href="#" class="login-link">Forgot your password? <strong>Reset it</strong></a>
+        <a href="#" class="login-link">Don't have an account? <strong>Register</strong></a>
+      </div>
     </div>
+  </div>
+  <script>
+    const loginForm = document.getElementById('login-form');
 
-    <!-- Admin override button -->
-    <button id="admin-button" onclick="adminAccess()">Admin</button>
-
-    <script>
-        let isSignUp = false; // Tracks if the user is signing up
-
-        function toggleAuth() {
-            isSignUp = !isSignUp;
-            document.getElementById("submit-btn").innerText = isSignUp ? "Sign Up" : "Login";
-            document.getElementById("toggle-auth").innerHTML = isSignUp ? 'Already have an account? <a href="#" onclick="toggleAuth()">Login here</a>' : 'Don\'t have an account? <a href="#" onclick="toggleAuth()">Sign up here</a>';
-        }
-
-        document.getElementById("auth-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            let hashedPassword = CryptoJS.SHA256(password).toString();
-
-            if (isSignUp) {
-                if (localStorage.getItem(username)) {
-                    alert("Username already exists. Please choose another.");
-                } else {
-                    localStorage.setItem(username, hashedPassword);
-                    localStorage.setItem("isLoggedIn", "true");
-                    alert("Account created successfully!");
-                    window.location.href = "home.html"; // Redirect to home page
-                }
-            } else {
-                if (localStorage.getItem(username) === hashedPassword) {
-                    localStorage.setItem("isLoggedIn", "true");
-                    alert("Login successful!");
-                    window.location.href = "home.html"; // Redirect to home page
-                } else {
-                    document.getElementById("error-message").classList.remove("hidden");
-                }
-            }
-        });
-
-        function adminAccess() {
-            localStorage.setItem("isLoggedIn", "true");
-            window.location.href = "home.html";
-        }
-
-        // Redirect to home if already logged in
-        window.onload = function() {
-            if (localStorage.getItem("isLoggedIn") === "true") {
-                window.location.href = "home.html"; // Redirect if already logged in
-            }
-        };
-    </script>
-
-    <style>
-        #admin-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: crimson;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-    </style>
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevent the default form submission
+      window.location.href = 'index.html'; // Redirect to the dashboard
+    });
+  </script>
 </body>
 </html>

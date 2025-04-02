@@ -1,15 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthcare Portal</title>
-    <script>
-        window.onload = function() {
-            window.location.href = "login.html"; // Redirects to login page on load
-        };
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="dashboard">
+    <!-- Log Out Button -->
+    <button id="logout-btn" class="logout-button">Log Out</button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Sidebar Top Navigation -->
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="account.html" class="nav-link">Account</a>
+        <a href="results-summary.html" class="nav-link active">Summary</a>
+      </nav>
+      <!-- Horizontal Divider -->
+      <div class="sidebar-header">
+        <img src="images/profile-placeholder.jpg" alt="Profile Picture" class="profile-pic">
+        <h1>Andrea Rivera</h1>
+        <h2>Non-Anemic: 10 g/dL</h2>
+        <p><strong>Patient ID:</strong> 789087</p>
+        <button id="more-info-btn">More patient info</button>
+        <div id="patient-info" class="hidden">
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Blood Type:</strong> O+</p>
+          <p><strong>Condition:</strong> Non-Anemic</p>
+        </div>
+      </div>
+      <!-- Notification Banner -->
+      <div class="notification-banner">
+        <p><strong>Message from Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+      </div>
+      <button id="contact-pmp-btn" class="sidebar-button">Contact PMP</button>
+    </aside>
+
+    <!-- Modal Popup -->
+    <div id="contact-pmp-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Contact PMP</h2>
+        <p>Please provide your message or inquiry below:</p>
+        <textarea placeholder="Type your message here..."></textarea>
+        <button class="modal-submit-btn">Send</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Doctor's Notes -->
+      <div class="card doctors-notes-card">
+        <h3>Doctor's Notes</h3>
+        <p class="note-date"><strong>Date:</strong> March 20, 2025</p>
+        <div class="note-content">
+          <p><strong>Note:</strong> Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
+        </div>
+      </div>
+
+      <!-- Appointment Card -->
+      <div class="card appointment-card">
+        <div class="appointment-details">
+          <p>Today, March 23</p>
+          <p><strong>10:30 AM</strong></p>
+          <h1>Dr. Ruiz</h1>
+        </div>
+        <div class="appointment-image">
+          <img src="images/doctor-placeholder.png" alt="Doctor Image">
+        </div>
+      </div>
+
+      <!-- Results Summary Card -->
+      <div class="card results-summary-card">
+        <h3>Your Results</h3>
+        <p>Your new results are on their way.</p>
+        <div class="status">
+          <span class="status-sent">✔ Sent</span>
+          <span>□ Delivered</span>
+          <span>□ Received</span>
+        </div>
+        <div class="internal-card">
+          <div class="text-content">
+            <p>Last Results: <strong>13 g/dL</strong></p>
+            <p class="status-text">Non-Anemic</p>
+            <p>Received Mar 13, 2025 from Dr. Ruiz</p>
+          </div>
+          <div class="image-content">
+            <img src="images/iris-placeholder.png" alt="Doctor Image">
+          </div>
+        </div>
+      </div>
+
+      <!-- Anemia Plot Card -->
+      <div class="card anemia-plot-card">
+        <h3>Anemia Plot</h3>
+        <div class="chart">
+          <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Y-Axis Labels -->
+            <text x="5" y="20" font-size="10" fill="#333">16</text>
+            <text x="5" y="50" font-size="10" fill="#333">12</text>
+            <text x="5" y="80" font-size="10" fill="#333">8</text>
+            <text x="5" y="110" font-size="10" fill="#333">4</text>
+            <text x="5" y="140" font-size="10" fill="#333">0</text>
+
+            <!-- Reference Lines -->
+            <line x1="30" y1="100" x2="100%" y2="100" stroke="red" stroke-width="2" stroke-dasharray="5,5" />
+            <line x1="30" y1="30" x2="100%" y2="30" stroke="green" stroke-width="2" stroke-dasharray="5,5" />
+
+            <!-- Bars -->
+            <rect x="50" y="100" width="20" height="50" fill="red"></rect>
+            <rect x="90" y="70" width="20" height="80" fill="green"></rect>
+            <rect x="130" y="90" width="20" height="60" fill="green"></rect>
+            <rect x="170" y="120" width="20" height="30" fill="red"></rect>
+            <rect x="210" y="60" width="20" height="90" fill="green"></rect>
+
+            <!-- X-Axis Labels -->
+            <text x="50" y="170" font-size="10" fill="#333">Mar 1</text>
+            <text x="90" y="170" font-size="10" fill="#333">Mar 5</text>
+            <text x="130" y="170" font-size="10" fill="#333">Mar 10</text>
+            <text x="170" y="170" font-size="10" fill="#333">Mar 15</text>
+            <text x="210" y="170" font-size="10" fill="#333">Mar 20</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Upload Card -->
+      <div class="card upload-card">
+        <h3>Upload Eye Image</h3>
+        <div class="upload-box">
+          <label for="file-upload" style="cursor: pointer;">Upload Eye Image or drop it here</label>
+          <input type="file" id="file-upload" style="display: none;">
+        </div>
+      </div>
+
+      <!-- Past Results Card -->
+      <div class="card past-results-card">
+        <h3>Past Results</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Hg (g/dL)</th>
+              <th>Anemia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mar 13, 2025</td>
+              <td>4:33 PM</td>
+              <td>13.0</td>
+              <td>Non-Anemic</td>
+            </tr>
+            <tr>
+              <td>Mar 9, 2025</td>
+              <td>4:21 PM</td>
+              <td>13.4</td>
+              <td>Non-Anemic</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align: center;">
+          <a href="results-summary.html">View more</a>
+        </div>
+      </div>
+
+      <!-- Past Appointments Card -->
+      <div class="card past-appointments-card">
+        <h3>Past Appointments</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Provider</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Follow-Up</td>
+              <td>Apr 12, 2025</td>
+              <td>Dr. Lubezki</td>
+            </tr>
+            <tr>
+              <td>Urgent</td>
+              <td>Feb 1, 2025</td>
+              <td>Dr. Lubezki</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const modal = document.getElementById('contact-pmp-modal');
+    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+    const closeBtn = document.querySelector('.close-btn');
+
+    contactPmpBtn.addEventListener('click', () => {
+      modal.style.display = 'block'; // Show the modal when the button is clicked
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none'; // Hide the modal when the close button is clicked
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none'; // Hide the modal when clicking outside of it
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modal.style.display = 'none'; // Hide the modal when pressing the Escape key
+      }
+    });
+
+    const moreInfoBtn = document.getElementById('more-info-btn');
+    const patientInfo = document.getElementById('patient-info');
+    // const moreDetailsBtn = document.getElementById('more-details-btn');
+
+    moreInfoBtn.addEventListener('click', () => {
+      if (patientInfo.classList.contains('hidden')) {
+        patientInfo.classList.remove('hidden');
+        // moreDetailsBtn.classList.remove('hidden'); // Show "More Information" button
+        moreInfoBtn.textContent = 'Hide patient info';
+      } else {
+        patientInfo.classList.add('hidden');
+        // moreDetailsBtn.classList.add('hidden'); // Hide "More Information" button
+        moreInfoBtn.textContent = 'More patient info';
+      }
+    });
+
+    const logoutBtn = document.getElementById('logout-btn');
+
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = 'login.html'; // Redirect to the login page
+    });
+  </script>
 </body>
 </html>
