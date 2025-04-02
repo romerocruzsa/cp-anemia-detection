@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Log Out Button -->
+    <button id="logout-btn" class="logout-button">Log Out</button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Sidebar Top Navigation -->
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="account.html" class="nav-link active">Account</a>
+        <a href="results-summary.html" class="nav-link">Summary</a>
+      </nav>
+      <!-- Horizontal Divider -->
+      <div class="sidebar-header">
+        <img src="images/profile-placeholder.jpg" alt="Profile Picture" class="profile-pic">
+        <h1>Andrea Rivera</h1>
+        <h2>Non-Anemic: 10 g/dL</h2>
+        <p><strong>Patient ID:</strong> 789087</p>
+        <button id="more-info-btn">More patient info</button>
+        <div id="patient-info" class="hidden">
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Blood Type:</strong> O+</p>
+          <p><strong>Condition:</strong> Non-Anemic</p>
+        </div>
+      </div>
+      <!-- Notification Banner -->
+      <div class="notification-banner">
+        <p><strong>Message from Dr. Ruiz:</strong> Please update your contact information.</p>
+      </div>
+      <button id="contact-pmp-btn" class="sidebar-button">Contact PMP</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="account-dashboard">
+      <!-- Account Information Card -->
+      <div class="card account-info-card">
+        <h3>Account Information</h3>
+        <p><strong>Full Name:</strong> Andrea Rivera</p>
+        <p><strong>Email:</strong> andrea.rivera@example.com</p>
+        <p><strong>Phone:</strong> (787) 555-1234</p>
+        <p><strong>Address:</strong> 123 Main Street, Mayagüez, PR</p>
+        <button id="edit-account-btn" class="sidebar-button">Edit Account Info</button>
+      </div>
+
+      <!-- Medical Information Card -->
+      <div class="card medical-info-card">
+        <h3>Medical Information</h3>
+        <p><strong>Blood Type:</strong> O+</p>
+        <p><strong>Known Allergies:</strong> None</p>
+        <p><strong>Chronic Conditions:</strong> None</p>
+        <p><strong>Primary Physician:</strong> Dr. Ruiz</p>
+        <p><strong>Last Checkup:</strong> March 20, 2025</p>
+        <button id="edit-medical-btn" class="sidebar-button">Edit Medical Info</button>
+      </div>
+
+      <!-- Emergency Contact Card -->
+      <div class="card emergency-contact-card">
+        <h3>Emergency Contact</h3>
+        <p><strong>Contact Name:</strong> Maria Rivera</p>
+        <p><strong>Relationship:</strong> Mother</p>
+        <p><strong>Phone:</strong> (787) 555-5678</p>
+        <p><strong>Address:</strong> 456 Elm Street, Mayagüez, PR</p>
+        <button id="edit-emergency-btn" class="sidebar-button">Edit Emergency Contact</button>
+      </div>
+
+      <!-- Edit Account Modal -->
+      <div id="edit-account-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Edit Account Information</h2>
+          <form id="edit-account-form">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" value="Andrea Rivera" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="andrea.rivera@example.com" required>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" value="(787) 555-1234" required>
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required>123 Main Street, Mayagüez, PR</textarea>
+            <button type="submit" class="modal-submit-btn">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Medical Modal -->
+      <div id="edit-medical-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Edit Medical Information</h2>
+          <form id="edit-medical-form">
+            <label for="blood-type">Blood Type:</label>
+            <input type="text" id="blood-type" name="blood-type" value="O+" required>
+            <label for="allergies">Known Allergies:</label>
+            <input type="text" id="allergies" name="allergies" value="None">
+            <label for="conditions">Chronic Conditions:</label>
+            <input type="text" id="conditions" name="conditions" value="None">
+            <label for="primary-physician">Primary Physician:</label>
+            <input type="text" id="primary-physician" name="primary-physician" value="Dr. Ruiz">
+            <label for="last-checkup">Last Checkup:</label>
+            <input type="date" id="last-checkup" name="last-checkup" value="2025-03-20">
+            <button type="submit" class="modal-submit-btn">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Emergency Contact Modal -->
+      <div id="edit-emergency-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Edit Emergency Contact</h2>
+          <form id="edit-emergency-form">
+            <label for="contact-name">Contact Name:</label>
+            <input type="text" id="contact-name" name="contact-name" value="Maria Rivera" required>
+            <label for="relationship">Relationship:</label>
+            <input type="text" id="relationship" name="relationship" value="Mother" required>
+            <label for="emergency-phone">Phone:</label>
+            <input type="tel" id="emergency-phone" name="emergency-phone" value="(787) 555-5678" required>
+            <label for="emergency-address">Address:</label>
+            <textarea id="emergency-address" name="emergency-address" required>456 Elm Street, Mayagüez, PR</textarea>
+            <button type="submit" class="modal-submit-btn">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Security Settings Card -->
+      <div class="card security-settings-card">
+        <h3>Security Settings</h3>
+        <p><strong>Password:</strong> ********</p>
+        <button id="change-password-btn" class="sidebar-button">Change Password</button>
+      </div>
+
+      <!-- Change Password Modal -->
+      <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Change Password</h2>
+          <form id="change-password-form">
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" name="current-password" required>
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <label for="confirm-password">Confirm New Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <button type="submit" class="modal-submit-btn">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Contact PMP Modal -->
+  <div id="contact-pmp-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Contact PMP</h2>
+      <p>Please provide your message or inquiry below:</p>
+      <textarea placeholder="Type your message here..."></textarea>
+      <button class="modal-submit-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const editAccountModal = document.getElementById('edit-account-modal');
+    const editMedicalModal = document.getElementById('edit-medical-modal');
+    const editEmergencyModal = document.getElementById('edit-emergency-modal');
+    const editAccountBtn = document.getElementById('edit-account-btn');
+    const editMedicalBtn = document.getElementById('edit-medical-btn');
+    const editEmergencyBtn = document.getElementById('edit-emergency-btn');
+    const changePasswordModal = document.getElementById('change-password-modal');
+    const changePasswordBtn = document.getElementById('change-password-btn');
+    const contactPmpModal = document.getElementById('contact-pmp-modal');
+    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+    const closeBtns = document.querySelectorAll('.close-btn');
+    const moreInfoBtn = document.getElementById('more-info-btn');
+    const patientInfo = document.getElementById('patient-info');
+
+    editAccountBtn.addEventListener('click', () => {
+      editAccountModal.style.display = 'block';
+    });
+
+    editMedicalBtn.addEventListener('click', () => {
+      editMedicalModal.style.display = 'block';
+    });
+
+    editEmergencyBtn.addEventListener('click', () => {
+      editEmergencyModal.style.display = 'block';
+    });
+
+    changePasswordBtn.addEventListener('click', () => {
+      changePasswordModal.style.display = 'block';
+    });
+
+    contactPmpBtn.addEventListener('click', () => {
+      contactPmpModal.style.display = 'block';
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        editAccountModal.style.display = 'none';
+        editMedicalModal.style.display = 'none';
+        editEmergencyModal.style.display = 'none';
+        changePasswordModal.style.display = 'none';
+        contactPmpModal.style.display = 'none';
+      });
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === editAccountModal || e.target === editMedicalModal || e.target === editEmergencyModal || e.target === changePasswordModal || e.target === contactPmpModal) {
+        editAccountModal.style.display = 'none';
+        editMedicalModal.style.display = 'none';
+        editEmergencyModal.style.display = 'none';
+        changePasswordModal.style.display = 'none';
+        contactPmpModal.style.display = 'none';
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        editAccountModal.style.display = 'none';
+        editMedicalModal.style.display = 'none';
+        editEmergencyModal.style.display = 'none';
+        changePasswordModal.style.display = 'none';
+        contactPmpModal.style.display = 'none';
+      }
+    });
+
+    moreInfoBtn.addEventListener('click', () => {
+      if (patientInfo.classList.contains('hidden')) {
+        patientInfo.classList.remove('hidden');
+        moreInfoBtn.textContent = 'Hide patient info';
+      } else {
+        patientInfo.classList.add('hidden');
+        moreInfoBtn.textContent = 'More patient info';
+      }
+    });
+
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
