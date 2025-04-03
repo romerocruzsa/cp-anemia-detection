@@ -1,9 +1,5 @@
 {
-    "controller": "http://localhost:8000",
-    "workers": [
-      "http://localhost:9000",
-      "http://localhost:9001"
-    ],
-    "receiver": "http://localhost:8500"
-  }
-  
+  "controller": "http://localhost:8000",
+  "receiver": "http://localhost:8500",
+  "workers": []
+}

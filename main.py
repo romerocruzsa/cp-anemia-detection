@@ -33,9 +33,13 @@ def dir_setup():
 
     return dataset_dir, weights_dir, metrics_dir, edge_input_path
 
-def main():
+def main(config):
+
     dataset_dir, weights_dir, metrics_dir, edge_input_path = dir_setup()
     architecture, compression_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss = params() 
+    if config:
+        print(f"[Main] Running with config: {config}")
+        
     device = cuda_check()
     edge_input_path = "" # Mannual toggle on/off
 
