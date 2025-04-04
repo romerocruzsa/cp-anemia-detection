@@ -1,16 +1,12 @@
 import torch
 import torch.nn.functional as F
-from compression_engine.qat import apply_qat_fx
 from utils.model_metrics import compute_classification_metrics, compute_regression_metrics
 from utils.helper import cuda_check, sw_loss
 
-def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, mode="base", device="cuda"):
+def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, distiller=None, quantization="base", device="cuda"):
     """Trains the model and logs additional metrics."""
     model.to(device)
     model.train()
-
-    if mode == "qat":
-        model = apply_qat_fx(model, dataloader)
 
     total_loss = 0
     total_ce_loss = 0
@@ -40,6 +36,20 @@ def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, mode="
         mse_loss = reg1_loss(reg_pred, hb_level)
         mae_loss = reg2_loss(reg_pred, hb_level)
         loss = sw_loss(ce_loss, mse_loss, 0.7)
+
+        # Distillation loss (if self-distillation is enabled)
+        if distiller is not None:
+            kd_loss = distiller.compute_loss(class_pred, reg_pred, img, multiclass, hb_level) # Knowledge-distillation Loss
+            ce_loss = class_loss(class_pred, multiclass)
+            mse_loss = reg1_loss(reg_pred, hb_level)
+            mae_loss = reg2_loss(reg_pred, hb_level)
+            if kd_loss is not None:
+                loss = kd_loss
+            else:
+                ce_loss = class_loss(class_pred, multiclass)
+                mse_loss = reg1_loss(reg_pred, hb_level)
+                mae_loss = reg2_loss(reg_pred, hb_level)
+                loss = sw_loss(ce_loss, mse_loss, eta_class=distiller.eta_class)
 
         # Backpropagation
         loss.backward()

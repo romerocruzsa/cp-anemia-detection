@@ -1,22 +1,64 @@
 import os
+import shutil
 import torch
 import gc
 import csv
 from torch.ao.quantization.quantize_fx import convert_fx
 
-def params():
+def train_config():
     architecture = "mobilenetv2"
-    compression_mode = "base"
+    quantization_mode = "base"          # Options: 'base', 'qat' or 'ptq'. Note: 'ptq' is still under development
+    pruning_mode = "base"               # Options: 'base' or 'structured'.
+    distillation_mode = "self-distil"   # Options: 'base', 'self-distil'.
+    precision = "fp32"
+    signature = "proto"
     batch_size = 32
     epochs = 3
-    folds = 5
+    folds = 2
 
     # Define loss functions
     cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
     mse_loss = torch.nn.MSELoss()  # Regression loss
     mae_loss = torch.nn.L1Loss()  # Regression loss
 
-    return architecture, compression_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
+    return architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
+
+def input_train_config(config_line):
+    args = config_line.strip().split()
+    architecture = args[0]
+    quantization_mode = args[1]
+    pruning_mode = args[2]
+    distillation_mode = args[3]
+    precision = "fp32"
+    signature = "proto"
+    batch_size = 32
+    epochs = 150
+    folds = 5
+
+    cross_entropy_loss = torch.nn.CrossEntropyLoss()
+    mse_loss = torch.nn.MSELoss()
+    mae_loss = torch.nn.L1Loss()
+
+    return (architecture, signature, quantization_mode, precision, 
+            pruning_mode, distillation_mode, batch_size, epochs, folds, 
+            cross_entropy_loss, mse_loss, mae_loss)
+
+
+def print_train_config(config):
+    print("="*100)
+    print(f"[Setup] Model Architecture:     \t\t{config[0]}")
+    print(f"[Setup] Signature:              \t\t{config[1]}")
+    print(f"[Setup] Quantization Mode:      \t\t{config[2]}")
+    print(f"[Setup] Precision:              \t\t{config[3]}")
+    print(f"[Setup] Pruning Mode:           \t\t{config[4]}")
+    print(f"[Setup] Distillation Mode:      \t\t{config[5]}")
+    print(f"[Setup] Batch Size:             \t\t{config[6]}")
+    print(f"[Setup] Epochs:                 \t\t{config[7]}")
+    print(f"[Setup] Cross-validation Folds: \t\t{config[8]}")
+    print(f"[Setup] Classification Loss:    \t\t{config[9]}")
+    print(f"[Setup] Regression Loss (1):    \t\t{config[10]}")
+    print(f"[Setup] Regression Loss (2):    \t\t{config[11]}")
+    print("="*100)
 
 def cuda_check():
     # Default device
@@ -31,6 +73,28 @@ def cuda_check():
 
     print(f"[Setup] Selected device: {device}")
     return device
+
+def clear_folder(folder_path):
+    """
+    Deletes all contents inside the given folder without removing the folder itself.
+    
+    Args:
+        folder_path (str): Path to the folder to clear.
+    """
+    if not os.path.exists(folder_path):
+        print(f"[Warning] Folder '{folder_path}' does not exist.")
+        return
+
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)  # Remove file or symbolic link
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)  # Recursively delete directory
+        except Exception as e:
+            print(f"[Error] Failed to delete {file_path}. Reason: {e}")
+
 
 def get_model_size(model, model_type="pytorch", model_path="model.onnx"):
     """Returns model size in MB"""
@@ -88,18 +152,18 @@ def sw_loss(loss_class, loss_reg, eta_class=0.5):
     total_loss = (eta_class * loss_class) + (eta_reg * loss_reg)
     return total_loss
 
-def save_model(score, model, architecture, signature, dir, mode="base"):
+def save_model(score, model, architecture, signature, dir, distillation="base", quantization="base", pruning="base"):
     # Save best model based on validation accuracy        
-    if mode == "qat":
+    if quantization == "qat":
         qat_model = convert_fx(model.to("cpu"))
         torch.save(
             qat_model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{mode.upper()}.pth",
+            f"{dir}/model_best_accuracy_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
     else:
         torch.save(
             model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{mode.upper()}.pth",
+            f"{dir}/model_best_accuracy_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
     print(f"Best model saved with Accuracy: {score:.4f}")
 
@@ -127,7 +191,7 @@ def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
                         "auc": metrics[6],
                         "r2_score": metrics[7],
                         "mae_loss": metrics[8],
-                        "mse_loss": metrics[9]}
+                        "mse_loss": metrics[9]} 
         else:
             metrics_dict = {
                             "epoch": epoch + 1,
@@ -145,12 +209,12 @@ def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
                             "latency": hw_metrics[0],
                             "malloc_before": hw_metrics[1],
                             "malloc_after": hw_metrics[2],
-                            "max_malloc": hw_metrics[3]}
+                            "max_malloc": hw_metrics[3]}          
         return metrics_dict
     
-def save_metrics(metrics, dir, phase, architecture, signature, mode="base"):
+def save_metrics(metrics, dir, phase, architecture, signature, distillation="base", quantization="base", pruning="base"):
     keys = metrics[0].keys()
-    with open(f"{dir}/{phase}_metrics_{architecture}_{signature}_{mode}.csv", 'w', newline='') as output_file:
+    with open(f"{dir}/{phase}_metrics_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.csv", 'w', newline='') as output_file:
             dict_writer = csv.DictWriter(output_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(metrics)

@@ -6,8 +6,8 @@ from utils.model_metrics import compute_classification_metrics, compute_regressi
 from utils.helper import sw_loss, timed_forward
 from compression_engine.ptq import apply_fp16, apply_static_ptq, apply_int4_awq
 
-def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, mode="base", precision="fp32", device="cpu"):
-    """Evaluates the model with metrics: Precision, Recall, AUC, F1, R², Memory Usage, and Latency."""
+def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, quantization="base", precision="fp32", device="cpu"):
+    """Evaluates "the model with metrics: Precision, Recall, AUC, F1, R², Memory Usage, and Latency."""
     model.to(device)
     model.eval()
 
@@ -28,7 +28,7 @@ def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, mode="base", preci
     torch.cuda.empty_cache()
     gc.collect()
 
-    if mode == "ptq":
+    if quantization == "ptq":
         if precision == "fp16":
             model = apply_fp16(model)
 
@@ -44,7 +44,7 @@ def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, mode="base", preci
             multiclass = multiclass.to(device).long()
             hb_level = hb_level.to(device).unsqueeze(1).float()
 
-            if mode == "ptq" and precision == "fp16":
+            if quantization == "ptq" and precision == "fp16":
                 img, hb_level = img.half(), hb_level.half()
 
             class_pred, reg_pred, stats = timed_forward(model, img)
