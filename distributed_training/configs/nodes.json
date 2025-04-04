@@ -1,5 +1,8 @@
 {
   "controller": "http://localhost:8000",
   "receiver": "http://localhost:8500",
-  "workers": []
+  "workers": [
+    "http://localhost:8000",
+    "http://pi-edge1:9000"
+  ]
 }

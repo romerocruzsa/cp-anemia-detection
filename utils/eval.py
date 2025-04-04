@@ -4,7 +4,7 @@ import numpy as np
 import gc
 from utils.model_metrics import compute_classification_metrics, compute_regression_metrics
 from utils.helper import sw_loss, timed_forward
-from compression_engine.ptq import apply_fp16, apply_static_ptq, apply_int4_awq
+from compression_engine.ptq import apply_fp16, apply_static_ptq#, apply_int4_awq
 
 def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, mode="base", precision="fp32", device="cpu"):
     """Evaluates the model with metrics: Precision, Recall, AUC, F1, R², Memory Usage, and Latency."""

@@ -4,7 +4,7 @@ from compression_engine.qat import apply_qat_fx
 from utils.model_metrics import compute_classification_metrics, compute_regression_metrics
 from utils.helper import cuda_check, sw_loss
 
-def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, mode="base", device="cuda"):
+def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, mode="base", device="cpu"):
     """Trains the model and logs additional metrics."""
     model.to(device)
     model.train()

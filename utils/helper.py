@@ -1,36 +1,42 @@
 import os
 import torch
 import gc
+import time
+import psutil
 import csv
 from torch.ao.quantization.quantize_fx import convert_fx
 
 def params():
     architecture = "mobilenetv2"
     compression_mode = "base"
-    batch_size = 32
-    epochs = 3
-    folds = 5
+    lr = 0.001
+    batch_size = 4
+    epochs = 1
+    folds = 2
 
     # Define loss functions
     cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
     mse_loss = torch.nn.MSELoss()  # Regression loss
     mae_loss = torch.nn.L1Loss()  # Regression loss
 
-    return architecture, compression_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
+    return architecture, compression_mode, lr, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
 
 def cuda_check():
-    # Default device
     global device
-    device = torch.device('cpu')
+    device = torch.device("cpu")  # Default fallback
 
-    # Check for CUDA availability
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        print("[Setup] CUDA is not available, using CPU.")
+    # if torch.cuda.is_available():
+    #     device = torch.device("cuda")
+    #     print("[Setup] CUDA is available. Using GPU.")
+    # elif torch.backends.mps.is_available() and torch.backends.mps.is_built():
+    #     device = torch.device("mps")
+    #     print("[Setup] Apple MPS backend is available. Using MPS.")
+    # else:
+    #     print("[Setup] No GPU found. Using CPU.")
 
     print(f"[Setup] Selected device: {device}")
     return device
+
 
 def get_model_size(model, model_type="pytorch", model_path="model.onnx"):
     """Returns model size in MB"""
@@ -46,38 +52,44 @@ def calibrate_loop(model, calibration_loader):
 
 # Function to measure inference time & memory
 def timed_forward(model, img):
-    """Measures inference time and memory usage for PyTorch, ONNX, and TensorRT."""
-    start_event = torch.cuda.Event(enable_timing=True)
-    end_event = torch.cuda.Event(enable_timing=True)
+    """Measures inference time and memory usage across CPU, CUDA, and MPS."""
+    device = next(model.parameters()).device
 
-    # Clear cache
-    torch.cuda.empty_cache()
     gc.collect()
+    process = psutil.Process(os.getpid())
 
-    # Record memory usage before inference
-    torch.cuda.reset_peak_memory_stats()
-    mem_before = torch.cuda.memory_allocated()
-    max_mem_before = torch.cuda.max_memory_allocated()
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+        torch.cuda.reset_peak_memory_stats()
+        mem_before = torch.cuda.memory_allocated()
+    else:
+        mem_before = process.memory_info().rss  # in bytes
 
-    # Start measuring latency
-    start_event.record()
+    # Start timing
+    start_time = time.perf_counter()
 
-    class_pred, reg_pred = model(img)
+    with torch.no_grad():
+        class_pred, reg_pred = model(img)
 
-    end_event.record()
-    torch.cuda.synchronize()  # Ensure accurate timing
-    latency = start_event.elapsed_time(end_event)  # Time in ms
+    if device.type == "cuda":
+        torch.cuda.synchronize()
 
-    # Record memory usage after inference
-    mem_after = torch.cuda.memory_allocated()
-    max_mem_after = torch.cuda.max_memory_allocated()
+    end_time = time.perf_counter()
+    latency = (end_time - start_time) * 1000  # ms
 
-    # Store stats
+    if device.type == "cuda":
+        mem_after = torch.cuda.memory_allocated()
+        max_mem = torch.cuda.max_memory_allocated()
+    else:
+        mem_after = process.memory_info().rss
+        max_mem = mem_after  # no peak available natively on CPU
+
     stats = {
-        "latency": latency,
-        "malloc_before": mem_before,
-        "malloc_after": mem_after,
-        "max_malloc": max_mem_after,
+        "device": device.type,
+        "latency_ms": latency,
+        "mem_before_mb": mem_before / (1024 ** 2),
+        "mem_after_mb": mem_after / (1024 ** 2),
+        "max_mem_mb": max_mem / (1024 ** 2),
     }
 
     return class_pred, reg_pred, stats

@@ -161,36 +161,42 @@
     async function scanDevices() {
       const deviceSection = document.getElementById("deviceConfigSection");
       const list = document.getElementById("deviceList");
-      deviceSection.style.display = "block"; // ✅ make section visible
+      deviceSection.style.display = "block";
       list.innerHTML = "";
 
-      // Simulated device data (you can replace with real scan later)
-      const devices = [
-        { id: 'nvj0', gpu: true, ram: '8192' },
-        { id: 'nvj1', gpu: true, ram: '8192' },
-        { id: 'pi-edge1', gpu: false, ram: '1024' },
-        { id: 'iphone-13', gpu: false, ram: '4096' }
-      ];
+      try {
+        const res = await fetch("http://localhost:8000/scan");
+        const data = await res.json();
 
-      devices.forEach(device => {
-        const div = document.createElement('div');
-        div.className = 'device-select';
-        div.innerHTML = `
-          <div>
-            <strong>${device.id}</strong><br>
-            <small>${device.ram}MB${device.gpu ? ' • GPU' : ''}</small>
-          </div>
-          <select class="form-select device-role">
-            <option value="none" selected>None</option>
-            <option value="training">Training</option>
-            <option value="inference">Inference</option>
-            <option value="other">Other</option>
-          </select>
-        `;
-        list.appendChild(div);
-      });
+        const devices = data.devices || [];
 
-      logConsole("✅ Device scan complete. Devices loaded into configurator.");
+        if (devices.length === 0) {
+          logConsole("⚠ No devices discovered.");
+          return;
+        }
+
+        devices.forEach(device => {
+          const div = document.createElement('div');
+          div.className = 'device-select';
+          div.innerHTML = `
+            <div>
+              <strong>${device.id}</strong><br>
+              <small>${device.ram}MB${device.gpu ? ' • GPU' : ''}</small>
+            </div>
+            <select class="form-select device-role">
+              <option value="none" selected>None</option>
+              <option value="training">Training</option>
+              <option value="inference">Inference</option>
+              <option value="other">Other</option>
+            </select>`;
+          list.appendChild(div);
+        });
+
+        logConsole(`✅ Device scan complete. Found ${devices.length} devices.`);
+
+      } catch (err) {
+        logConsole("❌ Failed to scan devices: " + err.message);
+      }
     }
 
     function handleDistributedToggle() {

@@ -15,7 +15,8 @@ class DatasetHandler():
         self.sheet_path = os.path.join(data_dir, "Anemia_Data_Collection_Sheet.csv")
         self.transform = transform
         self.test_split = test_split
-        self.sample_size = sample_size
+        # self.sample_size = sample_size
+        self.sample_size = 3
         self.tag = tag
 
         self.data_sheet = None

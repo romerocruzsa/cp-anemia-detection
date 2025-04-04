@@ -2,7 +2,7 @@ import torch
 from torch.ao.quantization import QConfig, QConfigMapping
 from torch.ao.quantization.quantize_fx import prepare_fx, convert_fx
 from torch.ao.quantization.observer import MinMaxObserver
-import modelopt.torch.quantization as mtq
+# import modelopt.torch.quantization as mtq
 from utils.helper import calibrate_loop
 
 def apply_static_ptq(model, dataloader, num_calib_batches=10):
@@ -39,10 +39,10 @@ def apply_fp16(model):
     return fp16_model
 
 # INT4 can be added here if you're using an external library like MIT-HAN Lab's MTQ
-def apply_int4_awq(model, dataloader):
-    """
-    Converts model weights to INT4 using AWQ config for inference.
-    """
-    quant_cfg = mtq.INT4_AWQ_REAL_QUANT_CFG
-    int4_model = mtq.quantize(model, quant_cfg, forward_loop=calibrate_loop(dataloader))
-    return int4_model
+# def apply_int4_awq(model, dataloader):
+#     """
+#     Converts model weights to INT4 using AWQ config for inference.
+#     """
+#     quant_cfg = mtq.INT4_AWQ_REAL_QUANT_CFG
+#     int4_model = mtq.quantize(model, quant_cfg, forward_loop=calibrate_loop(dataloader))
+#     return int4_model

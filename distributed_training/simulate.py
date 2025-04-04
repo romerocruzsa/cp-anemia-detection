@@ -1,62 +1,52 @@
 import os
 import subprocess
-import time
+import time import
 import requests
 import json
 import webbrowser
+from main import main as train_main  # Import your training function
 
 def launch_uvicorn(app_path, port, cwd):
-    return subprocess.Popen(
-        ['uvicorn', app_path, '--port', str(port), '--reload'],
-        cwd=cwd
-    )
+    return subprocess.Popen(['uvicorn', app_path, '--port', str(port), '--reload'], cwd=cwd)
 
 def load_config():    
     config_path = os.path.join(os.path.dirname(__file__), "configs/nodes.json")
     with open(config_path) as f:
         return json.load(f)
 
-# Load configuration
+def run_main_with_config(config_dict):
+    config_path = os.path.join(os.path.dirname(__file__), "..", "training_config.json")
+
+    # Save the config to a temporary file in root
+    with open(config_path, "w") as f:
+        json.dump(config_dict, f)
+
+    # Absolute path to main.py from simulate.py
+    main_py_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "main.py"))
+
+    # Call main.py as subprocess with the config path
+    subprocess.run(["python", main_py_path, config_path])
+
+# Setup
 config = load_config()
 controller_url = config["controller"]
-worker_nodes = config["workers"]
 receiver_url = config["receiver"]
-
-# # Step 0 — Launch result receiver
-# print("[0] Launching result receiver...")
-# receiver_proc = launch_uvicorn("receiver:app", 8500, "receiver")
-# time.sleep(2)
+controller_id = "controller"
 
 # Step 1 — Launch controller
 print("[1] Launching controller...")
 controller_proc = launch_uvicorn("server:app", 8000, "controller")
 time.sleep(2)
 
-# # Step 2 — Launch workers
-# print("[2] Launching workers...")
-# worker_procs = []
-# for i in range(len(worker_nodes)):
-#     port = 9000 + i
-#     proc = launch_uvicorn("client:app", port, "worker")
-#     worker_procs.append(proc)
-# time.sleep(2)
-
-# Step 3 — Launch dashboard (serve frontend)
-print("[3] Launching monitoring dashboard...")
+# Step 2 — Launch dashboard
+print("[2] Launching monitoring dashboard...")
 dashboard_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-dashboard_proc = subprocess.Popen(['python3', '-m', 'http.server', '8600'], cwd=dashboard_root)
-webbrowser.open("http://localhost:8600/ml_dashboard.html")
+dashboard_proc = subprocess.Popen(['python3', '-m', 'http.server', '5500'], cwd=dashboard_root)
 time.sleep(2)
 
-# # Step 4 — Register iPhone and Raspberry Pi
-print("[4] Registering user endpoints to controller...")
+# Step 3 — Register edge devices
+print("[3] Registering user endpoints to controller...")
 devices = [
-    # {
-    #     "id": "ios-13",
-    #     "role": "dashboard",
-    #     "hardware": {"ram": 4096, "gpu": False, "cpu": "Apple A15", "device": "ios-13"},
-    #     "tags": ["mobile", "observer"]
-    # },
     {
         "id": "pi-edge1",
         "role": "inference",
@@ -72,38 +62,41 @@ for device in devices:
     except Exception as e:
         print(f"✗ Failed to register {device['id']}: {e}")
 
-# Step 5 — Trigger distributed training
-print("[5] Sending training tasks to controller...")
+# Step 4 — Trigger distributed training config
+print("[4] Sending training tasks to controller...")
+training_config = {
+    "learningRate": 0.001,
+    "batchSize": 32,
+    "epochs": 1,
+    "selectedRoles": [{"id": controller_id, "role": "training"}]
+}
+
 try:
-    response = requests.post(f"{controller_url}/distribute")
-    results = response.json()
-    print("→ Controller response:", results)
+    response = requests.post(f"{controller_url}/start-training", json=training_config)
+    print("→ Controller response:", response.json())
 except Exception as e:
-    print("✗ Error distributing training:", e)
-    results = {"results": []}
+    print("✗ Error contacting controller:", e)
 
-# Step 6 — Wait for aggregation
-print("[6] Waiting for aggregation...")
-time.sleep(5)
+# Step 5 — If controller is trainer, run training
+if any(role["id"] == controller_id and role["role"] == "training" for role in training_config["selectedRoles"]):
+    print(f"[✓] Local node '{controller_id}' is a trainer. Running local training...")
+    result = train_main(training_config)
+    print("[✓] Training result:", result)
 
-# Step 7 — Optional: Send inference result to Pi (mock)
-print("[7] Sending result to Pi-edge1 (simulated endpoint)...")
-try:
-    final_payload = results["results"][0] if results["results"] else {"error": "No results"}
-    dummy_inference_url = "http://localhost:8700/receive"  # Replace with real if needed
-    res = requests.post(dummy_inference_url, json=final_payload)
-    print("→ Pi-edge1 response:", res.json())
-except Exception as e:
-    print("✗ Could not contact Pi-edge1:", e)
+# # Step 6 — Simulate inference response
+# print("[6] Sending result to Pi-edge1 (simulated endpoint)...")
+# try:
+#     dummy_result = result if result else {"error": "No result"}
+#     dummy_inference_url = "http://localhost:8700/receive"
+#     res = requests.post(dummy_inference_url, json=dummy_result)
+#     print("→ Pi-edge1 response:", res.json())
+# except Exception as e:
+#     print("✗ Could not contact Pi-edge1:", e)
 
-# Step 8 — Hold dashboard open
 print("✓ Simulation complete. Dashboard available for 25 minutes.")
 time.sleep(60 * 25)
 
 # Cleanup
 print("Shutting down processes...")
-# for proc in worker_procs:
-#     proc.terminate()
 controller_proc.terminate()
-# receiver_proc.terminate()
 dashboard_proc.terminate()
