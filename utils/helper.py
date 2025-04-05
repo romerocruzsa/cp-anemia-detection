@@ -5,23 +5,23 @@ import gc
 import csv
 from torch.ao.quantization.quantize_fx import convert_fx
 
-def train_config():
-    architecture = "mobilenetv2"
-    quantization_mode = "base"          # Options: 'base', 'qat' or 'ptq'. Note: 'ptq' is still under development
-    pruning_mode = "base"               # Options: 'base' or 'structured'.
-    distillation_mode = "self-distil"   # Options: 'base', 'self-distil'.
-    precision = "fp32"
-    signature = "proto"
-    batch_size = 32
-    epochs = 3
-    folds = 2
+# def train_config():
+#     architecture = "mobilenetv2"
+#     quantization_mode = "base"          # Options: 'base', 'qat' or 'ptq'. Note: 'ptq' is still under development
+#     pruning_mode = "base"               # Options: 'base' or 'structured'.
+#     distillation_mode = "self-distil"   # Options: 'base', 'self-distil'.
+#     precision = "fp32"
+#     signature = "proto"
+#     batch_size = 32
+#     epochs = 3
+#     folds = 2
 
-    # Define loss functions
-    cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
-    mse_loss = torch.nn.MSELoss()  # Regression loss
-    mae_loss = torch.nn.L1Loss()  # Regression loss
+#     # Define loss functions
+#     cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
+#     mse_loss = torch.nn.MSELoss()  # Regression loss
+#     mae_loss = torch.nn.L1Loss()  # Regression loss
 
-    return architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
+#     return architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
 
 def input_train_config(config_line):
     args = config_line.strip().split()
@@ -214,7 +214,7 @@ def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
     
 def save_metrics(metrics, dir, phase, architecture, signature, distillation="base", quantization="base", pruning="base"):
     keys = metrics[0].keys()
-    with open(f"{dir}/{phase}_metrics_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.csv", 'w', newline='') as output_file:
+    with open(f"{dir}/{phase}/{phase}_metrics_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.csv", 'w', newline='') as output_file:
             dict_writer = csv.DictWriter(output_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(metrics)

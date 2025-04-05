@@ -25,12 +25,13 @@ class MultiModel(nn.Module):
         "head": ["vit"]
     }
 
-    def __init__(self, model_name):
+    def __init__(self, model_name, dropout_p=0.2):
         super().__init__()
 
         # self.quant = QuantStub() # Start quantization
         
         self.model_name = model_name
+        self.dropout_p = dropout_p
 
         if self.model_name not in self.MODEL_MAPPING:
             raise ValueError(f"Model {model_name} not supported")
@@ -42,9 +43,10 @@ class MultiModel(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Dropout(p=0.2),
+            nn.Dropout(p=self.dropout_p),
             nn.Linear(num_ftrs, 128),
             nn.ReLU(),
+            nn.Dropout(p=self.dropout_p),
             nn.Linear(128, 5)
         )
 
