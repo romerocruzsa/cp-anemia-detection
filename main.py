@@ -5,12 +5,14 @@ from compression_engine.qat import apply_qat_fx
 from compression_engine.prune import PruningScheduler
 from compression_engine.kd import EnsembleSelfDistillation
 from utils.model_load import MultiModel
-from utils.helper import train_config, input_train_config, print_train_config, cuda_check, save_model, save_metrics, log_metrics, get_model_size, clear_folder
+from utils.compression_load import compression_config
+from utils.helper import input_train_config, print_train_config, cuda_check, save_model, save_metrics, log_metrics, get_model_size, clear_folder
 from utils.train import train
 from utils.eval import eval
 from torch.utils.data import DataLoader, Subset
 # from torch.quantization.quantize import convert
 from sklearn.model_selection import KFold
+from utils.early_stopping import EarlyStopping
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -27,6 +29,7 @@ def dir_config():
     datasets = ['cp-anemia']
     weights_dir = os.path.expanduser("~/cp-anemia-detection/output/weights")
     metrics_dir = os.path.expanduser("~/cp-anemia-detection/output/metrics")
+    checkpoints_dir = os.path.expanduser("~/cp-anemia-detection/output/checkpoints")
 
     dataset_dir = os.path.join(data_dir, datasets[0])
     anemic_dir = os.path.join(dataset_dir, "Anemic")
@@ -35,10 +38,10 @@ def dir_config():
 
     create_if_missing(dataset_dir, weights_dir, metrics_dir, anemic_dir, non_anemic_dir, os.path.dirname(edge_input_path), verbose=True)
 
-    return dataset_dir, weights_dir, metrics_dir, edge_input_path
+    return dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path
 
 def main():
-    dataset_dir, weights_dir, metrics_dir, edge_input_path = dir_config()
+    dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
     # architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss = train_config()
 
     # Load from sweeps.sh
@@ -79,95 +82,79 @@ def main():
         print("=" * 100)
         print(f"Training Model: {architecture}")
     
-        best_val_acc = -float("inf")  # Track best validation accuracy
         train_metrics_list = []
         val_metrics_list = []
 
+        epochs_per_fold = epochs // folds
 
-        # === MAIN LOOP ===
-        for epoch in range(epochs):
-            print(f"\nEpoch {epoch+1}/{epochs}")
-            fold = 1
+        for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
+            print(f"\n===== \tFold {fold}/{folds} \t=====")
 
-            for train_idx, val_idx in kf.split(range(len(train_dataset))):
+            best_val_acc = -float("inf")  # Track best validation accuracy
 
-                model = MultiModel(architecture).to(device)
-                optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
-                if quantization_mode == "qat":
-                    model = apply_qat_fx(model, train_loader)
+            model = MultiModel(architecture).to(device)
+            optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
-                if pruning_mode != "base":
-                    if pruning_mode == "unstructured":
-                        prune_scheduler = PruningScheduler(
-                            model=model,
-                            start_epoch=2,
-                            end_epoch=int(epochs * 0.8),
-                            interval=2,
-                            amount=0.2,
-                            mode="unstructured")
-                        if epoch >= 2:
-                            prune_scheduler.step(epoch)
-                    
-                    elif pruning_mode == "structured":
-                        prune_scheduler = PruningScheduler(
-                            model=model,
-                            start_epoch=2,
-                            end_epoch=int(epochs * 0.8),
-                            interval=2,
-                            amount=0.2,
-                            mode="structured")
-                        if epoch >= 2:
-                            prune_scheduler.step(epoch)
-                    
-                if distillation_mode == "self-distil":
-                    clear_folder(os.path.expanduser("~/cp-anemia-detection/compression_engine/kd_checkpoints"))
-                    distiller = EnsembleSelfDistillation(
-                        model_fn=lambda: MultiModel(architecture),
-                        save_dir='compression_engine/kd_checkpoints/',
-                        max_teachers=3,
-                        device=device
-                    )
-                else:
-                    distiller = None
+            checkpoint_path = os.path.join(checkpoints_dir, f"{architecture}_{signature}_{quantization_mode}_{pruning_mode}_{distillation_mode}_fold{fold}.pt")
+            if fold > 1 and best_val_acc > 0.75:
+                prev_path = os.path.join(checkpoints_dir, f"{architecture}_{signature}_{quantization_mode}_{pruning_mode}_{distillation_mode}_fold{fold-1}.pt")
+                if os.path.exists(prev_path):
+                    print(f"[Checkpoint] Loading previous best model from fold {fold-1}")
+                    model.load_state_dict(torch.load(prev_path))
 
-                train_subset = Subset(train_dataset, train_idx)
-                val_subset = Subset(train_dataset, val_idx)
+            train_subset = Subset(train_dataset, train_idx)
+            val_subset = Subset(train_dataset, val_idx)
+            train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
+            val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
 
-                train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
-                val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
+            model, prune_scheduler, distiller = compression_config(model,
+                                                                   architecture,
+                                                                   quantization_mode,
+                                                                   pruning_mode, 
+                                                                   distillation_mode, 
+                                                                   epochs,
+                                                                   train_loader)
+            
+            early_stopper = EarlyStopping(patience=12, delta=0.002, mode="max")
 
-                if fold == folds:
-                    # === VALIDATION PHASE ===
-                    phase = "validation"
-                    val_metrics, val_stats = eval(val_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device="cpu")
-                    log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
+            # === MAIN LOOP ===
+            for epoch in range(epochs_per_fold):
+                print(f"\n===== \tEpoch {epoch+1}/{epochs_per_fold} ===== Total Epochs: {epochs} \t=====")
 
-                    if val_metrics[2] > best_val_acc:
-                        best_val_acc = val_metrics[2]
-                        save_model(score=best_val_acc, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
+                # === TRAINING PHASE ===
+                phase = "training"
+                model, train_metrics = train(train_loader, model, cross_entropy_loss, mse_loss, mae_loss, optimizer, distiller=distiller, quantization=quantization_mode, device=device)
+                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics)
 
-                        if distillation_mode == "self-distil":
-                            distiller.update_top_models(model, best_val_acc, epoch)
+                # Store training metrics
+                train_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics, hw_metrics=None)
+                train_metrics_list.append(train_metrics_dict)
 
-                    # Store validation metrics
-                    val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
-                    val_metrics_list.append(val_metrics_dict)
+                # === VALIDATION PHASE ===
+                phase = "validation"
+                val_metrics, val_stats = eval(val_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device="cpu")
+                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
 
-                else:
-                    # === TRAINING PHASE ===
-                    phase = "training"
-                    model, train_metrics = train(train_loader, model, cross_entropy_loss, mse_loss, mae_loss, optimizer, distiller=distiller, quantization=quantization_mode, device=device)
-                    log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics)
+                if val_metrics[2] > best_val_acc:
+                    best_val_acc = val_metrics[2]
 
-                    # Store training metrics
-                    train_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics, hw_metrics=None)
-                    train_metrics_list.append(train_metrics_dict)
+                    if distillation_mode == "self-distil":
+                        distiller.update_top_models(model, best_val_acc, epoch)
+                    save_model(score=best_val_acc, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
+                    torch.save(model.state_dict(), checkpoint_path)
 
-                fold += 1  # Move to next fold
+                early_stopper(val_metrics[2], train_f1=train_metrics[5], val_f1=val_metrics[5], model=model)
+                if early_stopper.early_stop:
+                    print(f"[EarlyStopping] Triggered at epoch {epoch+1} due to validation stagnation or F1 gap.")
+                    break
+
+                # Store validation metrics
+                val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
+                val_metrics_list.append(val_metrics_dict)
 
             save_metrics(train_metrics_list, phase="training", dir=metrics_dir, architecture=architecture, signature=signature, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
             save_metrics(val_metrics_list, phase="validation", dir=metrics_dir, architecture=architecture, signature=signature, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
-
+            
         if quantization_mode == "qat":
             print(f"\n[{quantization_mode.upper()}] Converting to FX Graph Mode")
             save_model(score=best_val_acc, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
