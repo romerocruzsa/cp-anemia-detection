@@ -1,7 +1,7 @@
 # main.sh
 # Each line represents: MODEL_NAME       QUANTIZATION     PRUNING         DISTILLATION
 
-# mobilenetv2        base              base            base
+mobilenetv2        base              base            base
 # # mobilenetv2        qat               base            base
 # # mobilenetv2        base              structured      base
 # # mobilenetv2        base              unstructured    base
@@ -11,7 +11,7 @@
 # # mobilenetv2        base              structured      self-distil
 # # # mobilenetv2        qat               structured      self-distil
 
-# resnet18           base              base            base
+resnet18           base              base            base
 # # resnet18           qat               base            base
 # # resnet18           base              structured      base
 # # resnet18           base              unstructured    base
@@ -21,7 +21,7 @@
 # # resnet18           base              structured      self-distil
 # # # resnet18           qat               structured      self-distil
 
-# densenet121        base              base            base
+densenet121        base              base            base
 # # densenet121        qat               base            base
 # # densenet121        base              structured      base
 # # densenet121        base              unstructured    base
@@ -31,7 +31,7 @@
 # # densenet121        base              structured      self-distil
 # # # densenet121        qat               structured      self-distil
 
-# vgg16              base              base            base
+vgg16              base              base            base
 # # vgg16              qat               base            base
 # # vgg16              base              structured      base
 # # vgg16              base              unstructured    base
@@ -41,7 +41,7 @@
 # # vgg16              base              structured      self-distil
 # # # vgg16              qat               structured      self-distil
 
-# vit-tiny           base              base            base
+vit-tiny           base              base            base
 # # vit-tiny           qat               base            base
 # # vit-tiny           base              structured      base
 # # vit-tiny           base              unstructured    base
@@ -51,7 +51,7 @@
 # # vit-tiny           base              structured      self-distil
 # # # vit-tiny           qat               structured      self-distil
 
-# convnext-tiny      base              base            base
+convnext-tiny      base              base            base
 # # convnext-tiny      qat               base            base
 # # convnext-tiny      base              structured      base
 # # convnext-tiny      base              unstructured    base
@@ -61,7 +61,7 @@
 # # convnext-tiny      base              structured      self-distil
 # # # convnext-tiny      qat               structured      self-distil
 
-# efficientnet-b0    base              base            base
+efficientnet-b0    base              base            base
 # # efficientnet-b0    qat               base            base
 # # efficientnet-b0    base              structured      base
 # # efficientnet-b0    base              unstructured    base
@@ -71,7 +71,7 @@
 # # efficientnet-b0    base              structured      self-distil
 # # # efficientnet-b0    qat               structured      self-distil
 
-# shufflenetv2-0.5x  base              base            base
+shufflenetv2-0.5x  base              base            base
 # # shufflenetv2-0.5x  qat               base            base
 # # shufflenetv2-0.5x  base              structured      base
 # # shufflenetv2-0.5x  base              unstructured    base
@@ -81,7 +81,7 @@
 # # shufflenetv2-0.5x  base              structured      self-distil
 # # # shufflenetv2-0.5x  qat               structured      self-distil
 
-# regnety-400mf      base              base            base
+regnety-400mf      base              base            base
 # # regnety-400mf      qat               base            base
 # # regnety-400mf      base              structured      base
 # # regnety-400mf      base              unstructured    base
