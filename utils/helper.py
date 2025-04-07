@@ -26,16 +26,17 @@ from torch.ao.quantization.quantize_fx import convert_fx
 def input_train_config(config_line):
     args = config_line.strip().split()
     architecture = args[0]
-    quantization_mode = args[1]
-    pruning_mode = args[2]
-    distillation_mode = args[3]
+    quantization_mode = args[2]
+    pruning_mode = args[3]
+    distillation_mode = args[4]
     precision = "fp32"
-    signature = "proto"
+    signature = args[1]
     batch_size = 32
-    epochs = 150
     folds = 5
+    epochs = 150*folds
 
-    cross_entropy_loss = torch.nn.CrossEntropyLoss()
+    # cross_entropy_loss = torch.nn.CrossEntropyLoss()
+    cross_entropy_loss = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
     mse_loss = torch.nn.MSELoss()
     mae_loss = torch.nn.L1Loss()
 
@@ -158,14 +159,14 @@ def save_model(score, model, architecture, signature, dir, distillation="base", 
         qat_model = convert_fx(model.to("cpu"))
         torch.save(
             qat_model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
+            f"{dir}/model_best_loss_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
     else:
         torch.save(
             model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
+            f"{dir}/model_best_loss_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
-    print(f"Best model saved with Accuracy: {score:.4f}")
+    print(f"Best model saved with Loss: {score:.4f}")
 
 def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
     if log_type == "print":

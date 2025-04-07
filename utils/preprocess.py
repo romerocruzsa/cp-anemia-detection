@@ -9,10 +9,10 @@ import cv2
 import numpy as np
 from PIL import Image
 
-class DatasetHandler():
+class CPAnemic():
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
         self.data_dir = data_dir
-        self.sheet_path = os.path.join(data_dir, "Anemia_Data_Collection_Sheet.csv")
+        self.sheet_path = os.path.join(data_dir, "CP-Anemic_Data_Collection_Sheet.csv")
         self.transform = transform
         self.test_split = test_split
         self.sample_size = sample_size
@@ -26,7 +26,9 @@ class DatasetHandler():
         print(f"{self.tag} Loading data sheet...")
         self.data_sheet = pd.read_csv(self.sheet_path)
         severity_mapping = {"Non-Anemic": 0, "Mild": 1, "Moderate": 2, "Severe": 3}
+        # severity_mapping = {"Non-anemic": 0, "Anemic": 1}
         self.data_sheet["SEVERITY_CLASS"] = self.data_sheet["Severity"].map(severity_mapping)
+        # self.data_sheet["SEVERITY_CLASS"] = self.data_sheet["REMARK"].map(severity_mapping)
         if self.sample_size:
             self.data_sheet = self.data_sheet.sample(self.sample_size)
 
@@ -51,8 +53,10 @@ class DatasetHandler():
                     img = self.transform(img)
 
                 multiclass_label = torch.tensor(row['SEVERITY_CLASS'])
+                # binaryclass_label = torch.tensor(row['SEVERITY_CLASS'])
                 hb_level = torch.tensor(row['HB_LEVEL'])
 
+                # return img_id, img, multiclass_label, hb_level
                 return img_id, img, multiclass_label, hb_level
 
         return FeatureDataset(self.data_dir, self.data_sheet, self.transform)
@@ -69,39 +73,12 @@ class DatasetHandler():
         print(f"{self.tag} Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
         return train_set, test_set
 
-    def get_dataloaders(self, batch_size=8, pin_memory=True):
+    def get_dataloaders(self, batch_size=8, pin_memory=False):
         if not self.train_dataset or not self.test_dataset:
             self.get_datasets()
         train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, pin_memory=pin_memory)
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
-    
-    # def save_to_json(self, output_path=" "):
-    #     if self.data_sheet is None:
-    #         self.load_data_sheet()
-
-    #     output_path += "/preprocessed.json"
-    #     data_to_save = []
-
-    #     for idx, row in self.data_sheet.iterrows():
-    #         row_dict = row.to_dict()
-
-    #         # Get image and labels from dataset
-    #         dataset = self.get_features()
-    #         image_tensor, severity_class, hb_level = dataset[idx]
-
-    #         # Convert tensors to JSON-serializable formats
-    #         row_dict["IMAGE_PATH"] = os.path.join(self.data_dir, row['REMARK'], row['IMAGE_ID'] + ".png")
-    #         row_dict["IMAGE_VECTOR"] = image_tensor.tolist()
-    #         row_dict["SEVERITY_CLASS"] = float(severity_class.item())
-    #         row_dict["HB_LEVEL"] = float(hb_level.item())
-
-    #         data_to_save.append(row_dict)
-
-    #     with open(output_path, "w") as f:
-    #         json.dump(data_to_save, f, indent=4)
-
-    #     print(f"{self.tag} Saved {len(data_to_save)} entries to {output_path}")
 
 class EdgeInputHandler():
     def __init__(self, image_path, transform=None, tag=None):
@@ -159,12 +136,6 @@ class EdgeInputHandler():
                     if largest_bbox is None or cw * ch > largest_bbox[2] * largest_bbox[3]:
                             largest_bbox = (x, y, cw, ch)
 
-        # for cnt in contours:
-        #     if cv2.contourArea(cnt) > 5:  # Increased area threshold to eliminate small spots
-        #         x, y, cw, ch = cv2.boundingRect(cnt)
-        #         if x > h // 2:
-        #             cv2.drawContours(output_mask, [cnt], -1, 255, -1)
-
         # Invert mask to keep only unsegmented areas outside conjunctiva
         output_mask = cv2.bitwise_not(output_mask)
 
@@ -203,3 +174,205 @@ class EdgeInputHandler():
             plt.show()
 
         return output_mask, result
+
+class EyesDefyAnemia:
+    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
+        self.data_dir = data_dir
+        self.sheet_path = os.path.join(data_dir, "Eyes-Defy_Data_Collection_Sheet.csv")
+        self.transform = transform
+        self.test_split = test_split
+        self.sample_size = sample_size
+        self.tag = tag
+
+        self.data_sheet = None
+        self.train_dataset = None
+        self.test_dataset = None
+
+    def load_data_sheet(self):
+        print(f"{self.tag} Loading Eyes-Defy-Anemia metadata sheet...")
+        self.data_sheet = pd.read_csv(self.sheet_path)
+        if self.sample_size:
+            self.data_sheet = self.data_sheet.sample(self.sample_size)
+
+        def compute_multiclass_label(row):
+            hb = row['Hb']
+            sex = str(row.get("Sex", "")).strip().upper()
+            try:
+                hb = float(hb)
+                if hb < 8.0:
+                    return 3  # Severe
+                elif hb < 10.0:
+                    return 2  # Moderate
+                elif hb < 12.0:
+                    return 1  # Mild
+                else:
+                    return 0  # Non-anemic
+            except:
+                return -1
+
+        self.data_sheet["SEVERITY_CLASS"] = self.data_sheet.apply(compute_multiclass_label, axis=1)
+
+    def get_features(self):
+        class EyesDefyDataset(Dataset):
+            def __init__(self, base_dir, df, transform=None):
+                self.base_dir = base_dir
+                self.df = df
+                self.transform = transform
+                self.valid_indices = self._validate_images()
+
+            def _validate_images(self):
+                valid = []
+                for i in range(len(self.df)):
+                    row = self.df.iloc[i]
+                    label = row['Label']+"/palpebral"
+                    img_path = os.path.join(self.base_dir, label, row['Palpebral'] if pd.notna(row['Palpebral']) else row['Image'])
+                    try:
+                        with Image.open(img_path) as img:
+                            img.verify()
+                        valid.append(i)
+                    except Exception as e:
+                        continue
+                        # print(f"[Warning] Skipping invalid image at idx {i}: {img_path}")
+                return valid
+
+            def __len__(self):
+                return len(self.valid_indices)
+
+            def __getitem__(self, idx):
+                try:
+                    row_idx = self.valid_indices[idx]
+                    row = self.df.iloc[row_idx]
+                    label = row['Label']+"/palpebral"
+                    hb = row['Hb']
+                    severity_class = row['SEVERITY_CLASS']
+                    img_path = os.path.join(self.base_dir, label, row['Palpebral'] if pd.notna(row['Palpebral']) else row['Image'])
+
+                    image = Image.open(img_path).convert('RGB')
+
+                    if self.transform:
+                        image = self.transform(image)
+
+                    multiclass_label = torch.tensor(severity_class, dtype=torch.long)
+                    hb_level = torch.tensor(hb, dtype=torch.float32) if pd.notna(hb) else torch.tensor(-1.0)
+
+                    return row['Image'], image, multiclass_label, hb_level
+
+                except Exception as e:
+                    print(f"[Warning] Skipping idx {idx} due to unexpected error")
+
+        return EyesDefyDataset(self.data_dir, self.data_sheet, self.transform)
+
+    def get_datasets(self):
+        if self.data_sheet is None:
+            self.load_data_sheet()
+        dataset = self.get_features()
+        train_set, test_set = train_test_split(dataset, test_size=self.test_split, shuffle=True)
+        self.train_dataset = train_set
+        self.test_dataset = test_set
+
+        print(f"{self.tag} Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
+        return train_set, test_set
+
+    def get_dataloaders(self, batch_size=8, pin_memory=True):
+        if not self.train_dataset or not self.test_dataset:
+            self.get_datasets()
+        train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, pin_memory=pin_memory)
+        test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
+        return train_loader, test_loader
+    
+class UnifiedAnemiaDataset:
+    def __init__(self, cp_dir, eyes_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
+        self.cp_dir = cp_dir
+        self.eyes_dir = eyes_dir
+        self.transform = transform
+        self.test_split = test_split
+        self.sample_size = sample_size
+        self.tag = tag
+
+        self.dataset = None
+        self.train_dataset = None
+        self.test_dataset = None
+
+    def load_combined_data(self):
+        # Load CP-Anemic
+        cp_sheet = pd.read_csv(os.path.join(self.cp_dir, "CP-Anemic_Data_Collection_Sheet.csv"))
+        cp_sheet["Dataset"] = "cp"
+        cp_sheet["SEVERITY_CLASS"] = cp_sheet["Severity"].map({"Non-Anemic": 0, "Mild": 1, "Moderate": 2, "Severe": 3})
+        cp_sheet["IMG_PATH"] = cp_sheet.apply(lambda row: os.path.join(self.cp_dir, row["REMARK"], row["IMAGE_ID"] + ".png"), axis=1)
+
+        # Load Eyes-Defy
+        eyes_sheet = pd.read_csv(os.path.join(self.eyes_dir, "Eyes-Defy_Data_Collection_Sheet.csv"))
+        eyes_sheet["Dataset"] = "eyes"
+        
+        def severity(row):
+            try:
+                hb = float(row["Hb"])
+                if hb < 8.0:
+                    return 3
+                elif hb < 10.0:
+                    return 2
+                elif hb < 12.0:
+                    return 1
+                else:
+                    return 0
+            except:
+                return -1
+
+        eyes_sheet["SEVERITY_CLASS"] = eyes_sheet.apply(severity, axis=1)
+        eyes_sheet["IMG_PATH"] = eyes_sheet.apply(lambda row: os.path.join(self.eyes_dir, row["Label"], row["Palpebral"] if pd.notna(row["Palpebral"]) else row["Image"]), axis=1)
+
+        combined = pd.concat([cp_sheet, eyes_sheet], ignore_index=True)
+        if self.sample_size:
+            combined = combined.sample(self.sample_size)
+        self.dataset = combined
+
+
+    def get_dataset(self):
+        class CombinedDataset(Dataset):
+            def __init__(self, df, transform=None):
+                self.df = df.reset_index(drop=True)
+                self.transform = transform
+                self.valid_indices = self._validate()
+
+            def _validate(self):
+                valid = []
+                for i in range(len(self.df)):
+                    path = self.df.iloc[i]["IMG_PATH"]
+                    try:
+                        with Image.open(path) as img:
+                            img.verify()
+                        valid.append(i)
+                    except:
+                        continue
+                return valid
+
+            def __len__(self):
+                return len(self.valid_indices)
+
+            def __getitem__(self, idx):
+                row = self.df.iloc[self.valid_indices[idx]]
+                image = Image.open(row["IMG_PATH"]).convert('RGB')
+                if self.transform:
+                    image = self.transform(image)
+                multiclass_label = torch.tensor(row["SEVERITY_CLASS"], dtype=torch.long)
+                hb_level = torch.tensor(row.get("Hb", row.get("HB_LEVEL", -1)), dtype=torch.float32)
+                return row.get("IMAGE_ID", row.get("Image")), image, multiclass_label, hb_level
+
+        return CombinedDataset(self.dataset, self.transform)
+
+    def get_datasets(self):
+        if self.dataset is None:
+            self.load_combined_data()
+        dataset = self.get_dataset()
+        train_set, test_set = train_test_split(dataset, test_size=self.test_split, shuffle=True)
+        self.train_dataset = train_set
+        self.test_dataset = test_set
+        print(f"[Unified] Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
+        return train_set, test_set
+
+    def get_dataloaders(self, batch_size=8, pin_memory=True):
+        if not self.train_dataset or not self.test_dataset:
+            self.get_datasets()
+        train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, pin_memory=pin_memory)
+        test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
+        return train_loader, test_loader

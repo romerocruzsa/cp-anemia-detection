@@ -1,7 +1,7 @@
 import torch
 
 class EarlyStopping:
-    def __init__(self, patience=10, delta=0.001, mode="max", f1_gap_threshold=.25):
+    def __init__(self, patience=10, delta=0.001, mode="max", f1_gap_threshold=.50):
         """
         Args:
             patience (int): How long to wait after last improvement.
@@ -18,11 +18,11 @@ class EarlyStopping:
         self.f1_gap_threshold = f1_gap_threshold
 
     def __call__(self, val_score, train_f1=None, val_f1=None, model=None):
-        # Check if F1 gap triggers early stopping
+        # Check if Accuracy gap triggers early stopping
         if self.f1_gap_threshold is not None and train_f1 is not None and val_f1 is not None:
             gap = abs(train_f1 - val_f1)
             if gap > self.f1_gap_threshold:
-                print(f"[EarlyStopping] Triggered due to F1 gap: {gap:.4f} > {self.f1_gap_threshold}")
+                print(f"[EarlyStopping] Triggered due to Accuracy gap: {gap:.4f} > {self.f1_gap_threshold}")
                 self.early_stop = True
                 return
 

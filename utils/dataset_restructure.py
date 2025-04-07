@@ -81,7 +81,7 @@ def restructure_dataset(file_df, meta_df):
             "Sex": row.get("Sex", "NA"),
             "Label": label,
             "Image": image_name,
-            # "Palpebral": masks["palpebral"],
+            "Palpebral": masks["palpebral"],
             # "Forniceal": masks["forniceal"],
             # "Forniceal+Palpebral": masks["forniceal_palpebral"]
         })
