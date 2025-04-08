@@ -1,10 +1,15 @@
-from fastapi import FastAPI, HTTPException
+from typing import Dict
+from fastapi import Body, FastAPI, HTTPException
 from HANDLER.patients import PatientsHandler
+from HANDLER.ImageUploads import ImageUploadsHandler
+from HANDLER.AnemiaAnalysis import AnemiaAnalysisHandler
 import asyncpg
 import logging
 
 
 handler = PatientsHandler()
+image_handler = ImageUploadsHandler()
+analysis_handler = AnemiaAnalysisHandler()
 app = FastAPI()
 
 
@@ -39,8 +44,15 @@ async def get_patient_by_id(pid: int):
     return await handler.getPatientsByID(pid)
 
 @app.post("/insert_patient")
-async def insert_patient(data: dict):
-    return await handler.insertPatient(data)
+async def insert_patient(data: Dict = Body(...)):
+    try:
+        result = await handler.insertPatient(data)
+        if isinstance(result, dict):
+            return result
+        return result.body
+    except Exception as e:
+        logging.error(f"Error in insert_patient: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.delete("/delete_patient/{pid}")
 async def delete_patient(pid: int):
@@ -49,5 +61,29 @@ async def delete_patient(pid: int):
 @app.put("/update_patient/{pid}")
 async def update_patient(pid: int, data: dict):
     return await handler.putByID(pid, data)
+
+@app.post("/upload/{patient_id}")
+async def upload_image(patient_id: int, image_path: str):
+    return await image_handler.createUpload(patient_id, image_path)
+
+@app.get("/uploads/{patient_id}")
+async def get_patient_uploads(patient_id: int):
+    return await image_handler.getUploadsByPatient(patient_id)
+
+@app.put("/upload/{image_id}/status")
+async def update_upload_status(image_id: int, status: str):
+    return await image_handler.updateUploadStatus(image_id, status)
+
+@app.post("/analysis/{image_id}")
+async def create_analysis(image_id: int, status: str, confidence: float):
+    return await analysis_handler.createAnalysis(image_id, status, confidence)
+
+@app.get("/analysis/{image_id}")
+async def get_analysis(image_id: int):
+    return await analysis_handler.getAnalysisByImage(image_id)
+
+@app.get("/analysis/patient/{patient_id}")
+async def get_patient_history(patient_id: int):
+    return await analysis_handler.getPatientHistory(patient_id)
 
 
