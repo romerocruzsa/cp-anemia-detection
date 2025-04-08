@@ -1,10 +1,12 @@
 from CONFIG.db_config import pg_config
-import json
-import asyncpg
 import numpy as np
+import asyncpg
+import logging
 
+
+logging.basicConfig(level=logging.ERROR)
+print(pg_config)
 class PatientsDAO:
-
     def __init__(self):
         self.db_config = pg_config
         self.pool = None
@@ -12,6 +14,7 @@ class PatientsDAO:
     async def connect(self):
         if self.pool is None:
             try:
+                print("Creating connection pool...")
                 self.pool = await asyncpg.create_pool(
                     host=self.db_config['host'],
                     database=self.db_config['dbname'],
@@ -19,60 +22,70 @@ class PatientsDAO:
                     password=self.db_config['password'],
                     port=self.db_config['port']
                 )
+                print("Connection pool created successfully!")
             except Exception as e:
-                print.error(f"An error occurred: {e}")
+                logging.error(f"An error occurred while creating the connection pool: {e}")
+                raise
     
     async def getPatients(self):
+        await self.connect()
         async with self.pool.acquire() as conn:
             try:
-                query = "SELECT PatientID, FirstName, LastName, DateOfBirth, Gender, Email, CreatedAt FROM Patients;"
-                return await conn.fetch(query)
+                query = "SELECT PatientID, FirstName, LastName, DateOfBirth, Gender, Email, CreatedAt FROM patients;"
+                result = await conn.fetch(query)
+                print(result)
+                logging.info(f"Query result: {result}")
+                return result
             except Exception as e:
-                print.error(f"Error fetching patients: {e}")
+                logging.error(f"Error fetching patients: {e}")
                 return None
 
     async def getPatientsById(self, pid):
+        await self.connect()
         async with self.pool.acquire() as conn:
             try:
                 query = "SELECT PatientID, FirstName, LastName, DateOfBirth, Gender, Email, CreatedAt FROM Patients WHERE PatientID = $1;"
                 return await conn.fetchrow(query, pid)
             except Exception as e:
-                print.error(f"Error fetching patient by ID {pid}: {e}")
+                logging.error(f"Error fetching patient by ID {pid}: {e}")
                 return None
 
-    async def insertPatients(self, id, fname, lname, dob, gender, email, createdAt):
+    async def insertPatients(self, fname, lname, dob, gender, email):
+        await self.connect()
         async with self.pool.acquire() as conn:
             try:
                 query = """
-                INSERT INTO Patients (PatientID, FirstName, LastName, DateOfBirth, Gender, Email, CreatedAt)
-                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING PatientID;
+                INSERT INTO Patients ( FirstName, LastName, DateOfBirth, Gender, Email)
+                VALUES ($1, $2, $3, $4, $5) RETURNING PatientID;
                 """
-                return await conn.fetchval(query, id, fname, lname, dob, gender, email, createdAt)
+                return await conn.fetchval(query, fname, lname, dob, gender, email)
             except Exception as e:
-                print.error(f"Error inserting patient: {e}")
+                logging.error(f"Error inserting patient: {e}")
                 return None
 
     async def deletePatientsById(self, pid):
+        await self.connect()
         async with self.pool.acquire() as conn:
             try:
                 query = "DELETE FROM Patients WHERE PatientID = $1;"
                 result = await conn.execute(query, pid)
                 return result
             except Exception as e:
-                print.error(f"Error deleting patient {pid}: {e}")
+                logging.error(f"Error deleting patient {pid}: {e}")
                 return None
 
-    async def putPatientsByID(self, pid, fname, lname, dob, gender, email, createdAt):
+    async def putPatientsByID(self,pid,fname, lname, dob, gender, email):
+        await self.connect()
         async with self.pool.acquire() as conn:
             try:
                 query = """
                 UPDATE Patients SET FirstName = $1, LastName = $2, DateOfBirth = $3, 
-                Gender = $4, Email = $5, CreatedAt = $6 WHERE PatientID = $7;
+                Gender = $4, Email = $5 WHERE PatientID = $6;
                 """
-                result = await conn.execute(query, fname, lname, dob, gender, email, createdAt, pid)
+                result = await conn.execute(query, fname, lname, dob, gender, email,pid)
                 return result
             except Exception as e:
-                print.error(f"Error updating patient {pid}: {e}")
+                logging.error(f"Error updating patient {pid}: {e}")
                 return None
 
     async def close_connection(self):
@@ -80,5 +93,4 @@ class PatientsDAO:
             try:
                 await self.pool.close()
             except Exception as e:
-                print.error(f"Error closing database connection: {e}")
-    
+                logging.error(f"Error closing database connection: {e}")

@@ -1,16 +1,17 @@
 from fastapi.responses import JSONResponse
+from datetime import datetime
 from DAO.patients import PatientsDAO
 
 class PatientsHandler:
     def mapToDict(self, t):
         return {
-            'PatientID': t["PatientID"],
-            'FirstName': t["FirstName"],
-            'LastName': t["LastName"],
-            'DateOfBirth': t["DateOfBirth"],
-            'Gender': t["Gender"],
-            'Email': t["Email"],
-            'CreatedAt': t["CreatedAt"]
+            'PatientID': t["patientid"],
+            'FirstName': t["firstname"],
+            'LastName': t["lastname"],
+            'DateOfBirth': t["dateofbirth"].isoformat() if t["dateofbirth"] else None,
+            'Gender': t["gender"],
+            'Email': t["email"],
+            'CreatedAt': t["createdat"].isoformat() if t["createdat"] else None
         }
 
     async def getAllPatients(self):
@@ -34,17 +35,23 @@ class PatientsHandler:
             return JSONResponse(content={'error': f'Error retrieving patient {pid}: {e}'}, status_code=500)
 
     async def insertPatient(self, data):
-        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email', 'CreatedAt']
+        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email']
         if all(field in data for field in required_fields):
             dao = PatientsDAO()
             try:
-                patient_id = await dao.insertPatients(None, data['FirstName'], data['LastName'], data['DateOfBirth'], data['Gender'], data['Email'], data['CreatedAt'])
-                data['PatientID'] = patient_id
-                return JSONResponse(content=data, status_code=201)
+                date_of_birth = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
+                patient_id = await dao.insertPatients(
+                    data['FirstName'],
+                    data['LastName'],
+                    date_of_birth,  
+                    data['Gender'],
+                    data['Email']
+                )
+                return {"PatientID": patient_id, **data}
             except Exception as e:
-                return JSONResponse(content={'error': f'Error inserting patient: {e}'}, status_code=500)
+                raise JSONResponse(status_code=500, detail=f"Error inserting patient: {e}")
         else:
-            return JSONResponse(content={"error": "Bad data or missing fields"}, status_code=400)
+            raise JSONResponse(status_code=400, detail="Bad data or missing fields")
 
     async def deleteById(self, pid):
         dao = PatientsDAO()
@@ -58,16 +65,22 @@ class PatientsHandler:
             return JSONResponse(content={'error': f'Error deleting patient {pid}: {e}'}, status_code=500)
 
     async def putByID(self, pid, data):
-        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email', 'CreatedAt']
+        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email']
         if all(field in data for field in required_fields):
             dao = PatientsDAO()
             try:
-                result = await dao.putPatientsByID(pid, data['FirstName'], data['LastName'], data['DateOfBirth'], data['Gender'], data['Email'], data['CreatedAt'])
+                date_of_birth = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
+                result = await dao.putPatientsByID(
+                    pid,
+                    data['FirstName'],
+                    data['LastName'],
+                    date_of_birth,
+                    data['Gender'],
+                    data['Email'],
+                )
                 if result:
                     return JSONResponse(content=data, status_code=200)
                 else:
                     return JSONResponse(content={"error": "Not found"}, status_code=404)
             except Exception as e:
                 return JSONResponse(content={'error': f'Error updating patient {pid}: {e}'}, status_code=500)
-        else:
-            return JSONResponse(content={"error": "Bad data or missing fields"}, status_code=400)
