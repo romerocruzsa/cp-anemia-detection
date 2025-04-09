@@ -8,6 +8,7 @@ from utils.train import train
 from utils.eval import eval
 from torch.utils.data import DataLoader, Subset
 from sklearn.model_selection import KFold
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from utils.early_stopping import EarlyStopping
 
 import warnings
@@ -22,7 +23,7 @@ def create_if_missing(*paths, verbose=False):
 
 def dir_config():    
     data_dir = os.path.expanduser("~/cp-anemia-detection/data/")
-    datasets = "cp-anemic" # Options: "all", "cp-anemic", "eyes-defy-anemia"
+    datasets = "fingernail-anemia" # Options: "all", "cp-anemic", "eyes-defy-anemia"
     weights_dir = os.path.expanduser("~/cp-anemia-detection/output/weights")
     metrics_dir = os.path.expanduser("~/cp-anemia-detection/output/metrics")
     checkpoints_dir = os.path.expanduser("~/cp-anemia-detection/output/checkpoints")
@@ -38,9 +39,51 @@ def dir_config():
 
     return dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path
 
+def train_config():
+    dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
+    edge_input_path = "" # Mannual toggle on/off
+
+    # Determine mode based on whether edge input file exists
+    if os.path.exists(edge_input_path):
+        print("[Data] Edge input mode detected.")
+        dataloader = extract_data(edge_input_path, batch_size=1)
+        print("[Edge Mode] Ready to run model on edge input batch")
+
+    else:
+        print(f"[Data] Dataset mode detected.")
+        if dataset_dir.endswith("fingernail-anemia"):
+            dataset, dataloader = extract_data(dataset_type="fingernail-anemia",
+                                                dataset_dir=dataset_dir,
+                                                batch_size=32)
+            train_dataset, test_dataset = dataset
+            train_loader, test_loader = dataloader
+            print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
+            return train_dataset, train_loader, test_dataset, test_loader
+        
+        elif dataset_dir.endswith("cp-anemic"):
+            dataset, dataloader = extract_data(dataset_type="cp-anemic",
+                                                dataset_dir=dataset_dir,
+                                                batch_size=32)
+            train_dataset, test_dataset = dataset
+            train_loader, test_loader = dataloader
+            print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
+            return train_dataset, train_loader, test_dataset, test_loader
+
+        elif dataset_dir.endswith("eyes-defy-anemia"):
+            dataset, dataloader = extract_data(dataset_type="eyes-defy-anemia",
+                                                dataset_dir=dataset_dir,
+                                                batch_size=32)
+            train_dataset, test_dataset = dataset
+            train_loader, test_loader = dataloader
+            print("[Dataset: Eyes-Defy-Anemia] Ready for training and evaluation.")
+            return train_dataset, train_loader, test_dataset, test_loader
+
+
 def main():
     dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
-    # architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss = train_config()
+    train_dataset, train_loader, test_dataset, test_loader = train_config()
+
+    device = cuda_check()
 
     # Load from sweeps.sh
     with open("base_testing.sh", "r") as f:
@@ -54,45 +97,14 @@ def main():
         (architecture, signature, quantization_mode, precision, 
         pruning_mode, distillation_mode, batch_size, epochs, folds, 
         cross_entropy_loss, mse_loss, mae_loss) = input_train_config(sweep_line)
-
         print_train_config(input_train_config(sweep_line))
-
-        device = cuda_check()
-        edge_input_path = "" # Mannual toggle on/off
-
-        # Determine mode based on whether edge input file exists
-        if os.path.exists(edge_input_path):
-            print("[Data] Edge input mode detected.")
-            dataloader = extract_data(edge_input_path, batch_size=1)
-            print("[Edge Mode] Ready to run model on edge input batch")
-
-        else:
-            print("[Data] Dataset mode detected.")
-            # if dataset_dir == None:
-            #     dataset, dataloader = extract_data("all", batch_size=batch_size)
-            #     train_dataset, test_dataset = dataset
-            #     train_loader, test_loader = dataloader
-            #     print("[Dataset: CP-AnemiC & Eyes-Defy-Anemia] Ready for training and evaluation.")
-            if dataset_dir.endswith("cp-anemic"):
-                dataset, dataloader = extract_data(dataset_type="cp-anemic",
-                                                   dataset_dir=dataset_dir,
-                                                   batch_size=batch_size)
-                train_dataset, test_dataset = dataset
-                train_loader, test_loader = dataloader
-                print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
-            elif dataset_dir.endswith("eyes-defy-anemia"):
-                dataset, dataloader = extract_data(dataset_type="eyes-defy-anemia",
-                                                   dataset_dir=dataset_dir,
-                                                   batch_size=batch_size)
-                train_dataset, test_dataset = dataset
-                train_loader, test_loader = dataloader
-                print("[Dataset: Eyes-Defy-Anemia] Ready for training and evaluation.")
 
         # Set up 5-Fold Cross Validation
         kf = KFold(n_splits=folds, shuffle=True, random_state=42)
 
         print("=" * 100)
         print(f"Training Model: {architecture}")
+        torch.cuda.empty_cache()
     
         train_metrics_list = []
         val_metrics_list = []
@@ -105,19 +117,27 @@ def main():
             best_val_loss = float("inf")  # Track best validation accuracy
 
             model = MultiModel(architecture).to(device)
-            optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
-
-            checkpoint_path = os.path.join(checkpoints_dir, f"{architecture}_{signature}_{quantization_mode}_{pruning_mode}_{distillation_mode}_fold{fold}.pt")
-            # if fold > 1 and best_val_loss < 1.0:
-            #     prev_path = os.path.join(checkpoints_dir, f"{architecture}_{signature}_{quantization_mode}_{pruning_mode}_{distillation_mode}_fold{fold-1}.pt")
-            #     if os.path.exists(prev_path):
-            #         print(f"[Checkpoint] Loading previous best model from fold {fold-1}")
-            #         model.load_state_dict(torch.load(prev_path))
+            # import pdb; pdb.set_trace()
+            optimizer = torch.optim.Adam([
+                {'params': model.encoder_nail.parameters(), 'lr': 1e-4},
+                {'params': model.encoder_skin.parameters(), 'lr': 1e-4},
+                {'params': model.classifier_head.parameters(), 'lr': 5e-4},
+                {'params': model.quantile_head.parameters(), 'lr': 5e-4}
+            ])
+            scheduler = ReduceLROnPlateau(
+                optimizer,
+                mode='min',
+                factor=0.1,       # big drop from 1e-4 → 1e-5
+                patience=5,       # decay quickly if val loss stagnates
+                cooldown=1,       # wait 1 epoch before monitoring again
+                min_lr=1e-6,
+                verbose=True
+            )
 
             train_subset = Subset(train_dataset, train_idx)
             val_subset = Subset(train_dataset, val_idx)
-            train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True)#, pin_memory=True)
-            val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False)#, pin_memory=True)
+            train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
+            val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
 
             model, prune_scheduler, distiller = compression_config(model,
                                                                    architecture,
@@ -127,7 +147,7 @@ def main():
                                                                    epochs,
                                                                    train_loader)
             
-            # early_stopper = EarlyStopping(patience=12, delta=0.002, mode="min")
+            early_stopper = EarlyStopping(patience=12, delta=0.002, mode="min")
 
             # === MAIN LOOP ===
             for epoch in range(epochs_per_fold):
@@ -135,7 +155,7 @@ def main():
 
                 # === TRAINING PHASE ===
                 phase = "training"
-                model, train_metrics = train(train_loader, model, cross_entropy_loss, mse_loss, mae_loss, optimizer, distiller=distiller, quantization=quantization_mode, device=device)
+                model, train_metrics = train(train_loader, model, cross_entropy_loss, mse_loss, mae_loss, optimizer, distiller=distiller, quantization=quantization_mode, device="cuda:0")
                 log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics)
 
                 # Store training metrics
@@ -153,12 +173,13 @@ def main():
                     if distillation_mode == "self-distil":
                         distiller.update_top_models(model, best_val_loss, epoch)
                     save_model(score=best_val_loss, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
-                    torch.save(model.state_dict(), checkpoint_path)
+                
+                scheduler.step(val_metrics[0])
+                early_stopper(val_metrics[0], train_f1=train_metrics[5], val_f1=val_metrics[5], model=model)
 
-                # early_stopper(val_metrics[0], train_f1=train_metrics[5], val_f1=val_metrics[5], model=model)
-                # if early_stopper.early_stop:
-                #     print(f"[EarlyStopping] Triggered at epoch {epoch+1} due to validation stagnation or F1 gap.")
-                #     break
+                if early_stopper.early_stop:
+                    print(f"[EarlyStopping] Triggered at epoch {epoch+1} due to validation stagnation or F1 gap.")
+                    break
 
                 # Store validation metrics
                 val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
@@ -172,7 +193,10 @@ def main():
             save_model(score=best_val_loss, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
         else:
             print(f"\nFine-tuned {get_model_size(model)}")
+        
         print("=" * 100)
+        test_metrics, test_stats = eval(test_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device=device)
+        log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=test_metrics, hw_metrics=test_stats)
 
 if __name__ == "__main__":
     torch.manual_seed(42)

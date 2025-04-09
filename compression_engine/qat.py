@@ -11,7 +11,7 @@ def apply_qat_fx(model, dataloader, backend="x86"):
     qconfig = get_default_qat_qconfig(backend)
     qconfig_mapping = QConfigMapping().set_global(qconfig)
 
-    example_input = next(iter(dataloader))[1]
+    example_input = next(iter(dataloader))[1], next(iter(dataloader))[2]
     qat_model = prepare_qat_fx(model, qconfig_mapping, example_input)
 
     return qat_model

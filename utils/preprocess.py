@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import cv2
 import numpy as np
 from PIL import Image
+import ast
 
 class CPAnemic():
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
@@ -279,95 +280,116 @@ class EyesDefyAnemia:
         train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, pin_memory=pin_memory)
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
-    
-class UnifiedAnemiaDataset:
-    def __init__(self, cp_dir, eyes_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
-        self.cp_dir = cp_dir
-        self.eyes_dir = eyes_dir
+class FingernailAnemiaDataset:
+    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
+        self.data_dir = data_dir
+        self.metadata_path = os.path.join(data_dir, "metadata.csv")
         self.transform = transform
         self.test_split = test_split
         self.sample_size = sample_size
         self.tag = tag
 
-        self.dataset = None
+        self.data_sheet = None
         self.train_dataset = None
         self.test_dataset = None
 
-    def load_combined_data(self):
-        # Load CP-Anemic
-        cp_sheet = pd.read_csv(os.path.join(self.cp_dir, "CP-Anemic_Data_Collection_Sheet.csv"))
-        cp_sheet["Dataset"] = "cp"
-        cp_sheet["SEVERITY_CLASS"] = cp_sheet["Severity"].map({"Non-Anemic": 0, "Mild": 1, "Moderate": 2, "Severe": 3})
-        cp_sheet["IMG_PATH"] = cp_sheet.apply(lambda row: os.path.join(self.cp_dir, row["REMARK"], row["IMAGE_ID"] + ".png"), axis=1)
+    def load_data_sheet(self):
+        print(f"{self.tag} Loading Fingernail-Anemia metadata sheet...")
+        self.data_sheet = pd.read_csv(self.metadata_path)
 
-        # Load Eyes-Defy
-        eyes_sheet = pd.read_csv(os.path.join(self.eyes_dir, "Eyes-Defy_Data_Collection_Sheet.csv"))
-        eyes_sheet["Dataset"] = "eyes"
-        
-        def severity(row):
-            try:
-                hb = float(row["Hb"])
-                if hb < 8.0:
-                    return 3
-                elif hb < 10.0:
-                    return 2
-                elif hb < 12.0:
-                    return 1
-                else:
-                    return 0
-            except:
-                return -1
-
-        eyes_sheet["SEVERITY_CLASS"] = eyes_sheet.apply(severity, axis=1)
-        eyes_sheet["IMG_PATH"] = eyes_sheet.apply(lambda row: os.path.join(self.eyes_dir, row["Label"], row["Palpebral"] if pd.notna(row["Palpebral"]) else row["Image"]), axis=1)
-
-        combined = pd.concat([cp_sheet, eyes_sheet], ignore_index=True)
         if self.sample_size:
-            combined = combined.sample(self.sample_size)
-        self.dataset = combined
+            self.data_sheet = self.data_sheet.sample(self.sample_size)
 
+        def compute_severity_class(hb):
+            try:
+                hb = float(hb)
+                if hb < 80:
+                    return 3, "Severe"
+                elif hb < 100:
+                    return 2, "Moderate"
+                elif hb < 120:
+                    return 1, "Mild"
+                else:
+                    return 0, "Non-anemic"
+            except:
+                return -1, "Unknown"
+        
+        def compute_remark(hb):
+            try:
+                hb = float(hb)
+                if hb < 120:
+                    return 1, "Anemic"
+                else:
+                    return 0, "Non-anemic"
+            except:
+                return -1, "Unknown"
 
-    def get_dataset(self):
-        class CombinedDataset(Dataset):
-            def __init__(self, df, transform=None):
-                self.df = df.reset_index(drop=True)
+        self.data_sheet["RemarkInfo"] = self.data_sheet["HB_LEVEL_GperL"].apply(compute_remark)
+        self.data_sheet["SeverityInfo"] = self.data_sheet["HB_LEVEL_GperL"].apply(compute_severity_class)
+        
+        self.data_sheet["RemarkClass"] = self.data_sheet["RemarkInfo"].apply(lambda x: x[0])
+        self.data_sheet["Remark"] = self.data_sheet["RemarkInfo"].apply(lambda x: x[1])
+        self.data_sheet["SeverityClass"] = self.data_sheet["SeverityInfo"].apply(lambda x: x[0])
+        self.data_sheet["Severity"] = self.data_sheet["SeverityInfo"].apply(lambda x: x[1])
+
+    def get_features(self):
+        class FingernailDataset(Dataset):
+            def __init__(self, base_dir, df, transform=None):
+                self.base_dir = base_dir
+                self.df = df
                 self.transform = transform
-                self.valid_indices = self._validate()
-
-            def _validate(self):
-                valid = []
-                for i in range(len(self.df)):
-                    path = self.df.iloc[i]["IMG_PATH"]
-                    try:
-                        with Image.open(path) as img:
-                            img.verify()
-                        valid.append(i)
-                    except:
-                        continue
-                return valid
 
             def __len__(self):
-                return len(self.valid_indices)
+                return len(self.df)
 
             def __getitem__(self, idx):
-                row = self.df.iloc[self.valid_indices[idx]]
-                image = Image.open(row["IMG_PATH"]).convert('RGB')
-                if self.transform:
-                    image = self.transform(image)
-                multiclass_label = torch.tensor(row["SEVERITY_CLASS"], dtype=torch.long)
-                hb_level = torch.tensor(row.get("Hb", row.get("HB_LEVEL", -1)), dtype=torch.float32)
-                return row.get("IMAGE_ID", row.get("Image")), image, multiclass_label, hb_level
+                row = self.df.iloc[idx]
+                remark = row["Remark"]
+                patient_id = row["PATIENT_ID"]
+                img_path = os.path.join(self.base_dir, remark, f"{patient_id}.jpg")
 
-        return CombinedDataset(self.dataset, self.transform)
+                image = Image.open(img_path).convert("RGB")
+                image_np = torch.tensor(np.array(image))
+
+                nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
+                skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
+
+                nail_crops = []
+                skin_crops = []
+
+                for box in nail_boxes:
+                    t, l, b, r = box
+                    crop = image.crop((l, t, r, b))
+                    if self.transform:
+                        crop = self.transform(crop)
+                    nail_crops.append(crop)
+
+                for box in skin_boxes:
+                    t, l, b, r = box
+                    crop = image.crop((l, t, r, b))
+                    if self.transform:
+                        crop = self.transform(crop)
+                    skin_crops.append(crop)
+
+                nail_tensor = torch.stack(nail_crops)  # (3, C, H, W)
+                skin_tensor = torch.stack(skin_crops)  # (3, C, H, W)
+
+                label = torch.tensor(row["SeverityClass"], dtype=torch.long)
+                hb_level = torch.tensor(row["HB_LEVEL_GperL"], dtype=torch.float32)
+
+                return patient_id, nail_tensor, skin_tensor, label, hb_level
+
+        return FingernailDataset(self.data_dir, self.data_sheet, self.transform)
 
     def get_datasets(self):
-        if self.dataset is None:
-            self.load_combined_data()
-        dataset = self.get_dataset()
+        if self.data_sheet is None:
+            self.load_data_sheet()
+        dataset = self.get_features()
         train_set, test_set = train_test_split(dataset, test_size=self.test_split, shuffle=True)
         self.train_dataset = train_set
         self.test_dataset = test_set
-        print(f"[Unified] Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
+
+        print(f"{self.tag} Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
         return train_set, test_set
 
     def get_dataloaders(self, batch_size=8, pin_memory=True):

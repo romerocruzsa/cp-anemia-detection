@@ -5,24 +5,6 @@ import gc
 import csv
 from torch.ao.quantization.quantize_fx import convert_fx
 
-# def train_config():
-#     architecture = "mobilenetv2"
-#     quantization_mode = "base"          # Options: 'base', 'qat' or 'ptq'. Note: 'ptq' is still under development
-#     pruning_mode = "base"               # Options: 'base' or 'structured'.
-#     distillation_mode = "self-distil"   # Options: 'base', 'self-distil'.
-#     precision = "fp32"
-#     signature = "proto"
-#     batch_size = 32
-#     epochs = 3
-#     folds = 2
-
-#     # Define loss functions
-#     cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
-#     mse_loss = torch.nn.MSELoss()  # Regression loss
-#     mae_loss = torch.nn.L1Loss()  # Regression loss
-
-#     return architecture, signature, quantization_mode, precision, pruning_mode, distillation_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
-
 def input_train_config(config_line):
     args = config_line.strip().split()
     architecture = args[0]
@@ -110,7 +92,7 @@ def calibrate_loop(model, calibration_loader):
         model(img.to("cpu"))
 
 # Function to measure inference time & memory
-def timed_forward(model, img):
+def timed_forward(model, nail_tensor, skin_tensor):
     """Measures inference time and memory usage for PyTorch, ONNX, and TensorRT."""
     start_event = torch.cuda.Event(enable_timing=True)
     end_event = torch.cuda.Event(enable_timing=True)
@@ -127,7 +109,7 @@ def timed_forward(model, img):
     # Start measuring latency
     start_event.record()
 
-    class_pred, reg_pred = model(img)
+    class_pred, reg_pred = model(nail_tensor, skin_tensor)
 
     end_event.record()
     torch.cuda.synchronize()  # Ensure accurate timing
@@ -152,6 +134,13 @@ def sw_loss(loss_class, loss_reg, eta_class=0.5):
     eta_reg = 1 - eta_class
     total_loss = (eta_class * loss_class) + (eta_reg * loss_reg)
     return total_loss
+
+def quantile_loss(preds, targets, quantiles=[0.25, 0.5, 0.75]):
+    loss = 0
+    for i, q in enumerate(quantiles):
+        errors = targets - preds[:, i]
+        loss += torch.max((q - 1) * errors, q * errors).mean()
+    return loss
 
 def save_model(score, model, architecture, signature, dir, distillation="base", quantization="base", pruning="base"):
     # Save best model based on validation accuracy        

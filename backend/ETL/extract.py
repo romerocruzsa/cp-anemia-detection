@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import torchvision.transforms as transforms
-from utils.preprocess import CPAnemic, EyesDefyAnemia, EdgeInputHandler, UnifiedAnemiaDataset
+from utils.preprocess import CPAnemic, EyesDefyAnemia, EdgeInputHandler, FingernailAnemiaDataset
 
 def is_edge_input(input_path):
     return os.path.isfile(input_path) and input_path.endswith(('.png', '.jpg', '.jpeg'))
@@ -39,6 +39,13 @@ def extract_data(dataset_type=None, dataset_dir=None, batch_size=8, tag="[ETL]")
         handler = EdgeInputHandler(image_path=dataset_dir, transform=edge_transform, tag=tag)
         dataloader = handler.get_dataloader(batch_size=batch_size)
         return dataloader
+    
+    elif dataset_type == "fingernail-anemia":
+        print(f"{tag} Processing dataset: {dataset_dir}")
+        handler = FingernailAnemiaDataset(data_dir=dataset_dir, transform=transform, tag=tag)
+        train_dataset, test_dataset = handler.get_datasets()
+        train_loader, test_loader = handler.get_dataloaders(batch_size=batch_size)
+        return [train_dataset, test_dataset], [train_loader, test_loader]
     
     elif dataset_type == "cp-anemic":
         print(f"{tag} Processing dataset: {dataset_dir}")

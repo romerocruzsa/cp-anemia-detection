@@ -3,87 +3,99 @@ import torch.nn as nn
 from torchvision import models
 from timm import create_model
 
+# class DualEncoderMultiHeadModel(nn.Module):
 class MultiModel(nn.Module):
-    MODEL_MAPPING = {
-        "mobilenetv2": lambda: models.mobilenet_v2(weights=None),
-        "resnet18": lambda: models.resnet18(weights=None),
-        "densenet121": lambda: models.densenet121(weights=None),
-        "vgg16": lambda: models.vgg16(weights=None),
-        "vit-tiny": lambda: create_model("vit_tiny_patch16_224", pretrained=False),
-        "convnext-tiny": lambda: models.convnext_tiny(weights=None),
-        "efficientnet-b0": lambda: models.efficientnet_b0(weights=None),
-        "shufflenetv2-0.5x": lambda: models.shufflenet_v2_x0_5(weights=None),
-        "regnety-400mf": lambda: models.regnet_y_400mf(weights=None),
-        "mnasnet0_5": lambda: models.mnasnet0_5(weights=None),
-        "ghostnetv2": lambda: create_model("ghostnetv2_100.in1k", pretrained=False),
-        "tinynet-a": lambda: create_model("tinynet_a.in1k", pretrained=False)
-    }
-
-    FEATURE_LAYER_MAPPING = {
-        "fc": ["resnet", "shufflenet", "regnet"],
-        "classifier": ["densenet", "vgg", "mobilenet", "efficientnet",
-                       "mnasnet","convnext", "ghostnet", "tinynet"],
-        "head": ["vit"]
-    }
-
-    def __init__(self, model_name, dropout_p=0.2, num_classes=4):
+    def __init__(self, model_name="mobilenetv2", dropout_p=0.3, num_classes=4):
         super().__init__()
         self.model_name = model_name
         self.dropout_p = dropout_p
 
-        if model_name not in self.MODEL_MAPPING:
-            raise ValueError(f"Model {model_name} not supported")
+        self.encoder_nail = self._create_encoder(model_name)
+        self.encoder_skin = self._create_encoder(model_name)
 
-        self.backbone = self.MODEL_MAPPING[model_name]()
-        num_ftrs = self._get_feature_size()
+        self.feature_dim = self._get_feature_size(model_name)
+        fused_dim = self.feature_dim * 2
 
-        # Replace head with identity for feature extraction
-        self._strip_classifier()
+        # Quantization stubs
+        self.quant = torch.quantization.QuantStub()
+        self.dequant = torch.quantization.DeQuantStub()
 
-        # Classification head
+        # Shared Bottleneck
+        self.shared_head = nn.Sequential(
+            nn.Linear(fused_dim, 256),
+            nn.ReLU(),
+            nn.Dropout(dropout_p),
+        )
+
+        # Classification Head
         self.classifier_head = nn.Sequential(
-            nn.Flatten(),
-            nn.Dropout(dropout_p),
-            nn.Linear(num_ftrs, 128),
+            nn.Linear(256, 128),
             nn.ReLU(),
             nn.Dropout(dropout_p),
-            nn.Linear(128, num_classes),
+            nn.Linear(128, num_classes)
         )
 
-        # Regression head
-        self.regression_head = nn.Sequential(
-            nn.Flatten(),
-            nn.Dropout(dropout_p),
-            nn.Linear(num_ftrs, 128),
+        # Quantile Regression Head (3 outputs)
+        self.quantile_head = nn.Sequential(
+            nn.Linear(256, 128),
             nn.ReLU(),
             nn.Dropout(dropout_p),
-            nn.Linear(128, 1),
-            nn.ReLU()
+            nn.Linear(128, 3),
+            nn.Sigmoid()  # ensures output in [0, 1] for scaling
         )
 
-    def _strip_classifier(self):
-        if "vgg" in self.model_name:
-            self.backbone.classifier = nn.Identity()
-        elif "resnet" in self.model_name or "shufflenet" in self.model_name or "regnet" in self.model_name:
-            self.backbone.fc = nn.Identity()
-        elif "vit" in self.model_name:
-            self.backbone.head = nn.Identity()
-        elif hasattr(self.backbone, "classifier"):
-            self.backbone.classifier = nn.Identity()
+    def _create_encoder(self, model_name):
+        MODEL_MAPPING = {
+            "mobilenetv2": lambda: models.mobilenet_v2(weights=None),
+            "resnet18": lambda: models.resnet18(weights=None),
+            "densenet121": lambda: models.densenet121(weights=None),
+            "vgg16": lambda: models.vgg16(weights=None),
+            "vit-tiny": lambda: create_model("vit_tiny_patch16_224", pretrained=False),
+            "convnext-tiny": lambda: models.convnext_tiny(weights=None),
+            "efficientnet-b0": lambda: models.efficientnet_b0(weights=None),
+            "shufflenetv2-0.5x": lambda: models.shufflenet_v2_x0_5(weights=None),
+            "regnety-400mf": lambda: models.regnet_y_400mf(weights=None),
+            "mnasnet0_5": lambda: models.mnasnet0_5(weights=None),
+            "ghostnetv2": lambda: create_model("ghostnetv2_100.in1k", pretrained=False),
+            "tinynet-a": lambda: create_model("tinynet_a.in1k", pretrained=False),
+        }
 
-    def _get_feature_size(self):
-        if "vgg" in self.model_name:
-            return 25088  # VGG-specific
-        if hasattr(self.backbone, "fc") and isinstance(self.backbone.fc, nn.Linear):
-            return self.backbone.fc.in_features
-        if hasattr(self.backbone, "classifier") and isinstance(self.backbone.classifier, nn.Sequential):
-            return self.backbone.classifier[-1].in_features
-        if hasattr(self.backbone, "head") and isinstance(self.backbone.head, nn.Linear):
-            return self.backbone.head.in_features
-        return getattr(self.backbone, "num_features", 1024)  # fallback default
+        model = MODEL_MAPPING[model_name]()
+        if "vgg" in model_name:
+            model.classifier = nn.Identity()
+        elif "resnet" in model_name or "shufflenet" in model_name or "regnet" in model_name:
+            model.fc = nn.Identity()
+        elif "vit" in model_name:
+            model.head = nn.Identity()
+        elif hasattr(model, "classifier"):
+            model.classifier = nn.Identity()
+        return model
 
-    def forward(self, x):
-        features = self.backbone(x)
-        class_output = self.classifier_head(features)
-        reg_output = self.regression_head(features).squeeze(1)
-        return class_output, reg_output
+    def _get_feature_size(self, model_name):
+        dummy_input = torch.randn(1, 3, 224, 224)
+        with torch.no_grad():
+            model = self._create_encoder(model_name)
+            features = model(dummy_input)
+            return features.shape[1] if len(features.shape) > 1 else features.shape[0]
+
+    def forward(self, nail_tensor, skin_tensor):
+        B, N, C, H, W = nail_tensor.shape
+
+        # Reshape and quantize
+        nail_flat = nail_tensor.view(B * N, C, H, W)
+        skin_flat = skin_tensor.view(B * N, C, H, W)
+
+        nail_flat = self.quant(nail_flat)
+        skin_flat = self.quant(skin_flat)
+
+        nail_feats = self.encoder_nail(nail_flat).view(B, N, -1).mean(dim=1)
+        skin_feats = self.encoder_skin(skin_flat).view(B, N, -1).mean(dim=1)
+
+        fused = torch.cat([nail_feats, skin_feats], dim=1)
+        fused = self.dequant(fused)
+
+        shared = self.shared_head(fused)
+        class_output = self.classifier_head(shared)
+        quantiles = self.quantile_head(shared)  # [0, 1] range
+
+        return class_output, quantiles
