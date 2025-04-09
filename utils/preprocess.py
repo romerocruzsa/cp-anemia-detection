@@ -281,6 +281,49 @@ class EyesDefyAnemia:
         train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, pin_memory=pin_memory)
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
+    
+ # ---- Feature Extraction Dataset Class ----
+class FingernailFeatures(Dataset):
+    def __init__(self, base_dir, df, transform=None):
+        self.base_dir = base_dir
+        self.df = df
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+        remark = row["Remark"]
+        patient_id = row["PATIENT_ID"]
+        img_path = os.path.join(self.base_dir, remark, f"{patient_id}.jpg")
+        image = Image.open(img_path).convert("RGB")
+        img_np = np.array(image)
+
+        nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
+        skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
+
+        nail_crops = []
+        for box in nail_boxes:
+            t, l, b, r = box
+            crop_img = Image.fromarray(img_np[t:b, l:r])
+            nail_crops.append(self.transform(crop_img))
+
+        skin_crops = []
+        for box in skin_boxes:
+            t, l, b, r = box
+            crop_img = Image.fromarray(img_np[t:b, l:r])
+            skin_crops.append(self.transform(crop_img))
+
+        nail_tensor = torch.stack(nail_crops)  # [3, C, H, W]
+        skin_tensor = torch.stack(skin_crops)  # [3, C, H, W]
+
+        label = torch.tensor(row["SeverityClass"], dtype=torch.long)
+        hb_level = torch.tensor(row["HB_LEVEL_GperDeciL"], dtype=torch.float32)
+
+        return patient_id, nail_tensor, skin_tensor, label, hb_level
+
+# ---- Main Dataset Loader Class ----
 class FingernailAnemiaDataset:
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None, n_per_class=30):
         self.data_dir = data_dir
@@ -336,64 +379,6 @@ class FingernailAnemiaDataset:
         self.data_sheet["Severity"] = self.data_sheet["SeverityInfo"].apply(lambda x: x[1])
 
     def get_features(self):
-        from PIL import Image
-
-        def calculate_features(img_np, percentile_levels=[5, 15, 25, 50, 75, 85, 95], low=0.2, high=0.8):
-            h, w = img_np.shape[:2]
-            img_cropped = img_np[int(low*h):int(high*h), int(low*w):int(high*w), :]
-            features = {}
-            for c_idx, color in enumerate("RGB"):
-                for p in percentile_levels:
-                    val = np.percentile(img_cropped[:, :, c_idx].ravel(), p)
-                    features[f"{color}_p={p}"] = val
-            return features
-
-        class FingernailFeatures(Dataset):
-            def __init__(self, base_dir, df, transform=None):
-                self.base_dir = base_dir
-                self.df = df
-                self.transform = transform
-
-            def __len__(self):
-                return len(self.df)
-
-            def __getitem__(self, idx):
-                row = self.df.iloc[idx]
-                remark = row["Remark"]
-                patient_id = row["PATIENT_ID"]
-                img_path = os.path.join(self.base_dir, remark, f"{patient_id}.jpg")
-                image = Image.open(img_path).convert("RGB")
-                img_np = np.array(image)
-
-                nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
-                skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
-
-                nail_features = []
-                for box in nail_boxes:
-                    t, l, b, r = box
-                    crop = img_np[t:b, l:r]
-                    nail_features.append(calculate_features(crop))
-
-                skin_features = []
-                for box in skin_boxes:
-                    t, l, b, r = box
-                    crop = img_np[t:b, l:r]
-                    skin_features.append(calculate_features(crop))
-
-                # Flatten and concatenate
-                feature_dict = {}
-                for i, d in enumerate(nail_features):
-                    feature_dict.update({f"NAIL_{i+1}_{k}": v for k, v in d.items()})
-                for i, d in enumerate(skin_features):
-                    feature_dict.update({f"SKIN_{i+1}_{k}": v for k, v in d.items()})
-
-                feature_tensor = torch.tensor(list(feature_dict.values()), dtype=torch.float32)
-                label = torch.tensor(row["SeverityClass"], dtype=torch.long)
-                hb_level = torch.tensor(row["HB_LEVEL_GperDeciL"], dtype=torch.float32)
-
-                return patient_id, feature_tensor, label, hb_level
-
-        self.FingernailFeatures = FingernailFeatures  # Expose to outer scope
         return FingernailFeatures(self.data_dir, self.data_sheet, self.transform)
 
     def get_datasets(self):
@@ -418,31 +403,18 @@ class FingernailAnemiaDataset:
                     balanced_dfs.append(sampled)
             return pd.concat(balanced_dfs).reset_index(drop=True)
 
-        # Balance training data by severity with KDE
-        df_balanced = kde_balance_by_severity(self.data_sheet, n_per_class=self.n_per_class)
+        # === 1. 80/20 Stratified Split ===
+        stratify_col = self.data_sheet["SeverityClass"]
+        train_df, test_df = train_test_split(self.data_sheet, test_size=self.test_split, stratify=stratify_col, random_state=42)
 
-        # Stratified test set from unbalanced full data
-        remaining_df = self.data_sheet.drop(df_balanced.index)
-        remaining_df = remaining_df.reset_index(drop=True)
+        # === 2. Balance training data ===
+        # n_per_class = int(0.7 * len(train_df) / 4)  # dynamic scaling
+        n_per_class = 50
+        train_df_balanced = kde_balance_by_severity(train_df, n_per_class=n_per_class)
 
-        if not remaining_df.empty:
-            hb_vals = remaining_df["HB_LEVEL_GperDeciL"].values
-            kde = gaussian_kde(hb_vals, bw_method=0.5 / np.std(hb_vals))
-            density = kde(hb_vals)
-            inv_density = 1.0 / (density + 1e-6)
-            bins = pd.qcut(inv_density, q=10, labels=False, duplicates="drop")
-            remaining_df["kde_bin"] = bins
-            stratify_labels = remaining_df["kde_bin"]
-
-            dataset_balanced = self.FingernailFeatures(self.data_dir, df_balanced, self.transform)
-            dataset_remaining = self.FingernailFeatures(self.data_dir, remaining_df, self.transform)
-
-            self.train_dataset = dataset_balanced
-            self.test_dataset = dataset_remaining
-        else:
-            dataset = self.get_features()
-            self.train_dataset = dataset
-            self.test_dataset = dataset  # fallback if no remaining
+        # === 3. Create datasets ===
+        self.train_dataset = FingernailFeatures(self.data_dir, train_df_balanced, self.transform)
+        self.test_dataset = FingernailFeatures(self.data_dir, test_df.reset_index(drop=True), self.transform)
 
         print(f"{self.tag} Dataset loaded — Balanced Train: {len(self.train_dataset)}, Test: {len(self.test_dataset)}")
         return self.train_dataset, self.test_dataset

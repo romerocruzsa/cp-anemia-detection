@@ -40,7 +40,7 @@ class MultiModel(nn.Module):
             nn.Linear(256, 128),
             nn.ReLU(),
             nn.Dropout(dropout_p),
-            nn.Linear(128, 3),
+            nn.Linear(128, 1),
             nn.Sigmoid()  # ensures output in [0, 1] for scaling
         )
 

@@ -1,7 +1,7 @@
 import os
 import torch
 from backend.ETL.extract import extract_data
-from utils.model_load import MultiModel, load_checkpoint
+from utils.cnn_load import MultiModel, load_checkpoint
 from utils.eval import eval
 from utils.helper import input_train_config, cuda_check
 from utils.hw_metrics import benchmark_single_model 

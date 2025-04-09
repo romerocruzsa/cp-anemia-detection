@@ -6,6 +6,8 @@ import csv
 from torch.ao.quantization.quantize_fx import convert_fx
 import numpy as np
 from scipy.stats import gaussian_kde
+from torchvision.transforms import ToPILImage
+from PIL import ImageDraw, ImageFont
 
 def input_train_config(config_line):
     args = config_line.strip().split()
@@ -159,11 +161,16 @@ def save_model(score, model, architecture, signature, dir, distillation="base", 
         )
     print(f"Best model saved with Loss: {score:.4f}")
 
-def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
+def log_metrics(log_type, phase, epoch, fold, metrics, architecture, hw_metrics=None, writer=None):
     if log_type == "print":
         print(f"{phase.capitalize()}: Fold {fold} - Total Loss: {metrics[0]:.4f}, Cross Entropy: {metrics[1]:4f}, Accuracy: {metrics[2]:.4f}, "
             f"Precision: {metrics[3]:.4f}, Recall: {metrics[4]:.4f}, F1 Score: {metrics[5]:.4f}, AUC: {metrics[6]:.4f}, "
             f"R2 Score: {metrics[7]:4f}, MAE: {metrics[8]:.4f}, MSE: {metrics[9]:.4f}")
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/Total_Loss", metrics[0], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/Accuracy", metrics[2], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/F1", metrics[5], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MAE", metrics[8], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MSE", metrics[9], epoch)
         
         if phase == "validation":
             print(f"Avg Latency (ms): {hw_metrics[0]:.2f}, Avg Memory Before (MB): {hw_metrics[1]:.2f}, "

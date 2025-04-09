@@ -1,7 +1,8 @@
 import os
 import torch
 from backend.ETL.extract import extract_data
-from utils.model_load import MultiModel
+from utils.cnn_load import MultiModel
+from utils.linearmodel_load import MultiModelMLP
 from utils.compression_load import compression_config
 from utils.helper import (input_train_config, print_train_config, cuda_check,
                            save_model, save_metrics, log_metrics, get_model_size, 
@@ -12,6 +13,7 @@ from torch.utils.data import DataLoader, Subset
 from sklearn.model_selection import KFold
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from utils.early_stopping import EarlyStopping
+from torch.utils.tensorboard import SummaryWriter
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -35,8 +37,6 @@ def dir_config():
     non_anemic_dir = os.path.join(dataset_dir, "Non-anemic")
     edge_input_path = os.path.join(data_dir, "edge-input", "sample_img1.png")
 
-    # if datasets == "all":
-    #     dataset_dir = None
     create_if_missing(dataset_dir, weights_dir, metrics_dir, anemic_dir, non_anemic_dir, os.path.dirname(edge_input_path), verbose=True)
 
     return dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path
@@ -59,32 +59,34 @@ def train_config():
                                                 batch_size=32)
             train_dataset, test_dataset = dataset
             train_loader, test_loader = dataloader
-            print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
+            print("[Dataset: Fingernail-Anemia] Ready for training and evaluation.")
             return train_dataset, train_loader, test_dataset, test_loader
         
-        elif dataset_dir.endswith("cp-anemic"):
-            dataset, dataloader = extract_data(dataset_type="cp-anemic",
-                                                dataset_dir=dataset_dir,
-                                                batch_size=32)
-            train_dataset, test_dataset = dataset
-            train_loader, test_loader = dataloader
-            print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
-            return train_dataset, train_loader, test_dataset, test_loader
+        # elif dataset_dir.endswith("cp-anemic"):
+        #     dataset, dataloader = extract_data(dataset_type="cp-anemic",
+        #                                         dataset_dir=dataset_dir,
+        #                                         batch_size=32)
+        #     train_dataset, test_dataset = dataset
+        #     train_loader, test_loader = dataloader
+        #     print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
+        #     return train_dataset, train_loader, test_dataset, test_loader
 
-        elif dataset_dir.endswith("eyes-defy-anemia"):
-            dataset, dataloader = extract_data(dataset_type="eyes-defy-anemia",
-                                                dataset_dir=dataset_dir,
-                                                batch_size=32)
-            train_dataset, test_dataset = dataset
-            train_loader, test_loader = dataloader
-            print("[Dataset: Eyes-Defy-Anemia] Ready for training and evaluation.")
-            return train_dataset, train_loader, test_dataset, test_loader
+        # elif dataset_dir.endswith("eyes-defy-anemia"):
+        #     dataset, dataloader = extract_data(dataset_type="eyes-defy-anemia",
+        #                                         dataset_dir=dataset_dir,
+        #                                         batch_size=32)
+        #     train_dataset, test_dataset = dataset
+        #     train_loader, test_loader = dataloader
+        #     print("[Dataset: Eyes-Defy-Anemia] Ready for training and evaluation.")
+        #     return train_dataset, train_loader, test_dataset, test_loader
 
 
 def main():
     dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
     train_dataset, train_loader, test_dataset, test_loader = train_config()
+    log_dir = os.path.expanduser("~/cp-anemia-detection/output/logs")
 
+    writer = SummaryWriter(log_dir=log_dir)
     device = cuda_check()
 
     # Load from sweeps.sh
@@ -114,6 +116,7 @@ def main():
         epochs_per_fold = epochs // folds
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
+
             print(f"\n===== \tFold {fold}/{folds} \t=====")
 
             best_val_loss = float("inf")  # Track best validation accuracy
@@ -149,27 +152,41 @@ def main():
                                                                    epochs,
                                                                    train_loader)
             
-            early_stopper = EarlyStopping(patience=12, delta=0.002, mode="min")
+            early_stopper = EarlyStopping(patience=25, delta=0.002, mode="min")
 
             # === MAIN LOOP ===
             for epoch in range(epochs_per_fold):
                 print(f"\n===== \tEpoch {epoch+1}/{epochs_per_fold} ===== Total Epochs: {epochs} \t=====")
 
-                pruning_scheduler.step(epoch)
+                if pruning_scheduler:
+                    pruning_scheduler.step(epoch)
 
                 # === TRAINING PHASE ===
                 phase = "training"
-                model, train_metrics = train(train_loader, model, cross_entropy_loss, mse_loss, mae_loss, optimizer, distiller=distiller, quantization=quantization_mode, device="cuda:0")
-                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics)
+                model, train_metrics = train(train_loader,
+                                             model,
+                                             cross_entropy_loss,
+                                             mse_loss, mae_loss,
+                                             optimizer,
+                                             distiller=distiller,
+                                             quantization=quantization_mode,
+                                             device="cuda:0")
+                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics, architecture=architecture, writer=writer)
 
                 # Store training metrics
-                train_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics, hw_metrics=None)
+                train_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=train_metrics, architecture=architecture, hw_metrics=None)
                 train_metrics_list.append(train_metrics_dict)
 
                 # === VALIDATION PHASE ===
                 phase = "validation"
-                val_metrics, val_stats = eval(val_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device="cpu")
-                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
+                val_metrics, val_stats = eval(val_loader,
+                                              model,
+                                              cross_entropy_loss,
+                                              mse_loss,
+                                              mae_loss,
+                                              quantization=quantization_mode,
+                                              device="cpu")
+                log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, architecture=architecture, hw_metrics=val_stats, writer=writer)
 
                 if val_metrics[0] < best_val_loss:
                     best_val_loss = val_metrics[0]
@@ -185,23 +202,37 @@ def main():
                     print(f"[EarlyStopping] Triggered at epoch {epoch+1} due to validation stagnation or F1 gap.")
                     break
                 
-                
                 # Store validation metrics
-                val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
+                val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, architecture=architecture, hw_metrics=val_stats)
                 val_metrics_list.append(val_metrics_dict)
 
-            save_metrics(train_metrics_list, phase="training", dir=metrics_dir, architecture=architecture, signature=signature, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
-            save_metrics(val_metrics_list, phase="validation", dir=metrics_dir, architecture=architecture, signature=signature, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
+            save_metrics(train_metrics_list,
+                         phase="training",
+                         dir=metrics_dir,
+                         architecture=architecture,
+                         signature=signature,
+                         distillation=distillation_mode,
+                         quantization=quantization_mode,
+                         pruning=pruning_mode)
+            save_metrics(val_metrics_list,
+                         phase="validation",
+                         dir=metrics_dir,
+                         architecture=architecture,
+                         signature=signature,
+                         distillation=distillation_mode,
+                         quantization=quantization_mode,
+                         pruning=pruning_mode)
             
-        if quantization_mode == "qat":
-            print(f"\n[{quantization_mode.upper()}] Converting to FX Graph Mode")
-            save_model(score=best_val_loss, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
+        # if quantization_mode == "qat":
+        #     print(f"\n[{quantization_mode.upper()}] Converting to FX Graph Mode")
+        #     save_model(score=best_val_loss, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
         else:
             print(f"\nFine-tuned {get_model_size(model)}")
         
         print("=" * 100)
-        test_metrics, test_stats = eval(test_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device=device)
-        log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=test_metrics, hw_metrics=test_stats)
+        # phase = "testing"
+        # test_metrics, test_stats = eval(test_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device=device)
+        # log_metrics(log_type="print", phase=phase, epoch="n/a", fold=fold, metrics=test_metrics, hw_metrics=test_stats)
 
 if __name__ == "__main__":
     torch.manual_seed(42)

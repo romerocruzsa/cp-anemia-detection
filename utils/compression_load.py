@@ -3,7 +3,7 @@ from compression_engine.prune import PruningScheduler
 from compression_engine.qat import apply_qat_fx
 from compression_engine.kd import EnsembleSelfDistillation
 from utils.helper import clear_folder
-from utils.model_load import MultiModel
+from utils.cnn_load import MultiModel
 
 def compression_config(model, architecture, quantization_mode, pruning_mode, distillation_mode, epochs, dataloader, device="cuda"):
     if quantization_mode == "qat":

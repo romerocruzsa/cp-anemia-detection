@@ -1,9 +1,10 @@
 import torch
+import os
 import torch.nn.functional as F
 import numpy as np
 import gc
 from utils.model_metrics import compute_classification_metrics, compute_regression_metrics
-from utils.helper import sw_loss, timed_forward, quantile_loss
+from utils.helper import sw_loss, timed_forward
 from compression_engine.ptq import apply_fp16, apply_static_ptq, apply_int4_awq
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score,
@@ -13,6 +14,7 @@ from sklearn.metrics import (
 
 def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, device, quantization="base", precision="fp32"):
     """Evaluates the model with additional metrics: Precision, Recall, AUC, F1, R², Memory Usage, and Latency."""
+    count = 1
     model.to(device)
     model.eval()
     mean_stats = []
