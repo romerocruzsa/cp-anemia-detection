@@ -114,7 +114,7 @@ def main():
 
         epochs_per_fold = epochs // folds
 
-        for fold, (train_idx,Loss_Total val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
+        for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
 
             print(f"\n===== \tFold {fold}/{folds} \t=====")
 
