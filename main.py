@@ -2,7 +2,6 @@ import os
 import torch
 from backend.ETL.extract import extract_data
 from utils.cnn_load import MultiModel
-from utils.linearmodel_load import MultiModelMLP
 from utils.compression_load import compression_config
 from utils.helper import (input_train_config, print_train_config, cuda_check,
                            save_model, save_metrics, log_metrics, get_model_size, 
@@ -115,7 +114,7 @@ def main():
 
         epochs_per_fold = epochs // folds
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
+        for fold, (train_idx,Loss_Total val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
 
             print(f"\n===== \tFold {fold}/{folds} \t=====")
 
