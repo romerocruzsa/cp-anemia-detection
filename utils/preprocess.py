@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import ast
+from scipy.stats import gaussian_kde
 
 class CPAnemic():
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
@@ -281,13 +282,14 @@ class EyesDefyAnemia:
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
 class FingernailAnemiaDataset:
-    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
+    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None, n_per_class=30):
         self.data_dir = data_dir
         self.metadata_path = os.path.join(data_dir, "metadata.csv")
         self.transform = transform
         self.test_split = test_split
         self.sample_size = sample_size
         self.tag = tag
+        self.n_per_class = n_per_class
 
         self.data_sheet = None
         self.train_dataset = None
@@ -313,7 +315,7 @@ class FingernailAnemiaDataset:
                     return 0, "Non-anemic"
             except:
                 return -1, "Unknown"
-        
+
         def compute_remark(hb):
             try:
                 hb = float(hb)
@@ -324,16 +326,29 @@ class FingernailAnemiaDataset:
             except:
                 return -1, "Unknown"
 
+        self.data_sheet["HB_LEVEL_GperDeciL"] = self.data_sheet["HB_LEVEL_GperL"].apply(lambda x: x / 10)
         self.data_sheet["RemarkInfo"] = self.data_sheet["HB_LEVEL_GperL"].apply(compute_remark)
         self.data_sheet["SeverityInfo"] = self.data_sheet["HB_LEVEL_GperL"].apply(compute_severity_class)
-        
+
         self.data_sheet["RemarkClass"] = self.data_sheet["RemarkInfo"].apply(lambda x: x[0])
         self.data_sheet["Remark"] = self.data_sheet["RemarkInfo"].apply(lambda x: x[1])
         self.data_sheet["SeverityClass"] = self.data_sheet["SeverityInfo"].apply(lambda x: x[0])
         self.data_sheet["Severity"] = self.data_sheet["SeverityInfo"].apply(lambda x: x[1])
 
     def get_features(self):
-        class FingernailDataset(Dataset):
+        from PIL import Image
+
+        def calculate_features(img_np, percentile_levels=[5, 15, 25, 50, 75, 85, 95], low=0.2, high=0.8):
+            h, w = img_np.shape[:2]
+            img_cropped = img_np[int(low*h):int(high*h), int(low*w):int(high*w), :]
+            features = {}
+            for c_idx, color in enumerate("RGB"):
+                for p in percentile_levels:
+                    val = np.percentile(img_cropped[:, :, c_idx].ravel(), p)
+                    features[f"{color}_p={p}"] = val
+            return features
+
+        class FingernailFeatures(Dataset):
             def __init__(self, base_dir, df, transform=None):
                 self.base_dir = base_dir
                 self.df = df
@@ -347,50 +362,90 @@ class FingernailAnemiaDataset:
                 remark = row["Remark"]
                 patient_id = row["PATIENT_ID"]
                 img_path = os.path.join(self.base_dir, remark, f"{patient_id}.jpg")
-
                 image = Image.open(img_path).convert("RGB")
-                image_np = torch.tensor(np.array(image))
+                img_np = np.array(image)
 
                 nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
                 skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
 
-                nail_crops = []
-                skin_crops = []
-
+                nail_features = []
                 for box in nail_boxes:
                     t, l, b, r = box
-                    crop = image.crop((l, t, r, b))
-                    if self.transform:
-                        crop = self.transform(crop)
-                    nail_crops.append(crop)
+                    crop = img_np[t:b, l:r]
+                    nail_features.append(calculate_features(crop))
 
+                skin_features = []
                 for box in skin_boxes:
                     t, l, b, r = box
-                    crop = image.crop((l, t, r, b))
-                    if self.transform:
-                        crop = self.transform(crop)
-                    skin_crops.append(crop)
+                    crop = img_np[t:b, l:r]
+                    skin_features.append(calculate_features(crop))
 
-                nail_tensor = torch.stack(nail_crops)  # (3, C, H, W)
-                skin_tensor = torch.stack(skin_crops)  # (3, C, H, W)
+                # Flatten and concatenate
+                feature_dict = {}
+                for i, d in enumerate(nail_features):
+                    feature_dict.update({f"NAIL_{i+1}_{k}": v for k, v in d.items()})
+                for i, d in enumerate(skin_features):
+                    feature_dict.update({f"SKIN_{i+1}_{k}": v for k, v in d.items()})
 
+                feature_tensor = torch.tensor(list(feature_dict.values()), dtype=torch.float32)
                 label = torch.tensor(row["SeverityClass"], dtype=torch.long)
-                hb_level = torch.tensor(row["HB_LEVEL_GperL"], dtype=torch.float32)
+                hb_level = torch.tensor(row["HB_LEVEL_GperDeciL"], dtype=torch.float32)
 
-                return patient_id, nail_tensor, skin_tensor, label, hb_level
+                return patient_id, feature_tensor, label, hb_level
 
-        return FingernailDataset(self.data_dir, self.data_sheet, self.transform)
+        self.FingernailFeatures = FingernailFeatures  # Expose to outer scope
+        return FingernailFeatures(self.data_dir, self.data_sheet, self.transform)
 
     def get_datasets(self):
         if self.data_sheet is None:
             self.load_data_sheet()
-        dataset = self.get_features()
-        train_set, test_set = train_test_split(dataset, test_size=self.test_split, shuffle=True)
-        self.train_dataset = train_set
-        self.test_dataset = test_set
 
-        print(f"{self.tag} Dataset loaded — Total: {len(dataset)}, Train: {len(train_set)}, Test: {len(test_set)}")
-        return train_set, test_set
+        def kde_balance_by_severity(df, target_column="HB_LEVEL_GperL", severity_column="Severity",
+                                    n_per_class=30, bandwidth=0.5, seed=42):
+            np.random.seed(seed)
+            balanced_dfs = []
+            for severity in df[severity_column].unique():
+                group = df[df[severity_column] == severity]
+                hb_vals = group[target_column].values
+                if len(group) <= n_per_class:
+                    balanced_dfs.append(group)
+                else:
+                    kde = gaussian_kde(hb_vals, bw_method=bandwidth / np.std(hb_vals))
+                    density = kde(hb_vals)
+                    probs = 1.0 / (density + 1e-6)
+                    probs /= probs.sum()
+                    sampled = group.sample(n=n_per_class, weights=probs, replace=False, random_state=seed)
+                    balanced_dfs.append(sampled)
+            return pd.concat(balanced_dfs).reset_index(drop=True)
+
+        # Balance training data by severity with KDE
+        df_balanced = kde_balance_by_severity(self.data_sheet, n_per_class=self.n_per_class)
+
+        # Stratified test set from unbalanced full data
+        remaining_df = self.data_sheet.drop(df_balanced.index)
+        remaining_df = remaining_df.reset_index(drop=True)
+
+        if not remaining_df.empty:
+            hb_vals = remaining_df["HB_LEVEL_GperDeciL"].values
+            kde = gaussian_kde(hb_vals, bw_method=0.5 / np.std(hb_vals))
+            density = kde(hb_vals)
+            inv_density = 1.0 / (density + 1e-6)
+            bins = pd.qcut(inv_density, q=10, labels=False, duplicates="drop")
+            remaining_df["kde_bin"] = bins
+            stratify_labels = remaining_df["kde_bin"]
+
+            dataset_balanced = self.FingernailFeatures(self.data_dir, df_balanced, self.transform)
+            dataset_remaining = self.FingernailFeatures(self.data_dir, remaining_df, self.transform)
+
+            self.train_dataset = dataset_balanced
+            self.test_dataset = dataset_remaining
+        else:
+            dataset = self.get_features()
+            self.train_dataset = dataset
+            self.test_dataset = dataset  # fallback if no remaining
+
+        print(f"{self.tag} Dataset loaded — Balanced Train: {len(self.train_dataset)}, Test: {len(self.test_dataset)}")
+        return self.train_dataset, self.test_dataset
 
     def get_dataloaders(self, batch_size=8, pin_memory=True):
         if not self.train_dataset or not self.test_dataset:

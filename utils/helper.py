@@ -4,6 +4,8 @@ import torch
 import gc
 import csv
 from torch.ao.quantization.quantize_fx import convert_fx
+import numpy as np
+from scipy.stats import gaussian_kde
 
 def input_train_config(config_line):
     args = config_line.strip().split()
@@ -208,3 +210,32 @@ def save_metrics(metrics, dir, phase, architecture, signature, distillation="bas
             dict_writer = csv.DictWriter(output_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(metrics)
+
+def kde_undersample_subset(dataset, target_attr="hb_level", n_samples=100, bandwidth=0.5):
+    """
+    Perform KDE-based under-sampling on a Subset or full Dataset.
+
+    Args:
+        dataset: torch.utils.data.Subset or Dataset
+        target_attr: attribute returned by dataset.__getitem__ to use for sampling (e.g., Hb value)
+        n_samples: number of points to retain
+        bandwidth: KDE bandwidth in same units as target
+
+    Returns:
+        A new Subset with under-sampled indices
+    """
+    targets = []
+    for i in range(len(dataset)):
+        try:
+            _, _, _, _, hb_level = dataset[i]
+            targets.append(float(hb_level))
+        except Exception:
+            continue  # fallback if sample is broken
+
+    targets = np.array(targets)
+    kde = gaussian_kde(targets, bw_method=bandwidth / np.std(targets))
+    probs = 1.0 / (kde(targets) + 1e-6)
+    probs /= probs.sum()
+    sampled_indices = np.random.choice(len(dataset), size=n_samples, replace=False, p=probs)
+
+    return torch.utils.data.Subset(dataset, sampled_indices)
