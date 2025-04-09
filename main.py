@@ -139,7 +139,7 @@ def main():
             train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
             val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
 
-            model, prune_scheduler, distiller = compression_config(model,
+            model, pruning_scheduler, distiller = compression_config(model,
                                                                    architecture,
                                                                    quantization_mode,
                                                                    pruning_mode, 
@@ -152,6 +152,8 @@ def main():
             # === MAIN LOOP ===
             for epoch in range(epochs_per_fold):
                 print(f"\n===== \tEpoch {epoch+1}/{epochs_per_fold} ===== Total Epochs: {epochs} \t=====")
+
+                pruning_scheduler.step(epoch)
 
                 # === TRAINING PHASE ===
                 phase = "training"
@@ -180,7 +182,8 @@ def main():
                 if early_stopper.early_stop:
                     print(f"[EarlyStopping] Triggered at epoch {epoch+1} due to validation stagnation or F1 gap.")
                     break
-
+                
+                
                 # Store validation metrics
                 val_metrics_dict = log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=val_metrics, hw_metrics=val_stats)
                 val_metrics_list.append(val_metrics_dict)
