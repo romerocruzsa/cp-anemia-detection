@@ -1,15 +1,15 @@
-import os
-import json
-import pandas as pd
 import torch
-from torch.utils.data import Dataset, DataLoader, TensorDataset
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-import cv2
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader, Dataset
+from sklearn.model_selection import KFold, train_test_split
+from sklearn.metrics import f1_score
+import os
+import pandas as pd
 import numpy as np
-from PIL import Image
-import ast
 from scipy.stats import gaussian_kde
+from skimage import io as skio
+import ast
 
 class CPAnemic():
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
@@ -282,48 +282,68 @@ class EyesDefyAnemia:
         test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory)
         return train_loader, test_loader
     
- # ---- Feature Extraction Dataset Class ----
 class FingernailFeatures(Dataset):
     def __init__(self, base_dir, df, transform=None):
         self.base_dir = base_dir
         self.df = df
         self.transform = transform
+        self.white_refs = self.compute_white_ref()
+
+    def compute_white_ref(self):
+        white_refs = {}
+        for idx, row in self.df.iterrows():
+            label = 'Anemic' if row['HB_LEVEL_GperL'] < 120 else 'Non-anemic'
+            img_path = os.path.join(self.base_dir, label, f"{row['PATIENT_ID']}.jpg")
+            if not os.path.exists(img_path):
+                continue
+            img = skio.imread(img_path)
+            white_patch = img[350:400, 300:350]  # HxW patch
+            medians = [np.median(white_patch[:, :, i]) for i in range(3)]
+            white_refs[row['PATIENT_ID']] = medians
+        return white_refs
 
     def __len__(self):
         return len(self.df)
 
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
-        remark = row["Remark"]
-        patient_id = row["PATIENT_ID"]
-        img_path = os.path.join(self.base_dir, remark, f"{patient_id}.jpg")
-        image = Image.open(img_path).convert("RGB")
-        img_np = np.array(image)
+        label = 'Anemic' if row['HB_LEVEL_GperL'] < 120 else 'Non-anemic'
+        img_path = os.path.join(self.base_dir, label, f"{row['PATIENT_ID']}.jpg")
+        image = skio.imread(img_path)
+
+        # Normalize using WHITE_REF
+        if row['PATIENT_ID'] in self.white_refs:
+            ref = np.array(self.white_refs[row['PATIENT_ID']]).reshape((1, 1, 3))
+            image = np.clip((image / (ref + 1e-6)) * 128, 0, 255).astype(np.uint8)
 
         nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
         skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
 
         nail_crops = []
+        skin_crops = []
+
         for box in nail_boxes:
             t, l, b, r = box
-            crop_img = Image.fromarray(img_np[t:b, l:r])
-            nail_crops.append(self.transform(crop_img))
+            crop = image[t:b, l:r, :]
+            if self.transform:
+                crop = self.transform(transforms.ToPILImage()(crop))
+            nail_crops.append(crop)
 
-        skin_crops = []
         for box in skin_boxes:
             t, l, b, r = box
-            crop_img = Image.fromarray(img_np[t:b, l:r])
-            skin_crops.append(self.transform(crop_img))
+            crop = image[t:b, l:r, :]
+            if self.transform:
+                crop = self.transform(transforms.ToPILImage()(crop))
+            skin_crops.append(crop)
 
-        nail_tensor = torch.stack(nail_crops)  # [3, C, H, W]
-        skin_tensor = torch.stack(skin_crops)  # [3, C, H, W]
+        nail_tensor = torch.stack(nail_crops)
+        skin_tensor = torch.stack(skin_crops)
 
-        label = torch.tensor(row["SeverityClass"], dtype=torch.long)
+        label_class = torch.tensor(row["SeverityClass"], dtype=torch.long)
         hb_level = torch.tensor(row["HB_LEVEL_GperDeciL"], dtype=torch.float32)
 
-        return patient_id, nail_tensor, skin_tensor, label, hb_level
+        return row['PATIENT_ID'], nail_tensor, skin_tensor, label_class, hb_level
 
-# ---- Main Dataset Loader Class ----
 class FingernailAnemiaDataset:
     def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None, n_per_class=30):
         self.data_dir = data_dir
@@ -403,16 +423,11 @@ class FingernailAnemiaDataset:
                     balanced_dfs.append(sampled)
             return pd.concat(balanced_dfs).reset_index(drop=True)
 
-        # === 1. 80/20 Stratified Split ===
         stratify_col = self.data_sheet["SeverityClass"]
         train_df, test_df = train_test_split(self.data_sheet, test_size=self.test_split, stratify=stratify_col, random_state=42)
 
-        # === 2. Balance training data ===
-        # n_per_class = int(0.7 * len(train_df) / 4)  # dynamic scaling
-        n_per_class = 50
-        train_df_balanced = kde_balance_by_severity(train_df, n_per_class=n_per_class)
+        train_df_balanced = kde_balance_by_severity(train_df, n_per_class=self.n_per_class)
 
-        # === 3. Create datasets ===
         self.train_dataset = FingernailFeatures(self.data_dir, train_df_balanced, self.transform)
         self.test_dataset = FingernailFeatures(self.data_dir, test_df.reset_index(drop=True), self.transform)
 
