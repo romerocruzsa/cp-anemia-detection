@@ -3,6 +3,7 @@ import shutil
 import torch
 import gc
 import csv
+import pandas as pd
 from torch.ao.quantization.quantize_fx import convert_fx
 import numpy as np
 from scipy.stats import gaussian_kde
@@ -96,7 +97,7 @@ def calibrate_loop(model, calibration_loader):
         model(img.to("cpu"))
 
 # Function to measure inference time & memory
-def timed_forward(model, nail_tensor, skin_tensor):
+def timed_forward(model, nail_tensor):
     """Measures inference time and memory usage for PyTorch, ONNX, and TensorRT."""
     start_event = torch.cuda.Event(enable_timing=True)
     end_event = torch.cuda.Event(enable_timing=True)
@@ -113,7 +114,7 @@ def timed_forward(model, nail_tensor, skin_tensor):
     # Start measuring latency
     start_event.record()
 
-    class_pred, reg_pred = model(nail_tensor, skin_tensor)
+    class_pred, reg_pred = model(nail_tensor)#, skin_tensor)
 
     end_event.record()
     torch.cuda.synchronize()  # Ensure accurate timing
@@ -172,7 +173,7 @@ def log_metrics(log_type, phase, epoch, fold, metrics, architecture, hw_metrics=
         writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MAE", metrics[8], epoch)
         writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MSE", metrics[9], epoch)
         
-        if phase == "validation":
+        if phase == "validation" or phase == "testing":
             print(f"Avg Latency (ms): {hw_metrics[0]:.2f}, Avg Memory Before (MB): {hw_metrics[1]:.2f}, "
                 f"Avg Memory After (MB): {hw_metrics[2]:.2f}, Avg Max Memory (MB): {hw_metrics[3]:.2f}")
         
@@ -246,3 +247,21 @@ def kde_undersample_subset(dataset, target_attr="hb_level", n_samples=100, bandw
     sampled_indices = np.random.choice(len(dataset), size=n_samples, replace=False, p=probs)
 
     return torch.utils.data.Subset(dataset, sampled_indices)
+
+def kde_balance_by_severity(df, target_column="HB_LEVEL_GperL", severity_column="Severity",
+                                    n_per_class=50, bandwidth=0.5, seed=42):
+            np.random.seed(seed)
+            balanced_dfs = []
+            for severity in df[severity_column].unique():
+                group = df[df[severity_column] == severity]
+                hb_vals = group[target_column].values
+                if len(group) <= n_per_class:
+                    balanced_dfs.append(group)
+                else:
+                    kde = gaussian_kde(hb_vals, bw_method=bandwidth / np.std(hb_vals))
+                    density = kde(hb_vals)
+                    probs = 1.0 / (density + 1e-6)
+                    probs /= probs.sum()
+                    sampled = group.sample(n=n_per_class, weights=probs, replace=False, random_state=seed)
+                    balanced_dfs.append(sampled)
+            return pd.concat(balanced_dfs).reset_index(drop=True)

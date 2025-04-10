@@ -7,12 +7,12 @@
 
 # # FINGERNAIL-ANEMIA
 mobilenetv2       fingernail-anemia   base            base      base
-# resnet18          fingernail-anemia   base            base      base
-# vit-tiny          fingernail-anemia   base            base      base
-# shufflenetv2-0.5x fingernail-anemia   base            base      base
-# regnety-400mf     fingernail-anemia   base            base      base
-# mnasnet0_5        fingernail-anemia   base            base      base
-# ghostnetv2        fingernail-anemia   base            base      base
+resnet18          fingernail-anemia   base            base      base
+vit-tiny          fingernail-anemia   base            base      base
+shufflenetv2-0.5x fingernail-anemia   base            base      base
+regnety-400mf     fingernail-anemia   base            base      base
+mnasnet0_5        fingernail-anemia   base            base      base
+ghostnetv2        fingernail-anemia   base            base      base
 
 # mobilenetv2       fingernail-anemia   qat            base      base
 # resnet18          fingernail-anemia   qat            base      base

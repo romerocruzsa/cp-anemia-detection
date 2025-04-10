@@ -178,7 +178,7 @@ class EdgeInputHandler():
         return output_mask, result
 
 class EyesDefyAnemia:
-    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None):
+    def __init__(self, data_dir, transform=None, test_split=0.25, sample_size=None, tag=None):
         self.data_dir = data_dir
         self.sheet_path = os.path.join(data_dir, "Eyes-Defy_Data_Collection_Sheet.csv")
         self.transform = transform
@@ -288,6 +288,11 @@ class FingernailFeatures(Dataset):
         self.df = df
         self.transform = transform
         self.white_refs = self.compute_white_ref()
+        self.crop_index = []  # (row_index, 'NAIL', box_idx)
+
+        for idx, row in self.df.iterrows():
+            for i in range(3):  # Assuming 3 crops per region
+                self.crop_index.append((idx, i))
 
     def compute_white_ref(self):
         white_refs = {}
@@ -303,15 +308,17 @@ class FingernailFeatures(Dataset):
         return white_refs
 
     def __len__(self):
-        return len(self.df)
+        return len(self.crop_index)
 
     def __getitem__(self, idx):
-        row = self.df.iloc[idx]
+        row_idx, box_idx = self.crop_index[idx]
+        row = self.df.iloc[row_idx]
+
         label = 'Anemic' if row['HB_LEVEL_GperL'] < 120 else 'Non-anemic'
         img_path = os.path.join(self.base_dir, label, f"{row['PATIENT_ID']}.jpg")
         image = skio.imread(img_path)
 
-        # Normalize using WHITE_REF
+        # WHITE_REF normalization
         if row['PATIENT_ID'] in self.white_refs:
             ref = np.array(self.white_refs[row['PATIENT_ID']]).reshape((1, 1, 3))
             image = np.clip((image / (ref + 1e-6)) * 128, 0, 255).astype(np.uint8)
@@ -319,33 +326,26 @@ class FingernailFeatures(Dataset):
         nail_boxes = ast.literal_eval(row["NAIL_BOUNDING_BOXES"])
         skin_boxes = ast.literal_eval(row["SKIN_BOUNDING_BOXES"])
 
-        nail_crops = []
-        skin_crops = []
+        # Nail crop
+        t_n, l_n, b_n, r_n = nail_boxes[box_idx]
+        nail_crop = image[t_n:b_n, l_n:r_n, :]
+        if self.transform:
+            nail_crop = self.transform(transforms.ToPILImage()(nail_crop))
 
-        for box in nail_boxes:
-            t, l, b, r = box
-            crop = image[t:b, l:r, :]
-            if self.transform:
-                crop = self.transform(transforms.ToPILImage()(crop))
-            nail_crops.append(crop)
+        # # Skin crop
+        # t_s, l_s, b_s, r_s = skin_boxes[box_idx]
+        # skin_crop = image[t_s:b_s, l_s:r_s, :]
+        # if self.transform:
+        #     skin_crop = self.transform(transforms.ToPILImage()(skin_crop))
 
-        for box in skin_boxes:
-            t, l, b, r = box
-            crop = image[t:b, l:r, :]
-            if self.transform:
-                crop = self.transform(transforms.ToPILImage()(crop))
-            skin_crops.append(crop)
-
-        nail_tensor = torch.stack(nail_crops)
-        skin_tensor = torch.stack(skin_crops)
-
-        label_class = torch.tensor(row["SeverityClass"], dtype=torch.long)
+        # label_class = torch.tensor(row["SeverityClass"], dtype=torch.long)
+        label_class = torch.tensor(row["RemarkClass"], dtype=torch.long)
         hb_level = torch.tensor(row["HB_LEVEL_GperDeciL"], dtype=torch.float32)
 
-        return row['PATIENT_ID'], nail_tensor, skin_tensor, label_class, hb_level
+        return row["PATIENT_ID"], nail_crop, label_class, hb_level
 
 class FingernailAnemiaDataset:
-    def __init__(self, data_dir, transform=None, test_split=0.2, sample_size=None, tag=None, n_per_class=30):
+    def __init__(self, data_dir, transform=None, test_split=0.20, sample_size=None, tag=None, n_per_class=50):
         self.data_dir = data_dir
         self.metadata_path = os.path.join(data_dir, "metadata.csv")
         self.transform = transform
@@ -405,8 +405,8 @@ class FingernailAnemiaDataset:
         if self.data_sheet is None:
             self.load_data_sheet()
 
-        def kde_balance_by_severity(df, target_column="HB_LEVEL_GperL", severity_column="Severity",
-                                    n_per_class=30, bandwidth=0.5, seed=42):
+        def kde_balance_by_severity(df, target_column="HB_LEVEL_GperL", severity_column="RemarkClass",
+                                    n_per_class=50, bandwidth=0.5, seed=42):
             np.random.seed(seed)
             balanced_dfs = []
             for severity in df[severity_column].unique():
@@ -423,7 +423,7 @@ class FingernailAnemiaDataset:
                     balanced_dfs.append(sampled)
             return pd.concat(balanced_dfs).reset_index(drop=True)
 
-        stratify_col = self.data_sheet["SeverityClass"]
+        stratify_col = self.data_sheet["RemarkClass"]
         train_df, test_df = train_test_split(self.data_sheet, test_size=self.test_split, stratify=stratify_col, random_state=42)
 
         train_df_balanced = kde_balance_by_severity(train_df, n_per_class=self.n_per_class)

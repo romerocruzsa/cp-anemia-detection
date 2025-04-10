@@ -36,14 +36,14 @@ def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, device, quantizati
     gc.collect()
 
     with torch.no_grad():
-        for _, (_, nail_tensor, skin_tensor, multiclass, hb_level) in enumerate(dataloader):
+        for _, (_, nail_tensor, multiclass, hb_level) in enumerate(dataloader):
             nail_tensor = nail_tensor.to(device)      # (B, 3, C, H, W)
-            skin_tensor = skin_tensor.to(device)      # (B, 3, C, H, W)
+            # skin_tensor = skin_tensor.to(device)      # (B, 3, C, H, W)
             multiclass = multiclass.to(device).long()
             hb_level = hb_level.to(device).unsqueeze(1).float()
 
             # Forward pass with latency & memory tracking
-            class_pred, reg_pred, stats = timed_forward(model, nail_tensor, skin_tensor)
+            class_pred, reg_pred, stats = timed_forward(model, nail_tensor)#, skin_tensor)
             reg_pred_avg = reg_pred.mean(dim=1)
             mean_stats.append(stats)
 
@@ -51,7 +51,8 @@ def eval(dataloader, model, class_loss, reg1_loss, reg2_loss, device, quantizati
             mse_loss = reg1_loss(reg_pred_avg, hb_level)
             mae_loss = reg2_loss(reg_pred_avg, hb_level)
             # q_loss = quantile_loss(reg_pred, hb_level)
-            loss = sw_loss(ce_loss, mae_loss, 0.7)
+            # loss = sw_loss(ce_loss, mae_loss, 0.7)
+            loss = ce_loss
 
             total_loss += loss.item()
             total_ce_loss += ce_loss.item()

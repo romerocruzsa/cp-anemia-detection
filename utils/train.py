@@ -17,15 +17,15 @@ def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, device
     all_preds, all_targets, all_probs = [], [], []
     all_hb_targets, all_hb_preds = [], []
 
-    for _, (_, nail_tensor, skin_tensor, multiclass, hb_level) in enumerate(dataloader):
+    for _, (_, nail_tensor, multiclass, hb_level) in enumerate(dataloader):
         nail_tensor = nail_tensor.to(device)      # (B, 3, C, H, W)
-        skin_tensor = skin_tensor.to(device)      # (B, 3, C, H, W)
+        # skin_tensor = skin_tensor.to(device)      # (B, 3, C, H, W)
         multiclass = multiclass.to(device).long()
         hb_level = hb_level.to(device).unsqueeze(1).float()
 
         optimizer.zero_grad()
         # Forward pass: now passing both inputs
-        class_pred, reg_pred = model(nail_tensor, skin_tensor)
+        class_pred, reg_pred = model(nail_tensor)#, skin_tensor)
         reg_pred_avg = reg_pred.mean(dim=1) 
 
         # Compute classification accuracy
@@ -38,8 +38,8 @@ def train(dataloader, model, class_loss, reg1_loss, reg2_loss, optimizer, device
         # q_loss = quantile_loss(reg_pred, hb_level)
         mse_loss = reg1_loss(reg_pred_avg, hb_level)
         mae_loss = reg2_loss(reg_pred_avg, hb_level)
-        loss = sw_loss(ce_loss, mae_loss, 0.7)
-        # loss = ce_loss
+        # loss = sw_loss(ce_loss, mae_loss, 0.7)
+        loss = ce_loss
 
         # # Distillation loss (if self-distillation is enabled)
         # if distiller is not None:

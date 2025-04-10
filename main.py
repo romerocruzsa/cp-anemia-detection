@@ -5,11 +5,11 @@ from utils.cnn_load import MultiModel
 from utils.compression_load import compression_config
 from utils.helper import (input_train_config, print_train_config, cuda_check,
                            save_model, save_metrics, log_metrics, get_model_size, 
-                           clear_folder, kde_undersample_subset)
+                           clear_folder, kde_undersample_subset, kde_balance_by_severity)
 from utils.train import train
 from utils.eval import eval
 from torch.utils.data import DataLoader, Subset
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from utils.early_stopping import EarlyStopping
 from torch.utils.tensorboard import SummaryWriter
@@ -60,24 +60,6 @@ def train_config():
             train_loader, test_loader = dataloader
             print("[Dataset: Fingernail-Anemia] Ready for training and evaluation.")
             return train_dataset, train_loader, test_dataset, test_loader
-        
-        # elif dataset_dir.endswith("cp-anemic"):
-        #     dataset, dataloader = extract_data(dataset_type="cp-anemic",
-        #                                         dataset_dir=dataset_dir,
-        #                                         batch_size=32)
-        #     train_dataset, test_dataset = dataset
-        #     train_loader, test_loader = dataloader
-        #     print("[Dataset: CP-AnemiC] Ready for training and evaluation.")
-        #     return train_dataset, train_loader, test_dataset, test_loader
-
-        # elif dataset_dir.endswith("eyes-defy-anemia"):
-        #     dataset, dataloader = extract_data(dataset_type="eyes-defy-anemia",
-        #                                         dataset_dir=dataset_dir,
-        #                                         batch_size=32)
-        #     train_dataset, test_dataset = dataset
-        #     train_loader, test_loader = dataloader
-        #     print("[Dataset: Eyes-Defy-Anemia] Ready for training and evaluation.")
-        #     return train_dataset, train_loader, test_dataset, test_loader
 
 
 def main():
@@ -102,9 +84,6 @@ def main():
         cross_entropy_loss, mse_loss, mae_loss) = input_train_config(sweep_line)
         print_train_config(input_train_config(sweep_line))
 
-        # Set up 5-Fold Cross Validation
-        kf = KFold(n_splits=folds, shuffle=True, random_state=42)
-
         print("=" * 100)
         print(f"Training Model: {architecture}")
         torch.cuda.empty_cache()
@@ -114,19 +93,44 @@ def main():
 
         epochs_per_fold = epochs // folds
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset))), 1):
+        df = train_dataset.df.copy()
+
+        # Apply KDE balancing before CV
+        df_balanced = kde_balance_by_severity(
+            df,
+            severity_column="RemarkClass",
+            target_column="HB_LEVEL_GperL",
+            n_per_class=50,
+            seed=42
+        )
+        
+        skf = StratifiedKFold(n_splits=folds, shuffle=True, random_state=42)
+
+        for fold, (train_idx, val_idx) in enumerate(skf.split(df_balanced, df_balanced["RemarkClass"]), 1):
 
             print(f"\n===== \tFold {fold}/{folds} \t=====")
 
+            train_df = df_balanced.iloc[train_idx].reset_index(drop=True)
+            val_df = df_balanced.iloc[val_idx].reset_index(drop=True)
+
+            train_subset = train_dataset.__class__(train_dataset.base_dir, train_df, transform=train_dataset.transform)
+            val_subset = train_dataset.__class__(train_dataset.base_dir, val_df, transform=train_dataset.transform)
+
+            train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
+            val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
+
+            print(f"Dataset loaded — Balanced Train: {len(train_subset)}, Test: {len(val_subset)}")
+
             best_val_loss = float("inf")  # Track best validation accuracy
 
-            model = MultiModel(architecture).to(device)
+            # model = MultiModel(architecture).to(device)
+            model = MultiModel().to(device)
             # import pdb; pdb.set_trace()
             optimizer = torch.optim.Adam([
                 {'params': model.encoder_nail.parameters(), 'lr': 1e-4},
-                {'params': model.encoder_skin.parameters(), 'lr': 1e-4},
-                {'params': model.classifier_head.parameters(), 'lr': 5e-4},
-                {'params': model.quantile_head.parameters(), 'lr': 5e-4}
+                # {'params': model.encoder_skin.parameters(), 'lr': 1e-4},
+                {'params': model.classifier_head.parameters(), 'lr': 1e-4},
+                {'params': model.quantile_head.parameters(), 'lr': 1e-4}
             ])
             scheduler = ReduceLROnPlateau(
                 optimizer,
@@ -138,11 +142,6 @@ def main():
                 verbose=True
             )
 
-            train_subset = Subset(train_dataset, train_idx)
-            val_subset = Subset(train_dataset, val_idx)
-            train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True, pin_memory=True)
-            val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False, pin_memory=True)
-
             model, pruning_scheduler, distiller = compression_config(model,
                                                                    architecture,
                                                                    quantization_mode,
@@ -151,7 +150,7 @@ def main():
                                                                    epochs,
                                                                    train_loader)
             
-            early_stopper = EarlyStopping(patience=25, delta=0.002, mode="min")
+            early_stopper = EarlyStopping(patience=30, delta=0.002, mode="min")
 
             # === MAIN LOOP ===
             for epoch in range(epochs_per_fold):
@@ -221,17 +220,25 @@ def main():
                          distillation=distillation_mode,
                          quantization=quantization_mode,
                          pruning=pruning_mode)
-            
-        # if quantization_mode == "qat":
-        #     print(f"\n[{quantization_mode.upper()}] Converting to FX Graph Mode")
-        #     save_model(score=best_val_loss, model=model, architecture=architecture, signature=signature, dir=weights_dir, distillation=distillation_mode, quantization=quantization_mode, pruning=pruning_mode)
-        else:
-            print(f"\nFine-tuned {get_model_size(model)}")
         
-        print("=" * 100)
-        # phase = "testing"
-        # test_metrics, test_stats = eval(test_loader, model, cross_entropy_loss, mse_loss, mae_loss, quantization=quantization_mode, device=device)
-        # log_metrics(log_type="print", phase=phase, epoch="n/a", fold=fold, metrics=test_metrics, hw_metrics=test_stats)
+        phase = "testing"
+        test_metrics, test_stats = eval(test_loader,
+                                              model,
+                                              cross_entropy_loss,
+                                              mse_loss,
+                                              mae_loss,
+                                              quantization=quantization_mode,
+                                              device="cpu") 
+        log_metrics(log_type="print", phase=phase, epoch=epoch, fold=fold, metrics=test_metrics, architecture=architecture, hw_metrics=test_stats, writer=writer)
+        log_metrics(log_type="dict", phase=phase, epoch=epoch, fold=fold, metrics=test_metrics, architecture=architecture, hw_metrics=test_stats)
+        save_metrics(val_metrics_list,
+                         phase=phase,
+                         dir=metrics_dir,
+                         architecture=architecture,
+                         signature=signature,
+                         distillation=distillation_mode,
+                         quantization=quantization_mode,
+                         pruning=pruning_mode)
 
 if __name__ == "__main__":
     torch.manual_seed(42)
