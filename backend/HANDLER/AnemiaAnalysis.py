@@ -11,11 +11,20 @@ class AnemiaAnalysisHandler:
             'AnalysisDate': t["analysisdate"].isoformat() if t["analysisdate"] else None,
             'ImagePath': t.get("imagepath")
         }
+    
+    async def getAnalysis(self):
+        dao = AnemiaAnalysisDAO()
+        try:
+            dbtuples = await dao.getAnalysis()
+            result = [self.mapToDict(e) for e in dbtuples] if dbtuples else []
+            return JSONResponse(content=result)
+        except Exception as e:
+            return JSONResponse(content={'error': f'An error occurred while retrieving Uploads: {e}'}, status_code=500)
 
     async def getAnalysisByImage(self, image_id):
         dao = AnemiaAnalysisDAO()
         try:
-            analysis = await dao.getAnalysis(image_id)
+            analysis = await dao.getAnalysisByID(image_id)
             if analysis:
                 return JSONResponse(content=self.mapToDict(analysis))
             return JSONResponse(content={"error": "Analysis not found"}, status_code=404)

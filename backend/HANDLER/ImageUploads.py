@@ -10,6 +10,15 @@ class ImageUploadsHandler:
             'UploadDate': t["uploaddate"].isoformat() if t["uploaddate"] else None,
             'Status': t["status"]
         }
+    
+    async def getAllUploads(self):
+        dao = ImageUploadsDAO()
+        try:
+            dbtuples = await dao.getUploads()
+            result = [self.mapToDict(e) for e in dbtuples] if dbtuples else []
+            return JSONResponse(content=result)
+        except Exception as e:
+            return JSONResponse(content={'error': f'An error occurred while retrieving Uploads: {e}'}, status_code=500)
 
     async def getUploadsByPatient(self, patient_id):
         dao = ImageUploadsDAO()

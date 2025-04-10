@@ -23,7 +23,20 @@ class AnemiaAnalysisDAO:
                 logging.error(f"An error occurred while creating the connection pool: {e}")
                 raise
 
-    async def getAnalysis(self, image_id):
+    async def getAnalysis(self):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                query = """
+                SELECT AnalysisID, ImageID, AnemiaStatus, ConfidenceScore, AnalysisDate 
+                FROM AnemiaAnalysis;
+                """
+                return await conn.fetch(query)
+            except Exception as e:
+                logging.error(f"Error fetching uploads: {e}")
+                return None
+
+    async def getAnalysisByID(self, image_id):
         await self.connect()
         async with self.pool.acquire() as conn:
             try:

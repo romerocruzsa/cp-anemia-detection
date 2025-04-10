@@ -62,23 +62,31 @@ async def delete_patient(pid: int):
 async def update_patient(pid: int, data: dict):
     return await handler.putByID(pid, data)
 
-@app.post("/upload/{patient_id}")
+@app.get("/get_uploads")
+async def get_uploads():
+    return await image_handler.getAllUploads()
+
+@app.post("/create_upload/{patient_id}")
 async def upload_image(patient_id: int, image_path: str):
     return await image_handler.createUpload(patient_id, image_path)
 
-@app.get("/uploads/{patient_id}")
+@app.get("/get_uploads_status/{patient_id}")
 async def get_patient_uploads(patient_id: int):
     return await image_handler.getUploadsByPatient(patient_id)
 
-@app.put("/upload/{image_id}/status")
+@app.put("/update_upload_status/{image_id}/status")
 async def update_upload_status(image_id: int, status: str):
     return await image_handler.updateUploadStatus(image_id, status)
 
-@app.post("/analysis/{image_id}")
+@app.get("/get_Analysis")
+async def get_uploads():
+    return await analysis_handler.getAnalysis()
+
+@app.post("/create_analysis/{image_id}")
 async def create_analysis(image_id: int, status: str, confidence: float):
     return await analysis_handler.createAnalysis(image_id, status, confidence)
 
-@app.get("/analysis/{image_id}")
+@app.get("/get_analysis_by_id/{image_id}")
 async def get_analysis(image_id: int):
     return await analysis_handler.getAnalysisByImage(image_id)
 
