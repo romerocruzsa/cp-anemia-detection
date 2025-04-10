@@ -74,3 +74,31 @@ class AnemiaAnalysisHandler:
                 content={'error': f'Error retrieving patient history: {e}'}, 
                 status_code=500
             )
+
+    async def deleteAnalysis(self, analysis_id: int):
+        dao = AnemiaAnalysisDAO()
+        try:
+            result = await dao.deleteAnalysis(analysis_id)
+            if result:
+                return JSONResponse(content={"message": "Analysis deleted successfully"})
+            return JSONResponse(content={"error": "Analysis not found"}, status_code=404)
+        except Exception as e:
+            return JSONResponse(
+                content={'error': f'Error deleting analysis: {e}'},
+                status_code=500
+            )
+
+    async def updateAnalysis(self, analysis_id: int, status: str, confidence: float):
+        dao = AnemiaAnalysisDAO()
+        try:
+            result = await dao.updateAnalysis(analysis_id, status, confidence)
+            if result:
+                return JSONResponse(content={"message": "Analysis updated successfully"})
+            return JSONResponse(content={"error": "Analysis not found"}, status_code=404)
+        except Exception as e:
+            return JSONResponse(
+                content={'error': f'Error updating analysis: {e}'},
+                status_code=500
+            )
+
+

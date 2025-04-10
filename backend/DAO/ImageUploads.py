@@ -87,3 +87,31 @@ class ImageUploadsDAO:
             except Exception as e:
                 logging.error(f"Error updating status for image {image_id}: {e}")
                 return None
+            
+
+    async def updateImage(self, image_id, image_path):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                query = """
+                UPDATE ImageUploads 
+                SET ImagePath = $1 
+                WHERE ImageID = $2;
+                """
+                return await conn.execute(query, image_path, image_id)
+            except Exception as e:
+                logging.error(f"Error updating image {image_id}: {e}")
+                return None
+            
+    async def deleteImage(self, image_id):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                query = """
+                DELETE FROM ImageUploads 
+                WHERE ImageID = $1;
+                """
+                return await conn.execute(query, image_id)
+            except Exception as e:
+                logging.error(f"Error deleting image {image_id}: {e}")
+                return None

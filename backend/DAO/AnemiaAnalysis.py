@@ -77,3 +77,31 @@ class AnemiaAnalysisDAO:
             except Exception as e:
                 logging.error(f"Error fetching analysis for patient {patient_id}: {e}")
                 return None
+            
+    async def deleteAnalysis(self, analysis_id):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                query = """
+                DELETE FROM AnemiaAnalysis 
+                WHERE AnalysisID = $1;
+                """
+                return await conn.execute(query, analysis_id)
+            except Exception as e:
+                logging.error(f"Error deleting analysis {analysis_id}: {e}")
+                return None
+            
+
+    async def updateAnalysis(self, analysis_id, status, confidence):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                query = """
+                UPDATE AnemiaAnalysis 
+                SET AnemiaStatus = $1, ConfidenceScore = $2 
+                WHERE AnalysisID = $3;
+                """
+                return await conn.execute(query, status, confidence, analysis_id)
+            except Exception as e:
+                logging.error(f"Error updating analysis {analysis_id}: {e}")
+                return None

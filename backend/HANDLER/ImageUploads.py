@@ -66,3 +66,29 @@ class ImageUploadsHandler:
                 content={'error': f'Error updating status: {e}'}, 
                 status_code=500
             )
+        
+    async def updateImage(self, image_id: int, image_path: str):
+        dao = ImageUploadsDAO()
+        try:
+            result = await dao.updateImage(image_id, image_path)
+            if result:
+                return JSONResponse(content={"message": "Image updated successfully"})
+            return JSONResponse(content={"error": "Image not found"}, status_code=404)
+        except Exception as e:
+            return JSONResponse(
+                content={'error': f'Error updating image: {e}'},
+                status_code=500
+            )
+
+    async def deleteImage(self, image_id: int):
+        dao = ImageUploadsDAO()
+        try:
+            result = await dao.deleteImage(image_id)
+            if result:
+                return JSONResponse(content={"message": "Image deleted successfully"})
+            return JSONResponse(content={"error": "Image not found"}, status_code=404)
+        except Exception as e:
+            return JSONResponse(
+                content={'error': f'Error deleting image: {e}'},
+                status_code=500
+            )

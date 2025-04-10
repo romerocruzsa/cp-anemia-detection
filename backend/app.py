@@ -78,6 +78,14 @@ async def get_patient_uploads(patient_id: int):
 async def update_upload_status(image_id: int, status: str):
     return await image_handler.updateUploadStatus(image_id, status)
 
+@app.put("/update_image/{image_id}")
+async def update_image(image_id: int, image_path: str):
+    return await image_handler.updateImage(image_id, image_path)
+
+@app.delete("/delete_image/{image_id}")
+async def delete_image(image_id: int):
+    return await image_handler.deleteImage(image_id)
+
 @app.get("/get_Analysis")
 async def get_uploads():
     return await analysis_handler.getAnalysis()
@@ -93,5 +101,13 @@ async def get_analysis(image_id: int):
 @app.get("/analysis/patient/{patient_id}")
 async def get_patient_history(patient_id: int):
     return await analysis_handler.getPatientHistory(patient_id)
+
+@app.delete("/delete_analysis/{analysis_id}")
+async def delete_analysis(analysis_id: int):
+    return await analysis_handler.deleteAnalysis(analysis_id)
+
+@app.put("/update_analysis/{analysis_id}")
+async def update_analysis(analysis_id: int, status: str, confidence: float):
+    return await analysis_handler.updateAnalysis(analysis_id, status, confidence)
 
 
