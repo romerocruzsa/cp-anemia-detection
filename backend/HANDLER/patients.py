@@ -1,6 +1,6 @@
 from fastapi.responses import JSONResponse
 from DAO.patients import PatientsDAO
-
+from app import get_current_user
 class PatientsHandler:
 
     def mapToDict(self, t):
