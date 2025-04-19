@@ -24,3 +24,12 @@ class PatientsHandler:
         except Exception as e:
             print(f"An error occurred while getting all patients: {e}")
             return JSONResponse(content={'error': 'An error occurred while retrieving patients'}, status_code=500)
+        
+    def createPatient(self, patient_data: dict):
+        dao = PatientsDAO()
+        try:
+            result = dao.createPatient(patient_data)
+            return JSONResponse(content=result)
+        except Exception as e:
+            print(f"Error creating patient: {e}")
+            return JSONResponse(content={'error': 'Failed to create patient'}, status_code=500)

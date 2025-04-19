@@ -31,4 +31,8 @@ async def get_data():
 async def get_patients():
     return PatientsHandler().getAllPatients()
 
+# @app.post("/patients/") # Still needs tweaking!
+# async def add_patient():
+#     handler = PatientsHandler()
+#     return handler.createPatient()
 
