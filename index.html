@@ -1,249 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patient Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Digital Chart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="dashboard">
-    <!-- Log Out Button -->
-    <button id="logout-btn" class="logout-button">Log Out</button>
+<body class="bg-gray-50 font-inter min-h-screen flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-black shadow-md p-6 flex flex-col justify-between min-h-screen">
+    <div>
+      <!-- Branding -->
+      <div class="mb-8 text-center">
+        <img src="images/profile-placeholder.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-2" />
+        <h1 class="text-xl text-white font-semibold">Andrea Rivera</h1>
+        <p class="text-sm text-white">Patient ID: 789087</p>
+      </div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <!-- Sidebar Top Navigation -->
-      <nav class="sidebar-nav">
-        <a href="index.html" class="nav-link">Dashboard</a>
-        <a href="account.html" class="nav-link">Account</a>
-        <a href="results-summary.html" class="nav-link active">Summary</a>
+      <!-- Navigation -->
+      <nav class="space-y-3">
+        <a href="index.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
+        <a href="account.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
+        <a href="results-summary.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
+        <a href="audit.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Audit Log</a>
       </nav>
-      <!-- Horizontal Divider -->
-      <div class="sidebar-header">
-        <img src="images/profile-placeholder.jpg" alt="Profile Picture" class="profile-pic">
-        <h1>Andrea Rivera</h1>
-        <h2>Non-Anemic: 10 g/dL</h2>
-        <p><strong>Patient ID:</strong> 789087</p>
-        <button id="more-info-btn">More patient info</button>
-        <div id="patient-info" class="hidden">
+
+      <!-- Patient Info Toggle -->
+      <div class="mt-6">
+        <button id="more-info-btn" class="text-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400">More patient info</button>
+        <div id="patient-info" class="mt-3 hidden text-sm text-white">
           <p><strong>Age:</strong> 32</p>
           <p><strong>Gender:</strong> Female</p>
           <p><strong>Blood Type:</strong> O+</p>
           <p><strong>Condition:</strong> Non-Anemic</p>
         </div>
       </div>
-      <!-- Notification Banner -->
-      <div class="notification-banner">
-        <p><strong>Message from Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
-      </div>
-      <button id="contact-pmp-btn" class="sidebar-button">Contact PMP</button>
-    </aside>
 
-    <!-- Modal Popup -->
-    <div id="contact-pmp-modal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Contact PMP</h2>
-        <p>Please provide your message or inquiry below:</p>
-        <textarea placeholder="Type your message here..."></textarea>
-        <button class="modal-submit-btn">Send</button>
+      <!-- Notification -->
+      <div class="mt-6 space-y-4">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Mayagüez Medical Center:</strong> Sample sent. Pending revision.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Appointment:</strong> March 23 at 10:30 AM with Dr. Ruiz.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+        </div>
       </div>
+
     </div>
 
+    <div>
+      <button id="contact-pmp-btn" class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Contact PCP</button>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="flex-1 flex flex-col">
+    <!-- Topbar -->
+    <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">Patient Digital Chart</h2>
+      <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">Log Out</button>
+    </header>
+
     <!-- Main Content -->
-    <main class="main-content">
-      <!-- Doctor's Notes -->
-      <div class="card doctors-notes-card">
-        <h3>Doctor's Notes</h3>
-        <p class="note-date"><strong>Date:</strong> March 20, 2025</p>
-        <div class="note-content">
-          <p><strong>Note:</strong> Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
-        </div>
-      </div>
+    <main class="p-6 space-y-6">
+        <!-- Sectioned Grid Layout -->
+        <div class="grid grid-cols- lg:grid-cols-3 gap-6">
 
-      <!-- Appointment Card -->
-      <div class="card appointment-card">
-        <div class="appointment-details">
-          <p>Today, March 23</p>
-          <p><strong>10:30 AM</strong></p>
-          <h1>Dr. Ruiz</h1>
-        </div>
-        <div class="appointment-image">
-          <img src="images/doctor-placeholder.png" alt="Doctor Image">
-        </div>
-      </div>
+          <!-- Section A: Doctor + Appointment Related -->
+          <div class="space-y-6">
+            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+              <h2 class="text-xl font-bold text-gray-800">Patient Care</h2>
+              <p class="text-sm text-gray-500">Doctor interactions and appointments</p>
+            </div>
 
-      <!-- Results Summary Card -->
-      <div class="card results-summary-card">
-        <h3>Your Results</h3>
-        <p>Your new results are on their way.</p>
-        <div class="status">
-          <span class="status-sent">✔ Sent</span>
-          <span>□ Delivered</span>
-          <span>□ Received</span>
-        </div>
-        <div class="internal-card">
-          <div class="text-content">
-            <p>Last Results: <strong>13 g/dL</strong></p>
-            <p class="status-text">Non-Anemic</p>
-            <p>Received Mar 13, 2025 from Dr. Ruiz</p>
+            <!-- Doctor's Notes -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+              <h3 class="text-lg font-semibold mb-2">Doctor's Notes</h3>
+              <p class="text-sm text-gray-500 mb-1"><strong>Date:</strong> March 20, 2025</p>
+              <p class="text-sm text-gray-700">Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
+            </div>
+
+            <!-- Upcoming Appointment -->
+            <div class="bg-green-50 p-4 border-t-4 border-green-400 rounded-lg shadow flex items-center justify-between">
+              <div>
+                <p class="text-sm text-white-500">Today, March 23</p>
+                <p class="text-xl font-semibold">10:30 AM</p>
+                <p class="text-sm text-white-700">Mayagüez Medical Center</p>
+                <p class="text-sm text-white-700">Opthalmology</p>
+                <p class="text-sm text-white-700">Dr. Ruiz</p>
+              </div>
+              <img src="images/doctor-placeholder.png" alt="Doctor" class="w-20 h-20 rounded-full" />
+            </div>
+
+            <!-- Past Appointments -->
+            <div class="bg-white p-4 rounded-lg shadow">
+              <h3 class="text-lg font-semibold mb-2">Past Appointments</h3>
+              <ul class="text-sm text-gray-700 space-y-2">
+                <li>
+                  <div class="flex justify-between">
+                    <span>Follow-Up - Apr 12, 2025</span>
+                    <span class="text-gray-500">Dr. Lubezki</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="flex justify-between">
+                    <span>Urgent - Feb 1, 2025</span>
+                    <span class="text-gray-500">Dr. Lubezki</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Medication List -->
+            <div class="bg-white p-4 rounded-lg shadow">
+              <h3 class="text-lg font-semibold mb-2">Current Medications</h3>
+              <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                <li>Iron Supplements - 1 tablet daily</li>
+                <li>Vitamin B12 - Twice a week</li>
+                <li>Folic Acid - As prescribed</li>
+              </ul>
+            </div>
           </div>
-          <div class="image-content">
-            <img src="images/iris-placeholder.png" alt="Doctor Image">
+
+          <!-- Section B: Anemia + Results Related -->
+          <div class="space-y-6">
+            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+              <h2 class="text-xl font-bold text-gray-800">Anemia Tracking</h2>
+              <p class="text-sm text-gray-500">Lab results and condition monitoring</p>
+            </div>
+
+              <!-- Anemia Previous Results Bar Chart -->
+              <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Previous Results Chart</h3>
+                <canvas id="anemiaBarChart" height="200"></canvas>
+              </div>
+
+            <!-- Results Records -->
+            <div class="bg-white p-4 rounded-lg shadow">
+              <h3 class="text-lg font-semibold mb-2">Your Results</h3>
+              <p class="text-sm text-gray-700 mb-2">Your new results are on their way.</p>
+              <div class="flex items-center space-x-4 text-sm">
+                <span class="text-green-600">✔ Sent</span>
+                <span class="text-gray-500">□ Delivered</span>
+                <span class="text-gray-500">□ Received</span>
+              </div>
+              <div class="mt-4 p-3 bg-gray-50 rounded-md flex items-center justify-between">
+                <div>
+                  <p class="text-sm">Last Results: <strong>13 g/dL</strong></p>
+                  <p class="text-sm text-green-600">Non-Anemic</p>
+                  <p class="text-xs text-gray-500">Received Mar 13, 2025 from Dr. Ruiz</p>
+                </div>
+                <img src="images/sample_img1.png" alt="Eye" class="w-16 h-16 rounded" />
+              </div>
+            </div>
+
+            <!-- Past Results Table -->
+            <div class="bg-white p-4 rounded-lg shadow">
+              <h3 class="text-lg font-semibold mb-4">Past Results</h3>
+              <table class="min-w-full text-sm text-left">
+                <thead class="text-gray-500">
+                  <tr>
+                    <th class="py-2">Date</th>
+                    <th class="py-2">Time</th>
+                    <th class="py-2">Hg (g/dL)</th>
+                    <th class="py-2">Anemia</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                  <tr class="border-t">
+                    <td class="py-2">Mar 13, 2025</td>
+                    <td class="py-2">4:33 PM</td>
+                    <td class="py-2">13.0</td>
+                    <td class="py-2">Non-Anemic</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="py-2">Mar 9, 2025</td>
+                    <td class="py-2">4:21 PM</td>
+                    <td class="py-2">13.4</td>
+                    <td class="py-2">Non-Anemic</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Section A: Doctor + Appointment Related -->
+          <div class="space-y-6">
+            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+              <h2 class="text-xl font-bold text-gray-800">Sample Records</h2>
+              <p class="text-sm text-gray-500">Send new samples and view previous ones</p>
+            </div>
+
+            <!-- Upload New Image -->
+
+            <div class="bg-white p-4 rounded-lg shadow">
+              <h3 class="text-lg font-semibold mb-2">Upload or Capture New Sample</h3>
+              <input type="file" accept="image/*" id="sample-upload" class="mb-4" />
+              <video id="camera-stream" autoplay class="mb-4 w-full max-h-48 rounded hidden"></video>
+              <button id="start-camera" class="mb-2 px-3 py-1 bg-blue-500 text-white rounded">Use Webcam</button>
+              <canvas id="snapshot-canvas" class="hidden"></canvas>
+              <button id="capture-btn" class="mb-4 px-3 py-1 bg-green-500 text-white rounded hidden">Capture</button>
+              <div id="sample-preview" class="hidden rounded bg-white p-2">
+                <p class="text-sm mb-2 text-gray-700">Preview:</p>
+                <img id="preview-img" src="#" class="w-full max-h-64 object-contain rounded" alt="Preview" />
+              </div>
+            </div>
+
+            </div>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Anemia Plot Card -->
-      <div class="card anemia-plot-card">
-        <h3>Anemia Plot</h3>
-        <div class="chart">
-          <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg">
-            <!-- Y-Axis Labels -->
-            <text x="5" y="20" font-size="10" fill="#333">16</text>
-            <text x="5" y="50" font-size="10" fill="#333">12</text>
-            <text x="5" y="80" font-size="10" fill="#333">8</text>
-            <text x="5" y="110" font-size="10" fill="#333">4</text>
-            <text x="5" y="140" font-size="10" fill="#333">0</text>
-
-            <!-- Reference Lines -->
-            <line x1="30" y1="100" x2="100%" y2="100" stroke="red" stroke-width="2" stroke-dasharray="5,5" />
-            <line x1="30" y1="30" x2="100%" y2="30" stroke="green" stroke-width="2" stroke-dasharray="5,5" />
-
-            <!-- Bars -->
-            <rect x="50" y="100" width="20" height="50" fill="red"></rect>
-            <rect x="90" y="70" width="20" height="80" fill="green"></rect>
-            <rect x="130" y="90" width="20" height="60" fill="green"></rect>
-            <rect x="170" y="120" width="20" height="30" fill="red"></rect>
-            <rect x="210" y="60" width="20" height="90" fill="green"></rect>
-
-            <!-- X-Axis Labels -->
-            <text x="50" y="170" font-size="10" fill="#333">Mar 1</text>
-            <text x="90" y="170" font-size="10" fill="#333">Mar 5</text>
-            <text x="130" y="170" font-size="10" fill="#333">Mar 10</text>
-            <text x="170" y="170" font-size="10" fill="#333">Mar 15</text>
-            <text x="210" y="170" font-size="10" fill="#333">Mar 20</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Upload Card -->
-      <div class="card upload-card">
-        <h3>Upload Eye Image</h3>
-        <div class="upload-box">
-          <label for="file-upload" style="cursor: pointer;">Upload Eye Image or drop it here</label>
-          <input type="file" id="file-upload" style="display: none;">
-        </div>
-      </div>
-
-      <!-- Past Results Card -->
-      <div class="card past-results-card">
-        <h3>Past Results</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Hg (g/dL)</th>
-              <th>Anemia</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mar 13, 2025</td>
-              <td>4:33 PM</td>
-              <td>13.0</td>
-              <td>Non-Anemic</td>
-            </tr>
-            <tr>
-              <td>Mar 9, 2025</td>
-              <td>4:21 PM</td>
-              <td>13.4</td>
-              <td>Non-Anemic</td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="text-align: center;">
-          <a href="results-summary.html">View more</a>
-        </div>
-      </div>
-
-      <!-- Past Appointments Card -->
-      <div class="card past-appointments-card">
-        <h3>Past Appointments</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Provider</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Follow-Up</td>
-              <td>Apr 12, 2025</td>
-              <td>Dr. Lubezki</td>
-            </tr>
-            <tr>
-              <td>Urgent</td>
-              <td>Feb 1, 2025</td>
-              <td>Dr. Lubezki</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </main>
   </div>
 
+  <!-- Modal -->
+  <!-- Contact PCP Modal -->
+  <div id="contact-pmp-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="contact-modal-content">
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeContactModal()">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Contact PCP</h2>
+      <textarea class="w-full p-2 border rounded mb-4" rows="4" placeholder="Type your message here..."></textarea>
+      <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Send</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const modal = document.getElementById('contact-pmp-modal');
-    const contactPmpBtn = document.getElementById('contact-pmp-btn');
-    const closeBtn = document.querySelector('.close-btn');
+    const preview = document.getElementById('preview-img');
+    const sampleInput = document.getElementById('sample-upload');
+    const sampleContainer = document.getElementById('sample-preview');
+    const video = document.getElementById('camera-stream');
+    const captureBtn = document.getElementById('capture-btn');
+    const startCameraBtn = document.getElementById('start-camera');
+    const canvas = document.getElementById('snapshot-canvas');
 
-    contactPmpBtn.addEventListener('click', () => {
-      modal.style.display = 'block'; // Show the modal when the button is clicked
-    });
-
-    closeBtn.addEventListener('click', () => {
-      modal.style.display = 'none'; // Hide the modal when the close button is clicked
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none'; // Hide the modal when clicking outside of it
+    sampleInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        sampleContainer.classList.remove('hidden');
       }
     });
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        modal.style.display = 'none'; // Hide the modal when pressing the Escape key
+    startCameraBtn.addEventListener('click', () => {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.classList.remove('hidden');
+          captureBtn.classList.remove('hidden');
+        });
+    });
+
+    captureBtn.addEventListener('click', () => {
+      const context = canvas.getContext('2d');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0);
+      preview.src = canvas.toDataURL('image/png');
+      sampleContainer.classList.remove('hidden');
+    });
+
+    new Chart(document.getElementById('anemiaBarChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Mar 1', 'Mar 5', 'Mar 10', 'Mar 15', 'Mar 20'],
+        datasets: [{
+          label: 'Hemoglobin (g/dL)',
+          data: [10, 12, 13, 11, 13.4],
+          backgroundColor: '#3b82f6'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: {
+          x: {
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Hemoglobin Level (g/dL)' },
+            grid: {
+              display: false
+            }
+          }
+        }
       }
     });
 
     const moreInfoBtn = document.getElementById('more-info-btn');
     const patientInfo = document.getElementById('patient-info');
-    // const moreDetailsBtn = document.getElementById('more-details-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const contactBtn = document.getElementById('contact-pmp-btn');
+    const modal = document.getElementById('contact-pmp-modal');
+    const closeModal = document.getElementById('close-modal');
 
     moreInfoBtn.addEventListener('click', () => {
-      if (patientInfo.classList.contains('hidden')) {
-        patientInfo.classList.remove('hidden');
-        // moreDetailsBtn.classList.remove('hidden'); // Show "More Information" button
-        moreInfoBtn.textContent = 'Hide patient info';
-      } else {
-        patientInfo.classList.add('hidden');
-        // moreDetailsBtn.classList.add('hidden'); // Hide "More Information" button
-        moreInfoBtn.textContent = 'More patient info';
-      }
+      patientInfo.classList.toggle('hidden');
+      moreInfoBtn.textContent = patientInfo.classList.contains('hidden')
+        ? 'More patient info'
+        : 'Hide patient info';
     });
-
-    const logoutBtn = document.getElementById('logout-btn');
 
     logoutBtn.addEventListener('click', () => {
-      window.location.href = 'login.html'; // Redirect to the login page
+      window.location.href = 'login.html';
     });
+
+    const contactModal = document.getElementById('contact-pmp-modal');
+    const contactModalContent = document.getElementById('contact-modal-content');
+    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+
+    function openContactModal() {
+      contactModal.classList.remove('hidden');
+      setTimeout(() => {
+        contactModal.classList.add('opacity-100');
+        contactModalContent.classList.remove('scale-95', 'opacity-0');
+        contactModalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeContactModal() {
+      contactModalContent.classList.remove('scale-100', 'opacity-100');
+      contactModalContent.classList.add('scale-95', 'opacity-0');
+      contactModal.classList.remove('opacity-100');
+      setTimeout(() => {
+        contactModal.classList.add('hidden');
+      }, 300);
+    }
+
+    contactPmpBtn.addEventListener('click', openContactModal);
   </script>
 </body>
 </html>
