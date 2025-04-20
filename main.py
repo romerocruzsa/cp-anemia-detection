@@ -42,13 +42,14 @@ def dir_config():
 
 def train_config():
     dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
-    edge_input_path = "" # Mannual toggle on/off
+    edge_input_path = "/Users/romerocruzsa/Workspace/Projects/Research/cp-anemia-detection/data/edge-input/sample_img2.png" # Mannual toggle on/off
 
     # Determine mode based on whether edge input file exists
     if os.path.exists(edge_input_path):
         print("[Data] Edge input mode detected.")
-        dataloader = extract_data(edge_input_path, batch_size=1)
+        dataloader = extract_data("edge-input", dataset_dir=edge_input_path, batch_size=1)
         print("[Edge Mode] Ready to run model on edge input batch")
+        return dataloader
 
     else:
         print(f"[Data] Dataset mode detected.")
@@ -64,7 +65,14 @@ def train_config():
 
 def main():
     dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
-    train_dataset, train_loader, test_dataset, test_loader = train_config()
+    print(os.path.exists(edge_input_path))
+    if edge_input_path != "":
+        dataloader = train_config()
+        print(dataloader)
+        import pdb;pdb.set_trace()
+
+    else:
+        train_dataset, train_loader, test_dataset, test_loader = train_config()
     log_dir = os.path.expanduser("~/cp-anemia-detection/output/logs")
 
     writer = SummaryWriter(log_dir=log_dir)
