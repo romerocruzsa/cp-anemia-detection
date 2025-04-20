@@ -3,237 +3,254 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results Summary</title>
+  <title>Results Records</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-  <div class="dashboard">
-    <!-- Log Out Button -->
-    <button id="logout-btn" class="logout-button">Log Out</button>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <!-- Sidebar Top Navigation -->
-      <nav class="sidebar-nav">
-        <a href="index.html" class="nav-link">Dashboard</a>
-        <a href="account.html" class="nav-link">Account</a>
-        <a href="results-summary.html" class="nav-link active">Summary</a>
+<body class="bg-gray-50 font-inter min-h-screen flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-black shadow-md p-6 flex flex-col justify-between min-h-screen">
+    <div>
+      <div class="mb-8 text-center">
+        <img src="images/profile-placeholder.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-2" />
+        <h1 class="text-xl text-white font-semibold">Andrea Rivera</h1>
+        <p class="text-sm text-white">Patient ID: 789087</p>
+      </div>
+      <nav class="space-y-3">
+        <a href="index.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
+        <a href="account.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
+        <a href="results-summary.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
+        <a href="audit.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Audit Log</a>
       </nav>
-      <!-- Horizontal Divider -->
-      <div class="sidebar-header">
-        <img src="images/profile-placeholder.jpg" alt="Profile Picture" class="profile-pic">
-        <h1>Andrea Rivera</h1>
-        <h2>Non-Anemic: 10 g/dL</h2>
-        <p><strong>Patient ID:</strong> 789087</p>
-        <button id="more-info-btn">More patient info</button>
-        <div id="patient-info" class="hidden">
+      <div class="mt-6">
+        <button id="more-info-btn" class="text-sm text-blue-600 hover:underline">More patient info</button>
+        <div id="patient-info" class="mt-3 hidden text-sm text-white">
           <p><strong>Age:</strong> 32</p>
           <p><strong>Gender:</strong> Female</p>
           <p><strong>Blood Type:</strong> O+</p>
           <p><strong>Condition:</strong> Non-Anemic</p>
         </div>
       </div>
-      <!-- Notification Banner -->
-      <div class="notification-banner">
-        <p><strong>Message from Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
-      </div>
-      <button id="contact-pmp-btn" class="sidebar-button">Contact PMP</button>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="results-summary">
-      <!-- Combined Search, Filter, Sort, and Table Card -->
-      <div class="card combined-results-card">
-        <div class="results-controls">
-          <input type="text" placeholder="Search results..." class="search-bar" id="search-input">
+      <div class="mt-6 space-y-4">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Mayagüez Medical Center:</strong> Sample sent. Pending revision.</p>
         </div>
-        <div class="filter-controls">
-          <label for="date-filter">Date:</label>
-          <input type="date" id="date-filter">
-          <label for="anemia-filter">Anemia:</label>
-          <select id="anemia-filter">
-            <option value="">All</option>
-            <option value="No">No</option>
-            <option value="Moderate">Moderate</option>
-            <option value="Severe">Severe</option>
-          </select>
-          <label for="sort-by">Sort By:</label>
-          <select id="sort-by">
-            <option value="date-asc">Date (Ascending)</option>
-            <option value="date-desc">Date (Descending)</option>
-            <option value="hg-asc">Hg (Ascending)</option>
-            <option value="hg-desc">Hg (Descending)</option>
-          </select>
-          <button id="apply-filters" class="filter-button">Apply Filters</button>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Appointment:</strong> March 23 at 10:30 AM with Dr. Ruiz.</p>
         </div>
-        <table class="results-table single-column" id="results-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Hg</th>
-              <th>Anemia</th>
-              <th>Doctor</th>
-              <th>Hospital</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2024-04-05</td>
-              <td>09:15 AM</td>
-              <td>13.1</td>
-              <td>No</td>
-              <td>Dr. Santos</td>
-              <td>San Juan Medical Center</td>
-            </tr>
-            <tr>
-              <td>2024-04-01</td>
-              <td>01:30 PM</td>
-              <td>7.2</td>
-              <td>Severe</td>
-              <td>Dr. Vega</td>
-              <td>Bayamón General Hospital</td>
-            </tr>
-            <tr>
-              <td>2024-03-30</td>
-              <td>07:45 AM</td>
-              <td>6.9</td>
-              <td>Severe</td>
-              <td>Dr. Torres</td>
-              <td>Arecibo General Hospital</td>
-            </tr>
-            <tr>
-              <td>2024-03-25</td>
-              <td>03:00 PM</td>
-              <td>8.3</td>
-              <td>Moderate</td>
-              <td>Dr. Rodríguez</td>
-              <td>Caguas Regional Hospital</td>
-            </tr>
-            <tr>
-              <td>2024-03-20</td>
-              <td>11:30 AM</td>
-              <td>11.8</td>
-              <td>No</td>
-              <td>Dr. Fernández</td>
-              <td>Mayagüez Medical Center</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+        </div>
+      </div>
+
+    </div>
+    <div>
+      <button id="contact-pmp-btn" class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Contact PCP</button>
+    </div>
+  </aside>
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">Records View</h2>
+      <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">Log Out</button>
+    </header>
+    <main class="p-6 space-y-6">
+        <!-- Account Information Header -->
+        <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+          <h2 class="text-xl font-bold text-gray-800">Patient Records</h2>
+          <p class="text-sm text-gray-500">View your previous results, recommedations, and more </p>
+        </div><div class="bg-white p-4 rounded-lg shadow">
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-4">
+          <input type="text" placeholder="Search results..." class="w-full md:w-1/3 border px-3 py-2 rounded" id="search-input">
+          <div class="flex flex-wrap items-center gap-4">
+            <label class="text-sm">Date: <input type="date" id="date-filter" class="border px-2 py-1 rounded"></label>
+            <label class="text-sm">Remark:
+              <select id="anemia-filter" class="border px-2 py-1 rounded">
+                <option value="">All</option>
+                <option value="No">No</option>
+                <option value="Moderate">Mild</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Severe">Severe</option>
+              </select>
+            </label>
+            <label class="text-sm">Sort By:
+              <select id="sort-by" class="border px-2 py-1 rounded">
+                <option value="date-asc">Date (Ascending)</option>
+                <option value="date-desc">Date (Descending)</option>
+                <option value="hb-asc">Hemoglobin Level (Ascending)</option>
+                <option value="hb-desc">Hemoglobin Level (Descending)</option>
+              </select>
+            </label>
+            <button id="apply-filters" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Apply Filters</button>
+            <button id="clear-filters" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Clear Filters</button>
+          </div>
+        </div>
+        <div id="result-count" class="text-sm italic text-gray-500 text-right mt-2"></div>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-sm text-left border-collapse">
+            <thead class="text-gray-700 border-b">
+              <tr>
+                <th class="py-2 px-4">Sample</th>
+                <th class="py-2 px-4">Patient ID</th>
+                <th class="py-2 px-4">Date</th>
+                <th class="py-2 px-4">Time</th>
+                <th class="py-2 px-4">Hemoglobin Level</th>
+                <th class="py-2 px-4">Remark</th>
+                <th class="py-2 px-4">Doctor</th>
+                <th class="py-2 px-4">Hospital</th>
+              </tr>
+            </thead>
+            <tbody id="results-table"></tbody>
+          </table>
+        </div>
       </div>
     </main>
   </div>
 
-  <!-- Contact PMP Modal -->
-  <div id="contact-pmp-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>Contact PMP</h2>
-      <p>Please provide your message or inquiry below:</p>
-      <textarea placeholder="Type your message here..."></textarea>
-      <button class="modal-submit-btn">Send</button>
+  <!-- Contact PCP Modal -->
+  <div id="contact-pmp-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="contact-modal-content">
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeContactModal()">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Contact PCP</h2>
+      <textarea class="w-full p-2 border rounded mb-4" rows="4" placeholder="Type your message here..."></textarea>
+      <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Send</button>
     </div>
   </div>
 
   <script>
+
+    document.getElementById('more-info-btn').addEventListener('click', () => {
+      const info = document.getElementById('patient-info');
+      info.classList.toggle('hidden');
+    });
+    
     const logoutBtn = document.getElementById('logout-btn');
     logoutBtn.addEventListener('click', () => {
-      window.location.href = 'login.html'; // Redirect to the login page
+      window.location.href = 'login.html';
     });
+    
+    const contactModal = document.getElementById('contact-pmp-modal');
+    const contactModalContent = document.getElementById('contact-modal-content');
+    const contactPmpBtn = document.getElementById('contact-pmp-btn');
 
-    const searchInput = document.getElementById('search-input');
-    const dateFilter = document.getElementById('date-filter');
-    const anemiaFilter = document.getElementById('anemia-filter');
-    const sortBy = document.getElementById('sort-by');
-    const applyFiltersButton = document.getElementById('apply-filters');
-    const resultsTable = document.getElementById('results-table');
-    const rows = Array.from(resultsTable.querySelectorAll('tbody tr'));
-
-    function filterTable() {
-      const searchValue = searchInput.value.toLowerCase();
-      const dateValue = dateFilter.value;
-      const anemiaValue = anemiaFilter.value;
-
-      rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        const date = cells[0].textContent.trim();
-        const anemia = cells[3].textContent.trim().toLowerCase();
-        const matchesSearch = cells[0].textContent.toLowerCase().includes(searchValue) ||
-                              cells[1].textContent.toLowerCase().includes(searchValue) ||
-                              cells[2].textContent.toLowerCase().includes(searchValue) ||
-                              cells[3].textContent.toLowerCase().includes(searchValue) ||
-                              cells[4].textContent.toLowerCase().includes(searchValue) ||
-                              cells[5].textContent.toLowerCase().includes(searchValue);
-        const matchesDate = !dateValue || date === dateValue;
-        const matchesAnemia = !anemiaValue || anemia === anemiaValue.toLowerCase();
-
-        if (matchesSearch && matchesDate && matchesAnemia) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      });
+    function openContactModal() {
+      contactModal.classList.remove('hidden');
+      setTimeout(() => {
+        contactModal.classList.add('opacity-100');
+        contactModalContent.classList.remove('scale-95', 'opacity-0');
+        contactModalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
     }
 
-    function sortTable() {
-      const sortValue = sortBy.value;
-      const tbody = resultsTable.querySelector('tbody');
-      const sortedRows = rows.slice().sort((a, b) => {
-        const aCells = a.querySelectorAll('td');
-        const bCells = b.querySelectorAll('td');
-        if (sortValue === 'date-asc') {
-          return new Date(aCells[0].textContent) - new Date(bCells[0].textContent);
-        } else if (sortValue === 'date-desc') {
-          return new Date(bCells[0].textContent) - new Date(aCells[0].textContent);
-        } else if (sortValue === 'hg-asc') {
-          return parseFloat(aCells[2].textContent) - parseFloat(bCells[2].textContent);
-        } else if (sortValue === 'hg-desc') {
-          return parseFloat(bCells[2].textContent) - parseFloat(aCells[2].textContent);
-        }
+    function closeContactModal() {
+      contactModalContent.classList.remove('scale-100', 'opacity-100');
+      contactModalContent.classList.add('scale-95', 'opacity-0');
+      contactModal.classList.remove('opacity-100');
+      setTimeout(() => {
+        contactModal.classList.add('hidden');
+      }, 300);
+    }
+
+    contactPmpBtn.addEventListener('click', openContactModal);
+    
+    const results = [
+      {
+        patientId: '789087', gender: 'Female', age: 32,
+        date: '2024-04-05', time: '09:15 AM', hb: '13.1', anemia: 'No',
+        doctor: 'Dr. Santos', hospital: 'San Juan Medical Center',
+        note: 'Normal range. Continue regular checkups.', steps: 'No further action required.', sample: 'images/sample_img1.png'
+      },
+      {
+        patientId: '789087', gender: 'Female', age: 32,
+        date: '2024-04-01', time: '01:30 PM', hb: '7.2', anemia: 'Severe',
+        doctor: 'Dr. Vega', hospital: 'Bayamón General Hospital',
+        note: 'Critical level detected.', steps: 'Refer to hematologist immediately.', sample: 'images/sample_img1.png'
+      }
+    ];
+
+    const resultsTable = document.getElementById('results-table');
+    const searchInput = document.getElementById('search-input');
+    const anemiaFilter = document.getElementById('anemia-filter');
+    const dateFilter = document.getElementById('date-filter');
+    const sortBy = document.getElementById('sort-by');
+    const applyFiltersBtn = document.getElementById('apply-filters');
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const resultCount = document.getElementById('result-count');
+
+    applyFiltersBtn.addEventListener('click', renderFilteredResults);
+    clearFiltersBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      anemiaFilter.value = '';
+      dateFilter.value = '';
+      sortBy.value = 'date-asc';
+      renderFilteredResults();
+    });
+
+    function renderFilteredResults() {
+      const query = searchInput.value.toLowerCase();
+      const anemia = anemiaFilter.value;
+      const date = dateFilter.value;
+      const sort = sortBy.value;
+
+      let filtered = results.filter(r => {
+        const matchesQuery = Object.values(r).some(val => String(val).toLowerCase().includes(query));
+        const matchesAnemia = anemia ? r.anemia === anemia : true;
+        const matchesDate = date ? r.date === date : true;
+        return matchesQuery && matchesAnemia && matchesDate;
+      });
+
+      filtered.sort((a, b) => {
+        if (sort === 'date-asc') return new Date(a.date) - new Date(b.date);
+        if (sort === 'date-desc') return new Date(b.date) - new Date(a.date);
+        if (sort === 'hb-asc') return parseFloat(a.hb) - parseFloat(b.hb);
+        if (sort === 'hb-desc') return parseFloat(b.hb) - parseFloat(a.hb);
         return 0;
       });
 
-      tbody.innerHTML = '';
-      sortedRows.forEach(row => tbody.appendChild(row));
+      resultsTable.innerHTML = '';
+
+      filtered.forEach(r => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50 cursor-pointer';
+        row.innerHTML = `
+          <td class="py-2 px-4"><img src="${r.sample}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'" /></td>
+          <td class="py-2 px-4">${r.patientId}</td>
+          <td class="py-2 px-4">${r.date}</td>
+          <td class="py-2 px-4">${r.time}</td>
+          <td class="py-2 px-4">${r.hb}</td>
+          <td class="py-2 px-4">${r.anemia}</td>
+          <td class="py-2 px-4">${r.doctor}</td>
+          <td class="py-2 px-4">${r.hospital}</td>`;
+
+        const expand = document.createElement('tr');
+        expand.className = 'expand-details hidden';
+        expand.innerHTML = `
+          <td colspan="8" class="p-4 bg-gray-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex flex-col items-center">
+                <img src="${r.sample}" class="rounded shadow-md max-w-full" onerror="this.style.display='none'" />
+                <p class="text-xs text-gray-400 mt-2">Sample evaluated</p>
+              </div>
+              <div class="text-sm text-gray-800 space-y-2">
+                <p><strong>Notes:</strong> ${r.note}</p>
+                <p><strong>Recommendation:</strong> ${r.steps}</p>
+                <p class="text-xs text-gray-500 italic">Reference Range: Normal hemoglobin level is 12–16 g/dL for females, 14–18 g/dL for males.</p>
+              </div>
+            </div>
+          </td>`;
+
+        row.addEventListener('click', () => expand.classList.toggle('hidden'));
+        resultsTable.appendChild(row);
+        resultsTable.appendChild(expand);
+      });
+
+      resultCount.textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''} shown`;
     }
 
-    searchInput.addEventListener('input', filterTable);
-    applyFiltersButton.addEventListener('click', () => {
-      filterTable();
-      sortTable();
-    });
-
-    const contactPmpModal = document.getElementById('contact-pmp-modal');
-    const contactPmpBtn = document.getElementById('contact-pmp-btn');
-    const closeBtns = document.querySelectorAll('.close-btn');
-    const moreInfoBtn = document.getElementById('more-info-btn');
-    const patientInfo = document.getElementById('patient-info');
-
-    contactPmpBtn.addEventListener('click', () => {
-      contactPmpModal.style.display = 'block';
-    });
-
-    closeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        contactPmpModal.style.display = 'none';
-      });
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === contactPmpModal) {
-        contactPmpModal.style.display = 'none';
-      }
-    });
-
-    moreInfoBtn.addEventListener('click', () => {
-      if (patientInfo.classList.contains('hidden')) {
-        patientInfo.classList.remove('hidden');
-        moreInfoBtn.textContent = 'Hide patient info';
-      } else {
-        patientInfo.classList.add('hidden');
-        moreInfoBtn.textContent = 'More patient info';
-      }
-    });
+    renderFilteredResults();
   </script>
 </body>
 </html>
