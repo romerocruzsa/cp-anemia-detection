@@ -1,22 +1,52 @@
 import os
+import shutil
 import torch
 import gc
 import csv
+import pandas as pd
 from torch.ao.quantization.quantize_fx import convert_fx
+import numpy as np
+from scipy.stats import gaussian_kde
+from torchvision.transforms import ToPILImage
+from PIL import ImageDraw, ImageFont
 
-def params():
-    architecture = "mobilenetv2"
-    compression_mode = "base"
+def input_train_config(config_line):
+    args = config_line.strip().split()
+    architecture = args[0]
+    quantization_mode = args[2]
+    pruning_mode = args[3]
+    distillation_mode = args[4]
+    precision = "fp32"
+    signature = args[1]
     batch_size = 32
-    epochs = 3
     folds = 5
+    epochs = 150*folds
 
-    # Define loss functions
-    cross_entropy_loss = torch.nn.CrossEntropyLoss()  # Multi-class classification loss
-    mse_loss = torch.nn.MSELoss()  # Regression loss
-    mae_loss = torch.nn.L1Loss()  # Regression loss
+    # cross_entropy_loss = torch.nn.CrossEntropyLoss()
+    cross_entropy_loss = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
+    mse_loss = torch.nn.MSELoss()
+    mae_loss = torch.nn.L1Loss()
 
-    return architecture, compression_mode, batch_size, epochs, folds, cross_entropy_loss, mse_loss, mae_loss
+    return (architecture, signature, quantization_mode, precision, 
+            pruning_mode, distillation_mode, batch_size, epochs, folds, 
+            cross_entropy_loss, mse_loss, mae_loss)
+
+
+def print_train_config(config):
+    print("="*100)
+    print(f"[Setup] Model Architecture:     \t\t{config[0]}")
+    print(f"[Setup] Signature:              \t\t{config[1]}")
+    print(f"[Setup] Quantization Mode:      \t\t{config[2]}")
+    print(f"[Setup] Precision:              \t\t{config[3]}")
+    print(f"[Setup] Pruning Mode:           \t\t{config[4]}")
+    print(f"[Setup] Distillation Mode:      \t\t{config[5]}")
+    print(f"[Setup] Batch Size:             \t\t{config[6]}")
+    print(f"[Setup] Epochs:                 \t\t{config[7]}")
+    print(f"[Setup] Cross-validation Folds: \t\t{config[8]}")
+    print(f"[Setup] Classification Loss:    \t\t{config[9]}")
+    print(f"[Setup] Regression Loss (1):    \t\t{config[10]}")
+    print(f"[Setup] Regression Loss (2):    \t\t{config[11]}")
+    print("="*100)
 
 def cuda_check():
     # Default device
@@ -32,6 +62,28 @@ def cuda_check():
     print(f"[Setup] Selected device: {device}")
     return device
 
+def clear_folder(folder_path):
+    """
+    Deletes all contents inside the given folder without removing the folder itself.
+    
+    Args:
+        folder_path (str): Path to the folder to clear.
+    """
+    if not os.path.exists(folder_path):
+        print(f"[Warning] Folder '{folder_path}' does not exist.")
+        return
+
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)  # Remove file or symbolic link
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)  # Recursively delete directory
+        except Exception as e:
+            print(f"[Error] Failed to delete {file_path}. Reason: {e}")
+
+
 def get_model_size(model, model_type="pytorch", model_path="model.onnx"):
     """Returns model size in MB"""
     if model_type == "pytorch":
@@ -45,7 +97,7 @@ def calibrate_loop(model, calibration_loader):
         model(img.to("cpu"))
 
 # Function to measure inference time & memory
-def timed_forward(model, img):
+def timed_forward(model, nail_tensor):
     """Measures inference time and memory usage for PyTorch, ONNX, and TensorRT."""
     start_event = torch.cuda.Event(enable_timing=True)
     end_event = torch.cuda.Event(enable_timing=True)
@@ -62,7 +114,7 @@ def timed_forward(model, img):
     # Start measuring latency
     start_event.record()
 
-    class_pred, reg_pred = model(img)
+    class_pred, reg_pred = model(nail_tensor)#, skin_tensor)
 
     end_event.record()
     torch.cuda.synchronize()  # Ensure accurate timing
@@ -88,28 +140,40 @@ def sw_loss(loss_class, loss_reg, eta_class=0.5):
     total_loss = (eta_class * loss_class) + (eta_reg * loss_reg)
     return total_loss
 
-def save_model(score, model, architecture, signature, dir, mode="base"):
+def quantile_loss(preds, targets, quantiles=[0.25, 0.5, 0.75]):
+    loss = 0
+    for i, q in enumerate(quantiles):
+        errors = targets - preds[:, i]
+        loss += torch.max((q - 1) * errors, q * errors).mean()
+    return loss
+
+def save_model(score, model, architecture, signature, dir, distillation="base", quantization="base", pruning="base"):
     # Save best model based on validation accuracy        
-    if mode == "qat":
+    if quantization == "qat":
         qat_model = convert_fx(model.to("cpu"))
         torch.save(
             qat_model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{mode.upper()}.pth",
+            f"{dir}/model_best_loss_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
     else:
         torch.save(
             model.state_dict(),
-            f"{dir}/model_best_accuracy_{architecture}_{signature}_{mode.upper()}.pth",
+            f"{dir}/model_best_loss_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.pth",
         )
-    print(f"Best model saved with Accuracy: {score:.4f}")
+    print(f"Best model saved with Loss: {score:.4f}")
 
-def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
+def log_metrics(log_type, phase, epoch, fold, metrics, architecture, hw_metrics=None, writer=None):
     if log_type == "print":
         print(f"{phase.capitalize()}: Fold {fold} - Total Loss: {metrics[0]:.4f}, Cross Entropy: {metrics[1]:4f}, Accuracy: {metrics[2]:.4f}, "
             f"Precision: {metrics[3]:.4f}, Recall: {metrics[4]:.4f}, F1 Score: {metrics[5]:.4f}, AUC: {metrics[6]:.4f}, "
             f"R2 Score: {metrics[7]:4f}, MAE: {metrics[8]:.4f}, MSE: {metrics[9]:.4f}")
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/Total_Loss", metrics[0], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/Accuracy", metrics[2], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/F1", metrics[5], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MAE", metrics[8], epoch)
+        writer.add_scalar(f"{architecture}/Fold_{fold}/{phase}/MSE", metrics[9], epoch)
         
-        if phase == "validation":
+        if phase == "validation" or phase == "testing":
             print(f"Avg Latency (ms): {hw_metrics[0]:.2f}, Avg Memory Before (MB): {hw_metrics[1]:.2f}, "
                 f"Avg Memory After (MB): {hw_metrics[2]:.2f}, Avg Max Memory (MB): {hw_metrics[3]:.2f}")
         
@@ -127,7 +191,7 @@ def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
                         "auc": metrics[6],
                         "r2_score": metrics[7],
                         "mae_loss": metrics[8],
-                        "mse_loss": metrics[9]}
+                        "mse_loss": metrics[9]} 
         else:
             metrics_dict = {
                             "epoch": epoch + 1,
@@ -145,12 +209,59 @@ def log_metrics(log_type, phase, epoch, fold, metrics, hw_metrics=None):
                             "latency": hw_metrics[0],
                             "malloc_before": hw_metrics[1],
                             "malloc_after": hw_metrics[2],
-                            "max_malloc": hw_metrics[3]}
+                            "max_malloc": hw_metrics[3]}          
         return metrics_dict
     
-def save_metrics(metrics, dir, phase, architecture, signature, mode="base"):
+def save_metrics(metrics, dir, phase, architecture, signature, distillation="base", quantization="base", pruning="base"):
     keys = metrics[0].keys()
-    with open(f"{dir}/{phase}_metrics_{architecture}_{signature}_{mode}.csv", 'w', newline='') as output_file:
+    with open(f"{dir}/{phase}/{phase}_metrics_{architecture}_{signature}_{distillation}_{quantization}_{pruning}.csv", 'w', newline='') as output_file:
             dict_writer = csv.DictWriter(output_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(metrics)
+
+def kde_undersample_subset(dataset, target_attr="hb_level", n_samples=100, bandwidth=0.5):
+    """
+    Perform KDE-based under-sampling on a Subset or full Dataset.
+
+    Args:
+        dataset: torch.utils.data.Subset or Dataset
+        target_attr: attribute returned by dataset.__getitem__ to use for sampling (e.g., Hb value)
+        n_samples: number of points to retain
+        bandwidth: KDE bandwidth in same units as target
+
+    Returns:
+        A new Subset with under-sampled indices
+    """
+    targets = []
+    for i in range(len(dataset)):
+        try:
+            _, _, _, _, hb_level = dataset[i]
+            targets.append(float(hb_level))
+        except Exception:
+            continue  # fallback if sample is broken
+
+    targets = np.array(targets)
+    kde = gaussian_kde(targets, bw_method=bandwidth / np.std(targets))
+    probs = 1.0 / (kde(targets) + 1e-6)
+    probs /= probs.sum()
+    sampled_indices = np.random.choice(len(dataset), size=n_samples, replace=False, p=probs)
+
+    return torch.utils.data.Subset(dataset, sampled_indices)
+
+def kde_balance_by_severity(df, target_column="HB_LEVEL_GperL", severity_column="Severity",
+                                    n_per_class=50, bandwidth=0.5, seed=42):
+            np.random.seed(seed)
+            balanced_dfs = []
+            for severity in df[severity_column].unique():
+                group = df[df[severity_column] == severity]
+                hb_vals = group[target_column].values
+                if len(group) <= n_per_class:
+                    balanced_dfs.append(group)
+                else:
+                    kde = gaussian_kde(hb_vals, bw_method=bandwidth / np.std(hb_vals))
+                    density = kde(hb_vals)
+                    probs = 1.0 / (density + 1e-6)
+                    probs /= probs.sum()
+                    sampled = group.sample(n=n_per_class, weights=probs, replace=False, random_state=seed)
+                    balanced_dfs.append(sampled)
+            return pd.concat(balanced_dfs).reset_index(drop=True)

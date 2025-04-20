@@ -1,7 +1,7 @@
 pg_config = {
-    'host' : '192.168.1.20',
+    'host' : 'localhost',
     'user' : 'capiku',
     'password' :'capiku@3131!',
     'dbname' : 'capiku',
-    'port' : '5432'
+    'port' : '5433'
 }
