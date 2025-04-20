@@ -1,5 +1,19 @@
-/cawt/*
-.venv
+# Ignore Python virtual environments
+/cawt/
+.venv/
+
+# Ignore Python path files
 *.pth
-*onnx
+
+# Ignore output directory (relative to repo root)
+output/
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore all .onnx model files
+*.onnx
+
+# Ignore specific preprocessed file
 data/cp-anemia/preprocessed.json
