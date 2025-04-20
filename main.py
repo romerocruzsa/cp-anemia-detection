@@ -26,7 +26,7 @@ def create_if_missing(*paths, verbose=False):
 
 def dir_config():    
     data_dir = os.path.expanduser("~/cp-anemia-detection/data/")
-    datasets = "fingernail-anemia" # Options: "all", "cp-anemic", "eyes-defy-anemia"
+    datasets = "fingernail-anemia"
     weights_dir = os.path.expanduser("~/cp-anemia-detection/output/weights")
     metrics_dir = os.path.expanduser("~/cp-anemia-detection/output/metrics")
     checkpoints_dir = os.path.expanduser("~/cp-anemia-detection/output/checkpoints")
@@ -42,7 +42,8 @@ def dir_config():
 
 def train_config():
     dataset_dir, weights_dir, metrics_dir, checkpoints_dir, edge_input_path = dir_config()
-    edge_input_path = "/Users/romerocruzsa/Workspace/Projects/Research/cp-anemia-detection/data/edge-input/sample_img2.png" # Mannual toggle on/off
+    # edge_input_path = "/Users/romerocruzsa/Workspace/Projects/Research/cp-anemia-detection/data/edge-input/sample_img2.png" # Mannual toggle on/off
+    edge_input_path = "" # Mannual toggle on/off
 
     # Determine mode based on whether edge input file exists
     if os.path.exists(edge_input_path):
@@ -78,8 +79,8 @@ def main():
     writer = SummaryWriter(log_dir=log_dir)
     device = cuda_check()
 
-    # Load from sweeps.sh
-    with open("base_testing.sh", "r") as f:
+    script = os.path.expanduser("~/cp-anemia-detection/scripts/base_testing.sh")
+    with open(script, "r") as f:
         sweep_lines = [
             line.strip() for line in f
             if line.strip() and not line.strip().startswith("#")
