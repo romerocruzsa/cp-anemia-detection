@@ -20,6 +20,8 @@
 
       <!-- Navigation -->
       <nav class="space-y-3">
+        <a href="capture.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Upload Sample</a>
+        <a href="patient-care.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Patient Care</a>
         <a href="index.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
         <a href="account.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
         <a href="results-summary.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
@@ -168,7 +170,7 @@
     
     const contactModal = document.getElementById('contact-pmp-modal');
     const contactModalContent = document.getElementById('contact-modal-content');
-    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+    const contactPcpBtn = document.getElementById('contact-pmp-btn');
 
     function openContactModal() {
       contactModal.classList.remove('hidden');
@@ -188,7 +190,7 @@
       }, 300);
     }
 
-    contactPmpBtn.addEventListener('click', openContactModal);
+    contactPcpBtn.addEventListener('click', openContactModal);
 
     document.getElementById('more-info-btn').addEventListener('click', () => {
       const patientInfo = document.getElementById('patient-info');

@@ -6,6 +6,7 @@
   <title>Patient Digital Chart</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50 font-inter min-h-screen flex flex-col md:flex-row">
   <!-- Sidebar -->
@@ -20,6 +21,8 @@
 
       <!-- Navigation -->
       <nav class="space-y-3">
+        <a href="capture.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Upload Sample</a>
+        <a href="patient-care.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Patient Care</a>
         <a href="index.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
         <a href="account.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
         <a href="results-summary.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
@@ -50,8 +53,6 @@
         </div>
       </div>
 
-    </div>
-
     <div>
       <button id="contact-pmp-btn" class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Contact PCP</button>
     </div>
@@ -67,157 +68,174 @@
 
     <!-- Main Content -->
     <main class="p-6 space-y-6">
-        <!-- Sectioned Grid Layout -->
-        <div class="grid grid-cols- lg:grid-cols-3 gap-6">
-
-          <!-- Section A: Doctor + Appointment Related -->
-          <div class="space-y-6">
-            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
-              <h2 class="text-xl font-bold text-gray-800">Patient Care</h2>
-              <p class="text-sm text-gray-500">Doctor interactions and appointments</p>
-            </div>
-
-            <!-- Doctor's Notes -->
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
-              <h3 class="text-lg font-semibold mb-2">Doctor's Notes</h3>
-              <p class="text-sm text-gray-500 mb-1"><strong>Date:</strong> March 20, 2025</p>
-              <p class="text-sm text-gray-700">Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
-            </div>
-
-            <!-- Upcoming Appointment -->
-            <div class="bg-green-50 p-4 border-t-4 border-green-400 rounded-lg shadow flex items-center justify-between">
-              <div>
-                <p class="text-sm text-white-500">Today, March 23</p>
-                <p class="text-xl font-semibold">10:30 AM</p>
-                <p class="text-sm text-white-700">Mayagüez Medical Center</p>
-                <p class="text-sm text-white-700">Opthalmology</p>
-                <p class="text-sm text-white-700">Dr. Ruiz</p>
-              </div>
-              <img src="images/doctor-placeholder.png" alt="Doctor" class="w-20 h-20 rounded-full" />
-            </div>
-
-            <!-- Past Appointments -->
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h3 class="text-lg font-semibold mb-2">Past Appointments</h3>
-              <ul class="text-sm text-gray-700 space-y-2">
-                <li>
-                  <div class="flex justify-between">
-                    <span>Follow-Up - Apr 12, 2025</span>
-                    <span class="text-gray-500">Dr. Lubezki</span>
-                  </div>
-                </li>
-                <li>
-                  <div class="flex justify-between">
-                    <span>Urgent - Feb 1, 2025</span>
-                    <span class="text-gray-500">Dr. Lubezki</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Medication List -->
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h3 class="text-lg font-semibold mb-2">Current Medications</h3>
-              <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
-                <li>Iron Supplements - 1 tablet daily</li>
-                <li>Vitamin B12 - Twice a week</li>
-                <li>Folic Acid - As prescribed</li>
-              </ul>
-            </div>
+      <!-- Sectioned Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+        <!-- Section A: Patient Care -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Patient Care</h2>
+            <p class="text-sm text-gray-500">Health insights and care plan</p>
           </div>
-
-          <!-- Section B: Anemia + Results Related -->
-          <div class="space-y-6">
-            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
-              <h2 class="text-xl font-bold text-gray-800">Anemia Tracking</h2>
-              <p class="text-sm text-gray-500">Lab results and condition monitoring</p>
-            </div>
-
-              <!-- Anemia Previous Results Bar Chart -->
-              <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-lg font-semibold mb-2">Previous Results Chart</h3>
-                <canvas id="anemiaBarChart" height="200"></canvas>
-              </div>
-
-            <!-- Results Records -->
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h3 class="text-lg font-semibold mb-2">Your Results</h3>
-              <p class="text-sm text-gray-700 mb-2">Your new results are on their way.</p>
-              <div class="flex items-center space-x-4 text-sm">
-                <span class="text-green-600">✔ Sent</span>
-                <span class="text-gray-500">□ Delivered</span>
-                <span class="text-gray-500">□ Received</span>
-              </div>
-              <div class="mt-4 p-3 bg-gray-50 rounded-md flex items-center justify-between">
-                <div>
-                  <p class="text-sm">Last Results: <strong>13 g/dL</strong></p>
-                  <p class="text-sm text-green-600">Non-Anemic</p>
-                  <p class="text-xs text-gray-500">Received Mar 13, 2025 from Dr. Ruiz</p>
-                </div>
-                <img src="images/sample_img1.png" alt="Eye" class="w-16 h-16 rounded" />
-              </div>
-            </div>
-
-            <!-- Past Results Table -->
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h3 class="text-lg font-semibold mb-4">Past Results</h3>
-              <table class="min-w-full text-sm text-left">
-                <thead class="text-gray-500">
-                  <tr>
-                    <th class="py-2">Date</th>
-                    <th class="py-2">Time</th>
-                    <th class="py-2">Hg (g/dL)</th>
-                    <th class="py-2">Anemia</th>
-                  </tr>
-                </thead>
-                <tbody class="text-gray-700">
-                  <tr class="border-t">
-                    <td class="py-2">Mar 13, 2025</td>
-                    <td class="py-2">4:33 PM</td>
-                    <td class="py-2">13.0</td>
-                    <td class="py-2">Non-Anemic</td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-2">Mar 9, 2025</td>
-                    <td class="py-2">4:21 PM</td>
-                    <td class="py-2">13.4</td>
-                    <td class="py-2">Non-Anemic</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+    
+          <!-- Diagnosis Overview -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Diagnosis Overview</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Iron Deficiency Anemia - Diagnosed Jan 10, 2025</li>
+              <li>Vitamin B12 Deficiency - Diagnosed Feb 2, 2025</li>
+            </ul>
           </div>
-          <!-- Section A: Doctor + Appointment Related -->
-          <div class="space-y-6">
-            <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
-              <h2 class="text-xl font-bold text-gray-800">Sample Records</h2>
-              <p class="text-sm text-gray-500">Send new samples and view previous ones</p>
-            </div>
-
-            <!-- Upload New Image -->
-
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h3 class="text-lg font-semibold mb-2">Upload or Capture New Sample</h3>
-              <input type="file" accept="image/*" id="sample-upload" class="mb-4" />
-              <video id="camera-stream" autoplay class="mb-4 w-full max-h-48 rounded hidden"></video>
-              <button id="start-camera" class="mb-2 px-3 py-1 bg-blue-500 text-white rounded">Use Webcam</button>
-              <canvas id="snapshot-canvas" class="hidden"></canvas>
-              <button id="capture-btn" class="mb-4 px-3 py-1 bg-green-500 text-white rounded hidden">Capture</button>
-              <div id="sample-preview" class="hidden rounded bg-white p-2">
-                <p class="text-sm mb-2 text-gray-700">Preview:</p>
-                <img id="preview-img" src="#" class="w-full max-h-64 object-contain rounded" alt="Preview" />
-              </div>
-            </div>
-
-            </div>
-              </ul>
-            </div>
+    
+          <!-- Treatment Plan -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Treatment Plan</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Continue iron supplements</li>
+              <li>Weekly B12 injections</li>
+              <li>Follow-up CBC every 2 weeks</li>
+            </ul>
+          </div>
+    
+          <!-- Alerts -->
+          <div class="bg-red-50 border-l-4 border-red-400 p-3 text-sm text-red-800">
+            <p><strong>Alert:</strong> Next hemoglobin check is overdue.</p>
+          </div>
+    
+          <!-- Doctor's Notes -->
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+            <h3 class="text-lg font-semibold mb-2">Doctor's Notes</h3>
+            <p class="text-sm text-gray-500 mb-1"><strong>Date:</strong> March 20, 2025</p>
+            <p class="text-sm text-gray-700">Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
+          </div>
+    
+          <!-- Medication List -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Current Medications</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Iron Supplements - 1 tablet daily</li>
+              <li>Vitamin B12 - Twice a week</li>
+              <li>Folic Acid - As prescribed</li>
+            </ul>
           </div>
         </div>
+    
+        <!-- Section B: Anemia + Results Related -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Anemia Tracking</h2>
+            <p class="text-sm text-gray-500">Lab results and condition monitoring</p>
+          </div>
+    
+          <!-- Anemia Previous Results Bar Chart -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Previous Results Chart</h3>
+            <canvas id="anemiaBarChart" height="300"></canvas>
+          </div>
+    
+          <!-- Results Records -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Your Results</h3>
+            <p class="text-sm text-gray-700 mb-2">Your new results are on their way.</p>
+            <div class="flex items-center space-x-4 text-sm">
+              <span class="text-green-600">✔ Sent</span>
+              <span class="text-gray-500">□ Delivered</span>
+              <span class="text-gray-500">□ Received</span>
+            </div>
+            <div class="mt-4 p-3 bg-gray-50 rounded-md flex items-center justify-between">
+              <div>
+                <p class="text-sm">Last Results: <strong>13 g/dL</strong></p>
+                <p class="text-sm text-green-600">Non-Anemic</p>
+                <p class="text-xs text-gray-500">Received Mar 13, 2025 from Dr. Ruiz</p>
+              </div>
+              <img src="images/sample_img1.png" alt="Eye" class="w-16 h-16 rounded" />
+            </div>
+          </div>
+    
+          <!-- Past Results Table -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-4">Past Results</h3>
+            <table class="min-w-full text-sm text-left">
+              <thead class="text-gray-500">
+                <tr>
+                  <th class="py-2">Date</th>
+                  <th class="py-2">Time</th>
+                  <th class="py-2">Hg (g/dL)</th>
+                  <th class="py-2">Anemia</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700">
+                <tr class="border-t">
+                  <td class="py-2">Mar 13, 2025</td>
+                  <td class="py-2">4:33 PM</td>
+                  <td class="py-2">13.0</td>
+                  <td class="py-2">Non-Anemic</td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-2">Mar 9, 2025</td>
+                  <td class="py-2">4:21 PM</td>
+                  <td class="py-2">13.4</td>
+                  <td class="py-2">Non-Anemic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    
+        <!-- Section C: Appointments -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Appointments</h2>
+            <p class="text-sm text-gray-500">Schedule a new appointment or view previous ones</p>
+          </div>
+    
+          <!-- Schedule New Appointment -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Schedule New Appointment</h3>
+            <form id="appointment-form" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" placeholder="Doctor Name" class="border p-2 rounded w-full" required />
+                <input type="text" placeholder="Specialty" class="border p-2 rounded w-full" required />
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="datetime-local" class="border p-2 rounded w-full" required />
+                <input type="text" placeholder="Location" class="border p-2 rounded w-full" required />
+              </div>
+              <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Schedule</button>
+            </form>
+          </div>
+    
+          <!-- Calendar Display -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Calendar View</h3>
+            <div id="calendar" class="rounded p-4 overflow-x-auto">
+              <iframe
+                src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York"
+                style="border: 0" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+            </div>
+          </div>
+    
+          <!-- Previous Appointments -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Previous Appointments</h3>
+            <ul class="text-sm text-gray-700 space-y-3">
+              <li class="border-b pb-2">
+                <p><strong>Dr. Ruiz</strong> - Opthalmology</p>
+                <p>March 23, 2025 - 10:30 AM</p>
+                <p class="text-gray-500">Mayagüez Medical Center</p>
+              </li>
+              <li class="border-b pb-2">
+                <p><strong>Dr. Lubezki</strong> - Hematology</p>
+                <p>February 1, 2025 - 3:00 PM</p>
+                <p class="text-gray-500">Bayamón General Hospital</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
-  <!-- Modal -->
   <!-- Contact PCP Modal -->
   <div id="contact-pmp-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
     <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="contact-modal-content">
@@ -297,11 +315,7 @@
 
     const moreInfoBtn = document.getElementById('more-info-btn');
     const patientInfo = document.getElementById('patient-info');
-    const logoutBtn = document.getElementById('logout-btn');
-    const contactBtn = document.getElementById('contact-pmp-btn');
-    const modal = document.getElementById('contact-pmp-modal');
-    const closeModal = document.getElementById('close-modal');
-
+    
     moreInfoBtn.addEventListener('click', () => {
       patientInfo.classList.toggle('hidden');
       moreInfoBtn.textContent = patientInfo.classList.contains('hidden')
@@ -309,13 +323,14 @@
         : 'Hide patient info';
     });
 
+    const logoutBtn = document.getElementById('logout-btn');
     logoutBtn.addEventListener('click', () => {
       window.location.href = 'login.html';
     });
 
     const contactModal = document.getElementById('contact-pmp-modal');
     const contactModalContent = document.getElementById('contact-modal-content');
-    const contactPmpBtn = document.getElementById('contact-pmp-btn');
+    const contactPcpBtn = document.getElementById('contact-pmp-btn');
 
     function openContactModal() {
       contactModal.classList.remove('hidden');
@@ -335,7 +350,7 @@
       }, 300);
     }
 
-    contactPmpBtn.addEventListener('click', openContactModal);
+    contactPcpBtn.addEventListener('click', openContactModal);
   </script>
 </body>
 </html>
