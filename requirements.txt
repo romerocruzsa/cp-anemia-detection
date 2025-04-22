@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+scikit-learn
+pandas
+numpy
+joblib
+pillow
+scikit-image
+python-multipart
+asyncpg
+shap
+asyncpg
+pydantic
+python-dotenv
+psycopg2
