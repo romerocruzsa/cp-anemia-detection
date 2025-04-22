@@ -1,11 +1,12 @@
 import joblib
 import numpy as np
 import pandas as pd
+import os
 from ETL.input_preprocess import extract_features_from_image
-
 class HemoglobinHandler:
     def __init__(self):
-        self.model = joblib.load("/Users/romerocruzsa/Workspace/Projects/Research/cp-anemia-detection/weights/elasticnet_hblvl_estimator.pkl")
+        model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/elasticnet_hblvl_estimator.pkl')
+        self.model = joblib.load(os.path.abspath(model_path))
         self.rmse = 2.12  # Set your model’s RMSE here
 
     def classify_severity(self, hgb):
