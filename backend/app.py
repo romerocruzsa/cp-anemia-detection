@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from typing import Dict
 from fastapi import Body, FastAPI, HTTPException
 from HANDLER.patients import PatientsHandler
@@ -8,7 +12,6 @@ from HANDLER.HemoglobinEstimator import HemoglobinHandler
 import asyncpg
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-
 
 handler = PatientsHandler()
 image_handler = ImageUploadsHandler()
