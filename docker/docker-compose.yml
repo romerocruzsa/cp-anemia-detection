@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: anemicare_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=capiku
+      - DB_USER=capiku
+      - DB_PASSWORD=capiku@3131!
+    volumes:
+      - ./weights:/app/weights
+
+  db:
+    image: ankane/pgvector:latest
+    container_name: anemicare_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: capiku
+      POSTGRES_USER: capiku
+      POSTGRES_PASSWORD: capiku@3131!
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:

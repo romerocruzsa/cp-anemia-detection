@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+# *.pkl
+*.ipynb
+*.log
+datasets/
+models/
+# weights/
+.notebooks/
+.git/
