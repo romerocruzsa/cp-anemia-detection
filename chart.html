@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Digital Chart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 font-inter min-h-screen flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-black shadow-md p-6 flex flex-col justify-between min-h-screen">
+    <div>
+      <!-- Branding -->
+      <div class="mb-8 text-center">
+        <img src="images/profile-placeholder.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-2" />
+        <h1 class="text-xl text-white font-semibold">Andrea Rivera</h1>
+        <p class="text-sm text-white">Patient ID: 789087</p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="space-y-3">
+        <a href="capture.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Upload Sample</a>
+        <a href="patient-care.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Patient Care</a>
+        <a href="chart.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
+        <a href="account.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
+        <a href="results-summary.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
+        <a href="audit.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Audit Log</a>
+      </nav>
+
+      <!-- Patient Info Toggle -->
+      <div class="mt-6">
+        <button id="more-info-btn" class="text-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400">More patient info</button>
+        <div id="patient-info" class="mt-3 hidden text-sm text-white">
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Blood Type:</strong> O+</p>
+          <p><strong>Condition:</strong> Non-Anemic</p>
+        </div>
+      </div>
+
+      <!-- Notification -->
+      <div class="mt-6 space-y-4">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Mayagüez Medical Center:</strong> Sample sent. Pending revision.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Appointment:</strong> March 23 at 10:30 AM with Dr. Ruiz.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+        </div>
+      </div>
+
+    <div>
+      <button id="contact-pmp-btn" class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Contact PCP</button>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="flex-1 flex flex-col">
+    <!-- Topbar -->
+    <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">Patient Digital Chart</h2>
+      <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">Log Out</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-6 space-y-6">
+      <!-- Sectioned Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+        <!-- Section A: Patient Care -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Patient Care</h2>
+            <p class="text-sm text-gray-500">Health insights and care plan</p>
+          </div>
+    
+          <!-- Diagnosis Overview -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Diagnosis Overview</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Iron Deficiency Anemia - Diagnosed Jan 10, 2025</li>
+              <li>Vitamin B12 Deficiency - Diagnosed Feb 2, 2025</li>
+            </ul>
+          </div>
+    
+          <!-- Treatment Plan -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Treatment Plan</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Continue iron supplements</li>
+              <li>Weekly B12 injections</li>
+              <li>Follow-up CBC every 2 weeks</li>
+            </ul>
+          </div>
+    
+          <!-- Alerts -->
+          <div class="bg-red-50 border-l-4 border-red-400 p-3 text-sm text-red-800">
+            <p><strong>Alert:</strong> Next hemoglobin check is overdue.</p>
+          </div>
+    
+          <!-- Doctor's Notes -->
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+            <h3 class="text-lg font-semibold mb-2">Doctor's Notes</h3>
+            <p class="text-sm text-gray-500 mb-1"><strong>Date:</strong> March 20, 2025</p>
+            <p class="text-sm text-gray-700">Please monitor your hemoglobin levels closely and schedule a follow-up in two weeks.</p>
+          </div>
+    
+          <!-- Medication List -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Current Medications</h3>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>Iron Supplements - 1 tablet daily</li>
+              <li>Vitamin B12 - Twice a week</li>
+              <li>Folic Acid - As prescribed</li>
+            </ul>
+          </div>
+        </div>
+    
+        <!-- Section B: Anemia + Results Related -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Anemia Tracking</h2>
+            <p class="text-sm text-gray-500">Lab results and condition monitoring</p>
+          </div>
+    
+          <!-- Anemia Previous Results Bar Chart -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Previous Results Chart</h3>
+            <canvas id="anemiaBarChart" height="300"></canvas>
+          </div>
+    
+          <!-- Results Records -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Your Results</h3>
+            <p class="text-sm text-gray-700 mb-2">Your new results are on their way.</p>
+            <div class="flex items-center space-x-4 text-sm">
+              <span class="text-green-600">✔ Sent</span>
+              <span class="text-gray-500">□ Delivered</span>
+              <span class="text-gray-500">□ Received</span>
+            </div>
+            <div class="mt-4 p-3 bg-gray-50 rounded-md flex items-center justify-between">
+              <div>
+                <p class="text-sm">Last Results: <strong>13 g/dL</strong></p>
+                <p class="text-sm text-green-600">Non-Anemic</p>
+                <p class="text-xs text-gray-500">Received Mar 13, 2025 from Dr. Ruiz</p>
+              </div>
+              <img src="images/sample_img1.png" alt="Eye" class="w-16 h-16 rounded" />
+            </div>
+          </div>
+    
+          <!-- Past Results Table -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-4">Past Results</h3>
+            <table class="min-w-full text-sm text-left">
+              <thead class="text-gray-500">
+                <tr>
+                  <th class="py-2">Date</th>
+                  <th class="py-2">Time</th>
+                  <th class="py-2">Hg (g/dL)</th>
+                  <th class="py-2">Anemia</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700">
+                <tr class="border-t">
+                  <td class="py-2">Mar 13, 2025</td>
+                  <td class="py-2">4:33 PM</td>
+                  <td class="py-2">13.0</td>
+                  <td class="py-2">Non-Anemic</td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-2">Mar 9, 2025</td>
+                  <td class="py-2">4:21 PM</td>
+                  <td class="py-2">13.4</td>
+                  <td class="py-2">Non-Anemic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    
+        <!-- Section C: Appointments -->
+        <div class="space-y-6">
+          <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">Appointments</h2>
+            <p class="text-sm text-gray-500">Schedule a new appointment or view previous ones</p>
+          </div>
+    
+          <!-- Schedule New Appointment -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Schedule New Appointment</h3>
+            <form id="appointment-form" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" placeholder="Doctor Name" class="border p-2 rounded w-full" required />
+                <input type="text" placeholder="Specialty" class="border p-2 rounded w-full" required />
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="datetime-local" class="border p-2 rounded w-full" required />
+                <input type="text" placeholder="Location" class="border p-2 rounded w-full" required />
+              </div>
+              <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Schedule</button>
+            </form>
+          </div>
+    
+          <!-- Calendar Display -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Calendar View</h3>
+            <div id="calendar" class="rounded p-4 overflow-x-auto">
+              <iframe
+                src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York"
+                style="border: 0" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+            </div>
+          </div>
+    
+          <!-- Previous Appointments -->
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Previous Appointments</h3>
+            <ul class="text-sm text-gray-700 space-y-3">
+              <li class="border-b pb-2">
+                <p><strong>Dr. Ruiz</strong> - Opthalmology</p>
+                <p>March 23, 2025 - 10:30 AM</p>
+                <p class="text-gray-500">Mayagüez Medical Center</p>
+              </li>
+              <li class="border-b pb-2">
+                <p><strong>Dr. Lubezki</strong> - Hematology</p>
+                <p>February 1, 2025 - 3:00 PM</p>
+                <p class="text-gray-500">Bayamón General Hospital</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Contact PCP Modal -->
+  <div id="contact-pmp-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="contact-modal-content">
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeContactModal()">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Contact PCP</h2>
+      <textarea class="w-full p-2 border rounded mb-4" rows="4" placeholder="Type your message here..."></textarea>
+      <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Send</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const preview = document.getElementById('preview-img');
+    const sampleInput = document.getElementById('sample-upload');
+    const sampleContainer = document.getElementById('sample-preview');
+    const video = document.getElementById('camera-stream');
+    const captureBtn = document.getElementById('capture-btn');
+    const startCameraBtn = document.getElementById('start-camera');
+    const canvas = document.getElementById('snapshot-canvas');
+
+    sampleInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        sampleContainer.classList.remove('hidden');
+      }
+    });
+
+    startCameraBtn.addEventListener('click', () => {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.classList.remove('hidden');
+          captureBtn.classList.remove('hidden');
+        });
+    });
+
+    captureBtn.addEventListener('click', () => {
+      const context = canvas.getContext('2d');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0);
+      preview.src = canvas.toDataURL('image/png');
+      sampleContainer.classList.remove('hidden');
+    });
+
+    new Chart(document.getElementById('anemiaBarChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Mar 1', 'Mar 5', 'Mar 10', 'Mar 15', 'Mar 20'],
+        datasets: [{
+          label: 'Hemoglobin (g/dL)',
+          data: [10, 12, 13, 11, 13.4],
+          backgroundColor: '#3b82f6'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: {
+          x: {
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Hemoglobin Level (g/dL)' },
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+
+    const moreInfoBtn = document.getElementById('more-info-btn');
+    const patientInfo = document.getElementById('patient-info');
+    
+    moreInfoBtn.addEventListener('click', () => {
+      patientInfo.classList.toggle('hidden');
+      moreInfoBtn.textContent = patientInfo.classList.contains('hidden')
+        ? 'More patient info'
+        : 'Hide patient info';
+    });
+
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = 'login.html';
+    });
+
+    const contactModal = document.getElementById('contact-pmp-modal');
+    const contactModalContent = document.getElementById('contact-modal-content');
+    const contactPcpBtn = document.getElementById('contact-pmp-btn');
+
+    function openContactModal() {
+      contactModal.classList.remove('hidden');
+      setTimeout(() => {
+        contactModal.classList.add('opacity-100');
+        contactModalContent.classList.remove('scale-95', 'opacity-0');
+        contactModalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeContactModal() {
+      contactModalContent.classList.remove('scale-100', 'opacity-100');
+      contactModalContent.classList.add('scale-95', 'opacity-0');
+      contactModal.classList.remove('opacity-100');
+      setTimeout(() => {
+        contactModal.classList.add('hidden');
+      }, 300);
+    }
+
+    contactPcpBtn.addEventListener('click', openContactModal);
+  </script>
+</body>
+</html>
