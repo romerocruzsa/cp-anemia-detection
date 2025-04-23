@@ -11,3 +11,4 @@ shap
 asyncpg
 pydantic
 python-dotenv
+opencv-python
