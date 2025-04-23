@@ -142,6 +142,26 @@ async def predict_image(file: UploadFile = File(...), patient_id: int = None, im
         traceback.print_exc()  # 👈 This will show full traceback in terminal
         raise HTTPException(status_code=500, detail=str(e))
 
+# @app.post("/predict_image")
+# async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):
+#     try:
+#         image_bytes = await file.read()
+#         async with asyncpg.create_pool(
+#             host="localhost",
+#             database="capiku",
+#             user="capiku",
+#             password="capiku@3131!",
+#             port="5433"
+#         ) as pool:
+#             async with pool.acquire() as conn:
+#                 result = hemoglobin_handler.predict_hgb(image_bytes)
+#                 # print(result)
+#         return result
+#     except Exception as e:
+#         import traceback
+#         traceback.print_exc()  # 👈 This will show full traceback in terminal
+#         raise HTTPException(status_code=500, detail=str(e))
+    
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=10000)
