@@ -4,6 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from datetime import datetime
+from ultralytics import YOLO
+
+# Load once at top-level or pass as parameter
+WEIGHTS_DIR = os.path.expanduser("~/cp-anemia-detection/backend/weights")
+yolo_model = YOLO(os.path.join(WEIGHTS_DIR, "best_yolov8n_model.pt"))
 
 def save_debug_image(image, step_name, debug_dir="debug_outputs"):
     os.makedirs(debug_dir, exist_ok=True)
@@ -253,7 +258,18 @@ def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_ima
 
     return pd.DataFrame([feature_dict])     
 
-def extract_features_from_image(image_bytes, debug=False):
+def extract_features_from_image(image_bytes, model, debug=False):
+    import numpy as np
+    import cv2
+    from datetime import datetime
+
+    def save_debug_image(image, step_name, debug_dir="debug_outputs"):
+        os.makedirs(debug_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        path = os.path.join(debug_dir, f"{timestamp}_{step_name}.png")
+        cv2.imwrite(path, cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
+        return path
+
     # Decode and convert to RGB
     image_bgr = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
     image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
@@ -261,23 +277,37 @@ def extract_features_from_image(image_bytes, debug=False):
     if debug:
         save_debug_image(image, "input_image")
 
-    # ✅ Step 1: Segment hand (returns 3 items now)
-    hand_mask, contour, segmented_hand = segment_hand_otsu(image, debug=debug)
+    # 🔍 Step 1: Segment hand
+    # hand_mask, contour, segmented_hand = segment_hand_otsu(image, debug=debug)
 
-    # ✅ Step 2: Detect fingertips (uses mask + segmented hand image)
-    fingertips = detect_fingertips(segmented_hand, hand_mask, debug=debug)
+    # 🔍 Step 2: YOLOv8 Nail Detection
+    results = model.predict(source=image, conf=0.3, verbose=False)[0]
+    boxes = results.boxes.xyxy.cpu().numpy().astype(int)
 
-    # ✅ Step 3: Bounding boxes
-    bounding_boxes = generate_nail_bounding_boxes(fingertips, contour, image, debug=debug)
+    if len(boxes) == 0:
+        print("⚠️ No nails detected.")
+        return pd.DataFrame()  # or np.nan, depending on how you handle missing
 
-    # ✅ Step 4: Crop and filter
+    # Sort and take top 3 boxes (you can sort by confidence or position)
+    boxes = sorted(boxes, key=lambda b: (b[1], b[0]))[:3]  # Top 3 by vertical position (y1)
+
+    # Convert to (top_left, bottom_right)
+    bounding_boxes = [((x1, y1), (x2, y2)) for x1, y1, x2, y2 in boxes]
+
+    if debug:
+        image_with_boxes = image.copy()
+        for (x1, y1), (x2, y2) in bounding_boxes:
+            cv2.rectangle(image_with_boxes, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        save_debug_image(image_with_boxes, "yolo_detections")
+
+    # 🔍 Step 3: Crop and filter
     cropped_nails = crop_bounding_boxes(image, bounding_boxes, debug=debug)
     cropped_nails = filter_crops_by_brightness(cropped_nails)
 
-    # ✅ Step 5: Pick best nails
+    # 🔍 Step 4: Pick best nails
     best_nails = select_three_nails_with_least_background(cropped_nails, debug=debug)
 
-    # ✅ Step 6: Normalize RGB values
+    # 🔍 Step 5: Normalize RGB
     features = compute_normalized_rgb_from_reference_region_fixed(best_nails, image, debug=debug)
 
     return features
