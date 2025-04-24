@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Anemi-Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/frontend/static/style.css" />
+  <style>
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 1200px;
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form {
+      flex: 1;
+      min-width: 300px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .form-wrapper {
+        display: flex;
+        gap: 2rem;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .login-logo {
+        width: 100px;
+      }
+
+      .login-form {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="form-wrapper">
+        <!-- Branding Column -->
+        <div style="flex: 1; min-width: 250px;">
+          <img src="/frontend/static/images/eye-logo.png" alt="Anemi-Care Logo" class="login-logo" />
+          <h1 class="login-title">Anemi-Care</h1>
+          <p class="login-subtitle">University of Puerto Rico - Mayagüez</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form class="login-form" onsubmit="return validateForm()">
+          <h2 class="login-title">Patient Registration</h2>
+
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" name="first-name" required />
+
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" name="last-name" required />
+
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="sex">Legal Sex</label>
+          <select id="sex" name="sex" required>
+            <option value="">Select</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="eg. @gmail.com, @outlook.com, etc." />
+
+          <label for="phone">Mobile Phone</label>
+          <input type="tel" id="phone" name="phone" required placeholder="eg. 787-832-4040" />
+
+          <label for="address">Street Address</label>
+          <input type="text" id="address" name="address" required />
+
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" required />
+
+          <label for="state">State/Province</label>
+          <input type="text" id="state" name="state" required />
+
+          <label for="zip">ZIP Code</label>
+          <input type="text" id="zip" name="zip" required />
+
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select</option>
+            <option value="USA">United States</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="mrn">Medical Record Number (if known)</label>
+          <input type="text" id="mrn" name="mrn" />
+        </form>
+
+        <!-- Emergency Contact Form -->
+        <form class="login-form">
+          <h2 class="login-title">Emergency Contact</h2>
+
+          <label for="emergency-name">Contact Name</label>
+          <input type="text" id="emergency-name" name="emergency-name" />
+
+          <label for="emergency-phone">Contact Phone</label>
+          <input type="tel" id="emergency-phone" name="emergency-phone" />
+
+          <label for="relationship">Relationship to Patient</label>
+          <input type="text" id="relationship" name="relationship" />
+
+          <label style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
+            <input type="checkbox" required />
+            I certify the above information is correct and I have the legal right to submit this form.
+          </label>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+            <button type="submit" class="login-button">Create Account</button>
+            <a href="login.html" class="login-link">Already have an account? <strong>Login</strong></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
+      const phoneRegex = /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+
+      const firstName = document.getElementById("first-name").value;
+      const lastName = document.getElementById("last-name").value;
+      const phone = document.getElementById("phone").value;
+
+      if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+        alert("First and Last Name must contain only letters, spaces, or hyphens.");
+        return false;
+      }
+
+      if (!phoneRegex.test(phone)) {
+        alert("Please enter a valid phone number (e.g. 787-832-4040).");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</body>
+</html>

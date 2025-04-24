@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Anemi-Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/frontend/static/style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card" role="form" aria-labelledby="login-title">
+      <img src="/frontend/static/images/eye-logo.png" alt="Anemi-Care Logo" class="login-logo" />
+
+      <h1 class="login-title" id="login-title">Anemi-Care</h1>
+      <p class="login-subtitle">University of Puerto Rico - Mayagüez</p>
+
+      <form class="login-form" id="login-form" autocomplete="off" aria-describedby="login-desc">
+        <p id="login-desc" class="visually-hidden">Log in with your username and password to access the Anemi-Care dashboard.</p>
+
+        <label for="username">Email Address</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your email address"
+          required
+          aria-required="true"
+          autofocus
+        />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+          aria-required="true"
+        />
+
+        <button type="submit" class="login-button">Log In</button>
+      </form>
+
+      <div class="login-links">
+        <a href="#" class="login-link">Forgot your password? <strong>Reset it</strong></a>
+        <a href="register.html" class="login-link">Don't have an account? <strong>Register</strong></a>
+        <a href="index.html" class="login-link">Want to test our Early Anemia Screening AI? <strong>Click Here</strong></a>
+      </div>
+
+      <p class="legal-text">
+        By logging in, you agree to our <a href="privacy.html" target="_blank">Privacy Policy</a> and <a href="terms.html" target="_blank">Terms of Use</a>.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('login-form');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // Keep as-is: always redirect
+      window.location.href = 'capture.html';
+    });
+  </script>
+</body>
+</html>

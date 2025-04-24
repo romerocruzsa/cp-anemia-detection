@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-inter min-h-screen flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-black shadow-md p-6 flex flex-col justify-between min-h-screen">
+    <div>
+      <!-- Branding -->
+      <div class="mb-8 text-center">
+        <img src="/frontend/static/images/profile-placeholder.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-2" />
+        <h1 class="text-xl text-white font-semibold">Andrea Rivera</h1>
+        <p class="text-sm text-white">Patient ID: 789087</p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="space-y-3">
+        <a href="capture.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Upload Sample</a>
+        <a href="patient-care.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Patient Care</a>
+        <a href="chart.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Chart</a>
+        <a href="account.html" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">Account</a>
+        <a href="results-summary.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Records</a>
+        <a href="audit.html" class="block px-4 py-2 rounded-lg text-white hover:bg-white-100 focus:outline-none focus:ring-2 focus:ring-blue-400">Audit Log</a>
+      </nav>
+
+      <!-- Patient Info Toggle -->
+      <div class="mt-6">
+        <button id="more-info-btn" class="text-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400">More patient info</button>
+        <div id="patient-info" class="mt-3 hidden text-sm text-white">
+          <p><strong>Age:</strong> 32</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Blood Type:</strong> O+</p>
+          <p><strong>Condition:</strong> Non-Anemic</p>
+        </div>
+      </div>
+
+      <!-- Notification -->
+      <div class="mt-6 space-y-4">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Mayagüez Medical Center:</strong> Sample sent. Pending revision.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Appointment:</strong> March 23 at 10:30 AM with Dr. Ruiz.</p>
+        </div>
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+          <p><strong>Dr. Ruiz:</strong> Please schedule a follow-up appointment.</p>
+        </div>
+      </div>
+
+    <div>
+      <button id="contact-pmp-btn" class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Contact PCP</button>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="flex-1 flex flex-col">
+    <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">Account Configuration</h2>
+      <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">Log Out</button>
+    </header>
+
+    <main class="p-6 space-y-6">
+      <!-- Account Information Header -->
+      <div class="sticky top-0 z-10 bg-gray-50 p-3 rounded-lg">
+        <h2 class="text-xl font-bold text-gray-800">Settings</h2>
+        <p class="text-sm text-gray-500">Manage your profile, medical, emergency, and security information</p>
+      </div>
+
+      <!-- Account Information -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Account Information</h3>
+        <p><strong>Full Name:</strong> Andrea Rivera</p>
+        <p><strong>Email:</strong> andrea.rivera@example.com</p>
+        <p><strong>Phone:</strong> (787) 555-1234</p>
+        <p><strong>Address:</strong> 123 Main Street, Mayagüez, PR</p>
+        <button id="edit-account-btn" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Edit Account Info</button>
+      </div>
+
+      <!-- Medical Information -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Medical Information</h3>
+        <p><strong>Patient ID:</strong> 789087</p>
+        <p><strong>Medical Insurance Provider:</strong> MCS</p>
+        <p><strong>Blood Type:</strong> O+</p>
+        <p><strong>Known Allergies:</strong> None</p>
+        <p><strong>Chronic Conditions:</strong> None</p>
+        <p><strong>Primary Care Physician (PCP):</strong> Dr. Ruiz</p>
+        <p><strong>Last Checkup:</strong> March 20, 2025</p>
+        <button id="edit-medical-btn" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Edit Medical Info</button>
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Emergency Contact</h3>
+        <p><strong>Contact Name:</strong> Maria Rivera</p>
+        <p><strong>Relationship:</strong> Mother</p>
+        <p><strong>Phone:</strong> (787) 555-5678</p>
+        <p><strong>Address:</strong> 456 Elm Street, Mayagüez, PR</p>
+        <button id="edit-emergency-btn" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Edit Emergency Contact</button>
+      </div>
+
+      <!-- Security Settings -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Security Settings</h3>
+        <p><strong>Password:</strong> ********</p>
+        <button id="change-password-btn" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Change Password</button>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Modals -->
+  <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="edit-modal-content">
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeEditModal()">&times;</button>
+      <h2 class="text-xl font-semibold mb-4" id="edit-modal-title">Edit</h2>
+      <form id="edit-form" class="space-y-4">
+        <!-- Dynamic fields will be injected here -->
+      </form>
+      <button type="submit" form="edit-form" class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Save Changes</button>
+    </div>
+  </div>
+
+  <!-- Contact PCP Modal -->
+  <div id="contact-pmp-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300 ease-out" id="contact-modal-content">
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeContactModal()">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Contact PCP</h2>
+      <textarea class="w-full p-2 border rounded mb-4" rows="4" placeholder="Type your message here..."></textarea>
+      <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('edit-modal');
+    const modalContent = document.getElementById('edit-modal-content');
+    const modalTitle = document.getElementById('edit-modal-title');
+    const modalForm = document.getElementById('edit-form');
+
+    function openEditModal(title, fields) {
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.add('opacity-100');
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+      modalTitle.textContent = title;
+      modalForm.innerHTML = fields;
+    }
+
+    function closeEditModal() {
+      modalContent.classList.remove('scale-100', 'opacity-100');
+      modalContent.classList.add('scale-95', 'opacity-0');
+      modal.classList.remove('opacity-100');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modalTitle.textContent = '';
+        modalForm.innerHTML = '';
+      }, 300);
+    }
+    
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = 'login.html';
+    });
+    
+    const contactModal = document.getElementById('contact-pmp-modal');
+    const contactModalContent = document.getElementById('contact-modal-content');
+    const contactPcpBtn = document.getElementById('contact-pmp-btn');
+
+    function openContactModal() {
+      contactModal.classList.remove('hidden');
+      setTimeout(() => {
+        contactModal.classList.add('opacity-100');
+        contactModalContent.classList.remove('scale-95', 'opacity-0');
+        contactModalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeContactModal() {
+      contactModalContent.classList.remove('scale-100', 'opacity-100');
+      contactModalContent.classList.add('scale-95', 'opacity-0');
+      contactModal.classList.remove('opacity-100');
+      setTimeout(() => {
+        contactModal.classList.add('hidden');
+      }, 300);
+    }
+
+    contactPcpBtn.addEventListener('click', openContactModal);
+
+    document.getElementById('more-info-btn').addEventListener('click', () => {
+      const patientInfo = document.getElementById('patient-info');
+      if (patientInfo.classList.contains('hidden')) {
+        patientInfo.classList.remove('hidden');
+        moreInfoBtn.textContent = 'Hide patient info';
+      } else {
+        patientInfo.classList.add('hidden');
+        moreInfoBtn.textContent = 'More patient info';
+      }
+    });
+
+    document.getElementById('edit-account-btn').addEventListener('click', () => {
+      openEditModal('Edit Account Information', `
+        <label class='block text-sm'>Full Name:<input class='mt-1 block w-full p-2 border rounded' type='text' value='Andrea Rivera'></label>
+        <label class='block text-sm'>Email:<input class='mt-1 block w-full p-2 border rounded' type='email' value='andrea.rivera@example.com'></label>
+        <label class='block text-sm'>Phone:<input class='mt-1 block w-full p-2 border rounded' type='tel' value='(787) 555-1234'></label>
+        <label class='block text-sm'>Address:<textarea class='mt-1 block w-full p-2 border rounded'>123 Main Street, Mayagüez, PR</textarea></label>
+      `);
+    });
+
+    document.getElementById('edit-medical-btn').addEventListener('click', () => {
+      openEditModal('Edit Medical Information', `
+        <label class='block text-sm'>Blood Type:<input class='mt-1 block w-full p-2 border rounded' type='text' value='O+'></label>
+        <label class='block text-sm'>Known Allergies:<input class='mt-1 block w-full p-2 border rounded' type='text' value='None'></label>
+        <label class='block text-sm'>Chronic Conditions:<input class='mt-1 block w-full p-2 border rounded' type='text' value='None'></label>
+        <label class='block text-sm'>Primary Physician:<input class='mt-1 block w-full p-2 border rounded' type='text' value='Dr. Ruiz'></label>
+        <label class='block text-sm'>Last Checkup:<input class='mt-1 block w-full p-2 border rounded' type='date' value='2025-03-20'></label>
+      `);
+    });
+
+    document.getElementById('edit-emergency-btn').addEventListener('click', () => {
+      openEditModal('Edit Emergency Contact', `
+        <label class='block text-sm'>Contact Name:<input class='mt-1 block w-full p-2 border rounded' type='text' value='Maria Rivera'></label>
+        <label class='block text-sm'>Relationship:<input class='mt-1 block w-full p-2 border rounded' type='text' value='Mother'></label>
+        <label class='block text-sm'>Phone:<input class='mt-1 block w-full p-2 border rounded' type='tel' value='(787) 555-5678'></label>
+        <label class='block text-sm'>Address:<textarea class='mt-1 block w-full p-2 border rounded'>456 Elm Street, Mayagüez, PR</textarea></label>
+      `);
+    });
+
+    document.getElementById('change-password-btn').addEventListener('click', () => {
+      openEditModal('Change Password', `
+        <label class='block text-sm'>Current Password:<input class='mt-1 block w-full p-2 border rounded' type='password'></label>
+        <label class='block text-sm'>New Password:<input class='mt-1 block w-full p-2 border rounded' type='password'></label>
+        <label class='block text-sm'>Confirm New Password:<input class='mt-1 block w-full p-2 border rounded' type='password'></label>
+      `);
+    });
+  </script>
+
+</body>
+</html>
