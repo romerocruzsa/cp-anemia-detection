@@ -6,10 +6,6 @@ import os
 from datetime import datetime
 from ultralytics import YOLO
 
-# Load once at top-level or pass as parameter
-WEIGHTS_DIR = os.path.expanduser("~/cp-anemia-detection/backend/weights")
-yolo_model = YOLO(os.path.join(WEIGHTS_DIR, "best_yolov8n_model.pt"))
-
 def save_debug_image(image, step_name, debug_dir="debug_outputs"):
     os.makedirs(debug_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
@@ -258,10 +254,13 @@ def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_ima
 
     return pd.DataFrame([feature_dict])     
 
-def extract_features_from_image(image_bytes, model, debug=False):
-    import numpy as np
-    import cv2
-    from datetime import datetime
+def extract_features_from_image(image_bytes, debug=False):
+
+    print(f"Image byte length: {len(image_bytes)}")
+
+    # Load once at top-level or pass as parameter
+    WEIGHTS_DIR = os.path.abspath("weights")
+    model = YOLO(os.path.join(WEIGHTS_DIR, "best_yolov8n_model.pt"))
 
     def save_debug_image(image, step_name, debug_dir="debug_outputs"):
         os.makedirs(debug_dir, exist_ok=True)

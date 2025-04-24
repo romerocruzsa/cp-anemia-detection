@@ -8,5 +8,4 @@ cd ..
 
 # Run simple Python HTTP server for frontend
 echo "Serving frontend at http://localhost:5500"
-cd frontend/
 python3 -m http.server 5500

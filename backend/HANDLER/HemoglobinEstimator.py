@@ -19,7 +19,7 @@ class HemoglobinHandler:
 
     def predict_hgb(self, image_bytes):
         try:
-            features = extract_features_from_image(image_bytes, debug=False)
+            features = extract_features_from_image(image_bytes, debug=True)
             prediction = self.model.predict(features)[0]
 
             severity = self.classify_severity(prediction)
