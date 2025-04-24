@@ -14,7 +14,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('images/background-blur.jpg') no-repeat center center/cover;
+      /* background: url('images/background-blur.jpg') no-repeat center center/cover; */
       filter: blur(8px) opacity(0.4);
       z-index: -1;
     }
@@ -102,12 +102,12 @@
 
     <!-- Branding and Logo Only -->
     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center border border-gray-200">
-      <img src="images/eye-logo.png" alt="Anemi-Care Logo" class="w-32 mb-6" />
+      <img src="/frontend/static/images/eye-logo.png" alt="Anemi-Care Logo" class="w-32 mb-6" />
       <h1 class="text-3xl font-bold text-gray-800">Anemi-Care</h1>
       <p class="text-base text-gray-600 mb-4">AI Early Anemia Detection</p>
       <div class="space-y-2 text-sm">
-        <a href="login.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
-        <a href="register.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
+        <a href="/frontend/login.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
+        <a href="/frontend/register.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
         <!-- <a href="boot.html" class="text-black hover:underline">Want to test our Early Anemia Screening AI? <strong>Click Here</strong></a> -->
       </div>
     </div>
@@ -158,7 +158,7 @@
       captureBtn.classList.add('hidden');
       analyzeBtn.classList.add('hidden');
       clearSampleBtn.classList.add('hidden');
-      localStorage.clear();
+      sessionStorage.clear();
     }
 
     function loadImage(file) {
@@ -271,8 +271,14 @@
         const formData = new FormData();
         formData.append("file", blob, "sample.png");
 
+        // // Call the FastAPI backend
+        // const result = await fetch("http://127.0.0.1:8000/predict_image", {
+        //   method: "POST",
+        //   body: formData,
+        // });
+      
         // Call the FastAPI backend
-        const result = await fetch("http://127.0.0.1:8000/predict_image", {
+        const result = await fetch("https://anemicare.onrender.com/predict_image", {
           method: "POST",
           body: formData,
         });
@@ -297,7 +303,7 @@
           displayScreening(prediction);
 
           // Store it locally (optional)
-          localStorage.setItem('anemiaPrediction', JSON.stringify(prediction));
+          sessionStorage.setItem("anemiaPrediction", JSON.stringify(data));
         } else {
           alert("Prediction failed or response was missing info.");
           console.warn("Unexpected result from backend:", data);
