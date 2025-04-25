@@ -256,11 +256,8 @@ def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_ima
 
 def extract_features_from_image(image_bytes, debug=False):
 
-    print(f"Image byte length: {len(image_bytes)}")
-
-    # Load once at top-level or pass as parameter
-    WEIGHTS_DIR = os.path.abspath("weights")
-    model = YOLO(os.path.join(WEIGHTS_DIR, "best_yolov8n_model.pt"))
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_yolov8n_model.pkl')
+    model = YOLO(model_path)
 
     def save_debug_image(image, step_name, debug_dir="debug_outputs"):
         os.makedirs(debug_dir, exist_ok=True)
