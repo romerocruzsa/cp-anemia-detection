@@ -3,11 +3,12 @@ import numpy as np
 import pandas as pd
 import os
 from ETL.input_preprocess import extract_features_from_image
+from ultralytics import YOLO
 class HemoglobinHandler:
     def __init__(self):
         fgn_model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_yolov8n_model.pt')
         hb_model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_randomforest_model.pkl')
-        self.fgn_model = joblib.load(os.path.abspath(fgn_model_path))
+        self.fgn_model = YOLO(fgn_model_path)
         self.hb_model = joblib.load(os.path.abspath(hb_model_path))
         self.rmse = 1.97  # Set your model’s RMSE here
 

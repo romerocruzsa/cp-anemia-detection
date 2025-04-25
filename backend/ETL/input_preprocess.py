@@ -4,7 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from datetime import datetime
-from ultralytics import YOLO
 
 def save_debug_image(image, step_name, debug_dir="debug_outputs"):
     os.makedirs(debug_dir, exist_ok=True)
