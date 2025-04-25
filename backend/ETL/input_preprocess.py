@@ -234,22 +234,22 @@ def select_three_nails_with_least_background(cropped_images, background_threshol
 def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_image, ref_box_size=(50, 50), debug=False):
     height, width, _ = original_image.shape
     box_h, box_w = ref_box_size
-    ref_region = original_image[height - box_h:height, 0:box_w]
+    # ref_region = original_image[height - box_h:height, 0:box_w]
 
-    white_ref_median = {
-        color: np.median(ref_region[:, :, chan].ravel())
-        for chan, color in enumerate("RGB")
-    }
+    # white_ref_median = {
+    #     color: np.median(ref_region[:, :, chan].ravel())
+    #     for chan, color in enumerate("RGB")
+    # }
 
     feature_dict = {}
     for i, img in enumerate(nail_images[:3]):
         for chan, color in enumerate("RGB"):
             mean_val = np.mean(img[:, :, chan])
-            norm_val = mean_val / white_ref_median[color]
-            feature_dict[f'NAIL_{i+1}_{color}_mean'] = norm_val
+            # norm_val = mean_val / white_ref_median[color]
+            feature_dict[f'NAIL_{i+1}_{color}_mean'] = mean_val
 
-    if debug:
-        save_debug_image(ref_region, "white_reference_region")
+    # if debug:
+    #     save_debug_image(ref_region, "white_reference_region")
 
     return pd.DataFrame([feature_dict])     
 
@@ -278,7 +278,12 @@ def extract_features_from_image(image_bytes, model, debug=False):
 
     if len(boxes) == 0:
         print("⚠️ No nails detected.")
-        return pd.DataFrame()  # or np.nan, depending on how you handle missing
+        return pd.DataFrame()
+
+    elif len(boxes) < 3:
+        print(f"⚠️ Only {len(boxes)} nails detected, duplicating to make 3.")
+        while len(boxes) < 3:
+            boxes = np.vstack([boxes, boxes[-1]])
 
     # Sort and take top 3 boxes (you can sort by confidence or position)
     boxes = sorted(boxes, key=lambda b: (b[1], b[0]))[:3]  # Top 3 by vertical position (y1)
