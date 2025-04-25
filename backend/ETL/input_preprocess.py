@@ -254,10 +254,7 @@ def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_ima
 
     return pd.DataFrame([feature_dict])     
 
-def extract_features_from_image(image_bytes, debug=False):
-
-    model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_yolov8n_model.pkl')
-    model = YOLO(model_path)
+def extract_features_from_image(image_bytes, model, debug=False):
 
     def save_debug_image(image, step_name, debug_dir="debug_outputs"):
         os.makedirs(debug_dir, exist_ok=True)

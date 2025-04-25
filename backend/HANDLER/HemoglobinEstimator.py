@@ -5,8 +5,10 @@ import os
 from ETL.input_preprocess import extract_features_from_image
 class HemoglobinHandler:
     def __init__(self):
-        model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_randomforest_model.pkl')
-        self.model = joblib.load(os.path.abspath(model_path))
+        fgn_model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_yolov8n_model.pt')
+        hb_model_path = os.path.join(os.path.dirname(__file__), '..', 'weights/best_randomforest_model.pkl')
+        self.fgn_model = joblib.load(os.path.abspath(fgn_model_path))
+        self.hb_model = joblib.load(os.path.abspath(hb_model_path))
         self.rmse = 1.97  # Set your model’s RMSE here
 
     def classify_severity(self, hgb):
@@ -19,8 +21,8 @@ class HemoglobinHandler:
 
     def predict_hgb(self, image_bytes):
         try:
-            features = extract_features_from_image(image_bytes, debug=True)
-            prediction = self.model.predict(features)[0]
+            features = extract_features_from_image(image_bytes, self.fgn_model, debug=False)
+            prediction = self.hb_model.predict(features)[0]
 
             severity = self.classify_severity(prediction)
             if severity == "Inconclusive":
