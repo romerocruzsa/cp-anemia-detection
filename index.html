@@ -5,31 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anemicare: AI Early Anemia Detection</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="frontend/static/style.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      /* background: url('images/background-blur.jpg') no-repeat center center/cover; */
-      filter: blur(8px) opacity(0.4);
-      z-index: -1;
-    }
-    #drop-zone {
-      border: 2px dashed #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      transition: background 0.3s;
-    }
-    #drop-zone.dragover {
-      background: #f3f4f6;
-    }
-  </style>
 </head>
+
 <body class="font-inter min-h-screen flex items-center justify-center">
 
   <!-- Floating Logo -->
@@ -133,21 +112,36 @@
     const clearSampleBtn = document.getElementById('clear-sample');
     const canvas = document.getElementById('snapshot-canvas');
     const screeningSection = document.getElementById('screening-section');
+    const predictedHgb = document.getElementById('predicted-hgb');
+    const predictedClass = document.getElementById('predicted-class');
+    const predictedErrorRate = document.getElementById('predicted-error_rate');
+    const switchCameraBtn = document.getElementById('switch-camera');
+    const cameraOverlay = document.getElementById('camera-overlay');
+    const clearBtn = document.getElementById('clear-btn');
+    const samplePreview = document.getElementById('sample-preview');
+    const sampleImg = document.getElementById('sample-img');
+    
+    function show(el) {
+      el.classList.remove('hidden');
+  }
+
+    function hide(el) {
+      el.classList.add('hidden');
+    }
 
     function resetUI() {
     // Clear analyzed results
     preview.src = "";
-    preview.classList.add('hidden');
-    screeningSection.classList.add('hidden');
-    document.getElementById('predicted-hgb').textContent = '--';
-    document.getElementById('predicted-class').textContent = '--';
-    document.getElementById('predicted-error_rate').textContent = '--';
+    hide(preview);
+    hide(screeningSection);
+    predictedHgb.textContent = '--';
+    predictedClass.textContent = '--';
+    predictedErrorRate.textContent = '--';
 
     // Clear sample preview
-    const samplePreview = document.getElementById('sample-preview');
-    const sampleImg = document.getElementById('sample-img');
+    
     sampleImg.src = "#";
-    samplePreview.classList.add('hidden');
+    hide(samplePreview);
     }
 
 
@@ -156,16 +150,16 @@
         video.srcObject.getTracks().forEach(track => track.stop());
         video.srcObject = null;
       }
-      video.classList.add('hidden');
+      hide(video);
     }
 
     function clearAll() {
       resetUI();
       clearWebcam();
       sampleInput.value = "";
-      captureBtn.classList.add('hidden');
-      analyzeBtn.classList.add('hidden');
-      clearSampleBtn.classList.add('hidden');
+      hide(captureBtn);
+      hide(analyzeBtn);
+      hide(clearSampleBtn);
       sessionStorage.clear();
     }
 
@@ -178,14 +172,14 @@
 
         // Set main preview
         preview.src = imgSrc;
-        preview.classList.remove('hidden');
+        show(preview);
 
         // Set sample preview
-        document.getElementById('sample-img').src = imgSrc;
-        document.getElementById('sample-preview').classList.remove('hidden');
+        sampleImg.src = imgSrc;
+        show(samplePreview);
 
-        analyzeBtn.classList.remove('hidden');
-        clearSampleBtn.classList.remove('hidden');
+        show(analyzeBtn);
+        show(clearSampleBtn);
     };
     reader.readAsDataURL(file);
     }
@@ -222,10 +216,10 @@
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }})
         .then(stream => {
         video.srcObject = stream;
-        video.classList.remove('hidden');
-        document.getElementById('camera-overlay').classList.remove('hidden');
-        captureBtn.classList.remove('hidden');
-        clearSampleBtn.classList.remove('hidden');
+        show(video);
+        show(cameraOverlay);
+        show(captureBtn);
+        show(clearSampleBtn);
         });
     });
 
@@ -238,37 +232,37 @@
 
     // Set main preview
     preview.src = dataUrl;
-    preview.classList.remove('hidden');
+    show(preview);
 
     // Set sample preview
-    document.getElementById('sample-img').src = dataUrl;
-    document.getElementById('sample-preview').classList.remove('hidden');
+    sampleImg.src = dataUrl;
+    show(samplePreview);
 
-    analyzeBtn.classList.remove('hidden');
-    clearSampleBtn.classList.remove('hidden');
-    screeningSection.classList.add('hidden');
-    video.classList.add('hidden');
+    show(analyzeBtn);
+    show(clearSampleBtn);
+    hide(screeningSection);
+    hide(video);
     });
 
 
-    document.getElementById('sample-upload').addEventListener('change', (e) => {
+    sampleInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function (evt) {
         preview.src = evt.target.result;
-        preview.classList.remove('hidden');
-        analyzeBtn.classList.remove('hidden');
-        clearSampleBtn.classList.remove('hidden');
-        screeningSection.classList.add('hidden');
-        video.classList.add('hidden');
+        show(preview);
+        show(analyzeBtn);
+        show(clearSampleBtn);
+        hide(video);
+        hide(screeningSection);
         };
         reader.readAsDataURL(file);
     }
     });
 
     analyzeBtn.addEventListener('click', async () => {
-      spinner.classList.remove('hidden'); // Show the spinner/loading icon
+      show(spinner); // Show the spinner/loading icon
 
       try {
         const imageDataUrl = preview.src; // Get image preview from the canvas
@@ -285,14 +279,8 @@
           body: formData,
         });
       
-        // // Call the FastAPI backend
-        // const result = await fetch("https://anemicare.onrender.com/predict_image", {
-        //   method: "POST",
-        //   body: formData,
-        // });
-
         const data = await result.json(); // Read the response as JSON
-        spinner.classList.add('hidden');  // Hide the spinner once done
+        hide(spinner);  // Hide the spinner once done
 
         // Show some debug info in browser console
         console.log("Backend status:", result.status);
@@ -317,7 +305,7 @@
           console.warn("Unexpected result from backend:", data);
         }
       } catch (err) {
-        spinner.classList.add('hidden'); // Make sure spinner hides on error
+        hide(spinner); // Make sure spinner hides on error
         alert("Something went wrong analyzing the image.");
         console.error("Error:", err);
       }
@@ -326,12 +314,12 @@
     clearSampleBtn.addEventListener('click', clearAll);
 
     function displayScreening(prediction) {
-      document.getElementById('predicted-hgb').textContent = prediction.hgb;
-      document.getElementById('predicted-class').textContent = prediction.class;
-      document.getElementById('predicted-error_rate').textContent = prediction.error_rate;
-      screeningSection.classList.remove('hidden');
+      predictedHgb.textContent = prediction.hgb;
+      predictedClass.textContent = prediction.class;
+      predictedErrorRate.textContent = prediction.error_rate;
+      show(screeningSection);
       preview.src = prediction.image;
-      preview.classList.remove('hidden');
+      show(preview);
     }
   </script>
 </body>
