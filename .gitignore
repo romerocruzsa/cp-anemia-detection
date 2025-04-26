@@ -7,6 +7,8 @@
 
 # Ignore output directory (relative to repo root)
 output/
+data/
+fingernail_resource_opt/
 
 # Ignore compiled Python files
 *.pyc
