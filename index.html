@@ -279,17 +279,17 @@
         const formData = new FormData();
         formData.append("file", blob, "sample.png");
 
-        // Call the FastAPI backend
-        const result = await fetch("http://127.0.0.1:8000/predict_image", {
-          method: "POST",
-          body: formData,
-        });
-      
         // // Call the FastAPI backend
-        // const result = await fetch("https://anemicare.onrender.com/predict_image", {
+        // const result = await fetch("http://127.0.0.1:8000/predict_image", {
         //   method: "POST",
         //   body: formData,
         // });
+      
+        // Call the FastAPI backend
+        const result = await fetch("https://anemicare.onrender.com/predict_image", {
+          method: "POST",
+          body: formData,
+        });
 
         const data = await result.json(); // Read the response as JSON
         spinner.classList.add('hidden');  // Hide the spinner once done
