@@ -12,41 +12,6 @@ def save_debug_image(image, step_name, debug_dir="debug_outputs"):
     cv2.imwrite(path, cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
     return path
 
-def segment_hand_otsu(image, debug=False):
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
-    _, binary_mask = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-    if np.mean(gray[0:10, 0:10]) > 127:
-        binary_mask = cv2.bitwise_not(binary_mask)
-
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
-    cleaned_mask = cv2.morphologyEx(binary_mask, cv2.MORPH_CLOSE, kernel, iterations=2)
-    cleaned_mask = cv2.morphologyEx(cleaned_mask, cv2.MORPH_OPEN, kernel, iterations=1)
-
-    contours, _ = cv2.findContours(cleaned_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    mask = np.zeros_like(cleaned_mask)
-    largest_contour = None
-    if contours:
-        largest_contour = max(contours, key=cv2.contourArea)
-        cv2.drawContours(mask, [largest_contour], -1, 255, thickness=-1)
-
-    # Create an RGBA image (RGB + alpha)
-    segmented_hand = np.zeros((*image.shape[:2], 4), dtype=np.uint8)
-    for c in range(3):
-        segmented_hand[:, :, c] = np.where(mask == 255, image[:, :, c], 0)  # Keep hand pixels, black elsewhere
-    segmented_hand[:, :, 3] = np.where(mask == 255, 255, 0)  # Alpha channel: 255 for hand, 0 for background
-
-    if debug:
-        save_debug_image(cv2.cvtColor(mask, cv2.COLOR_GRAY2RGB), "segmented_hand_mask")
-        # Save RGBA as PNG to preserve transparency
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        debug_path = f"debug_outputs/{timestamp}_segmented_hand_rgba.png"
-        os.makedirs("debug_outputs", exist_ok=True)
-        cv2.imwrite(debug_path, segmented_hand)
-
-    return mask, largest_contour, segmented_hand
-
 def detect_fingertips(segmented_hand_image, mask, debug=False):
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     if not contours:
@@ -231,25 +196,44 @@ def select_three_nails_with_least_background(cropped_images, background_threshol
 
     return selected_images
 
+def find_brightest_patch(image, patch_size=(50, 50), stride=10):
+    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    h, w = gray.shape
+    ph, pw = patch_size
+    max_mean = -1
+    best_patch = (0, 0)
+
+    for y in range(0, h - ph + 1, stride):
+        for x in range(0, w - pw + 1, stride):
+            patch = gray[y:y + ph, x:x + pw]
+            patch_mean = np.mean(patch)
+            if patch_mean > max_mean:
+                max_mean = patch_mean
+                best_patch = (y, x)
+
+    y, x = best_patch
+    return image[y:y + ph, x:x + pw]  # Return the RGB patch
+
 def compute_normalized_rgb_from_reference_region_fixed(nail_images, original_image, ref_box_size=(50, 50), debug=False):
     height, width, _ = original_image.shape
-    box_h, box_w = ref_box_size
+    # box_h, box_w = ref_box_size
     # ref_region = original_image[height - box_h:height, 0:box_w]
+    ref_region = find_brightest_patch(original_image, patch_size=(int(height*.015), int(width*.015)))
 
-    # white_ref_median = {
-    #     color: np.median(ref_region[:, :, chan].ravel())
-    #     for chan, color in enumerate("RGB")
-    # }
+    white_ref_median = {
+        color: np.median(ref_region[:, :, chan].ravel())
+        for chan, color in enumerate("RGB")
+    }
 
     feature_dict = {}
     for i, img in enumerate(nail_images[:3]):
         for chan, color in enumerate("RGB"):
-            mean_val = np.mean(img[:, :, chan])
-            # norm_val = mean_val / white_ref_median[color]
-            feature_dict[f'NAIL_{i+1}_{color}_mean'] = mean_val
+            mean_val = np.median(img[:, :, chan])
+            norm_val = mean_val / white_ref_median[color]
+            feature_dict[f'NAIL_{i+1}_{color}_mean'] = norm_val
 
-    # if debug:
-    #     save_debug_image(ref_region, "white_reference_region")
+    if debug:
+        save_debug_image(ref_region, "white_reference_region")
 
     return pd.DataFrame([feature_dict])     
 
@@ -268,9 +252,6 @@ def extract_features_from_image(image_bytes, model, debug=False):
 
     if debug:
         save_debug_image(image, "input_image")
-
-    # 🔍 Step 1: Segment hand
-    # hand_mask, contour, segmented_hand = segment_hand_otsu(image, debug=debug)
 
     # 🔍 Step 2: YOLOv8 Nail Detection
     results = model.predict(source=image, conf=0.3, verbose=False)[0]

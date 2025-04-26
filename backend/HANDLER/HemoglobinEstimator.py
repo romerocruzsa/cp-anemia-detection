@@ -20,10 +20,15 @@ class HemoglobinHandler:
         elif hgb < 20: return "Normal"
         else: return "Inconclusive"
 
+    def __call__(self, image_bytes):
+        return self.predict_hgb(image_bytes)
+
+
     def predict_hgb(self, image_bytes):
         try:
             features = extract_features_from_image(image_bytes, self.fgn_model, debug=False)
             prediction = self.hb_model.predict(features)[0]
+            print("✅ Estimation complete!")
 
             severity = self.classify_severity(prediction)
             if severity == "Inconclusive":

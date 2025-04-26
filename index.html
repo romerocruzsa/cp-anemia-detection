@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anemi-Care Boot Screen</title>
+  <title>Anemicare: AI Early Anemia Detection</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -31,12 +31,19 @@
   </style>
 </head>
 <body class="font-inter min-h-screen flex items-center justify-center">
-  <div class="max-w-6xl w-full p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+  <!-- Floating Logo -->
+  <div class="fixed top-4 left-4 z-50">
+    <img src="../frontend/static/images/capicu-logo.png" alt="Capicu Logo" class="w-12 h-12 rounded-full" />
+  </div>
+
+  <div class="max-w-6xl w-full p-6 grid grid-cols-1 grid-cols-2 gap-8">
     <!-- Preliminary Screening Card -->
     <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
       <h2 class="text-2xl font-bold mb-4 text-gray-800">Preliminary Screening</h2>
-      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-gray-800">
+      <div class="bg-white-50 rounded-lg p-4 mb-6 text-sm text-gray-800">
         <h3 class="font-semibold text-base mb-2">🩺 How to Use</h3>
+        <img src="../frontend/static/images/howtouse.png" alt="How To Use" class="mb-6" />
         <ul class="list-disc list-inside space-y-1">
           <li>Upload a clear photo of your fingernails <em>or</em> use the device camera.</li>
           <li>Center your middle finger in the red box and capture the image.</li>
@@ -52,6 +59,7 @@
           </button> to review another sample.</li>
         </ul>
         <p class="mt-2 text-xs text-gray-500 italic">Note: This is a screening tool — consult a doctor for clinical diagnosis.</p>
+
       </div>
 
       <div id="drop-zone" class="mb-4 w-full">
@@ -63,7 +71,7 @@
         <video id="camera-stream" autoplay playsinline class="w-full max-h-52 hidden"></video>
         <!-- Overlay Box -->
         <div id="camera-overlay" class="absolute inset-0 flex items-center justify-center pointer-events-none hidden">
-          <div class="w-28 h-28 border-4 border-dashed border-red-500 rounded-xl"></div>
+          <div class="w-28 h-28 border-2 border-dashed border-red-500 rounded-xl"></div>
         </div>
       </div>
 
@@ -95,22 +103,22 @@
           <p class="text-sm">Estimated Hemoglobin: <strong id="predicted-hgb">--</strong> g/dL</p>
           <p class="text-sm">Anemia Classification: <strong id="predicted-class" class="text-yellow-600">--</strong></p>
           <p class="text-sm text-gray-600">Estimation Error Rate: ±<strong id="predicted-error_rate">--</strong> g/dL</p>
-          <p class="text-xs text-gray-500 italic mt-2">This is a preliminary screening. Please confirm with a clinician.</p>
+          <p class="text-xs text-gray-500 italic mt-2">Reference Range: Normal hemoglobin level is 12–16 g/dL for females, 14–18 g/dL for males.</p>
         </div>
       </div>
     </div>
 
     <!-- Branding and Logo Only -->
     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center border border-gray-200">
-      <img src="/frontend/static/images/eye-logo.png" alt="Anemi-Care Logo" class="w-32 mb-6" />
-      <h1 class="text-3xl font-bold text-gray-800">Anemi-Care</h1>
-      <p class="text-base text-gray-600 mb-4">AI Early Anemia Detection</p>
+      <img src="../frontend/static/images/logo.png" alt="Anemicare Logo" class="w-32" />
+      <h1 class="text-3xl font-bold text-gray-800">Anemicare</h1>
+      <p class="text-base text-gray-600 mb-4">AI Early Anemia Screening</p>
       <div class="space-y-2 text-sm">
-        <a href="/frontend/html/login.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
-        <a href="/frontend/html/register.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
-        <!-- <a href="boot.html" class="text-black hover:underline">Want to test our Early Anemia Screening AI? <strong>Click Here</strong></a> -->
+        <a href="../frontend/html/underconstruction.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
+        <a href="../frontend/html/underconstruction.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
       </div>
     </div>
+    
   </div>
 
   <script>
@@ -271,17 +279,17 @@
         const formData = new FormData();
         formData.append("file", blob, "sample.png");
 
-        // // Call the FastAPI backend
-        // const result = await fetch("http://127.0.0.1:8000/predict_image", {
-        //   method: "POST",
-        //   body: formData,
-        // });
-      
         // Call the FastAPI backend
-        const result = await fetch("https://anemicare.onrender.com/predict_image", {
+        const result = await fetch("http://127.0.0.1:8000/predict_image", {
           method: "POST",
           body: formData,
         });
+      
+        // // Call the FastAPI backend
+        // const result = await fetch("https://anemicare.onrender.com/predict_image", {
+        //   method: "POST",
+        //   body: formData,
+        // });
 
         const data = await result.json(); // Read the response as JSON
         spinner.classList.add('hidden');  // Hide the spinner once done

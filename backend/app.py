@@ -1,30 +1,40 @@
 import sys
 import os
 
+from typing import Dict
+from contextlib import asynccontextmanager
+from fastapi import Body, FastAPI, HTTPException, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+import asyncpg
+import logging
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-from typing import Dict
-from fastapi import Body, FastAPI, HTTPException
 from HANDLER.patients import PatientsHandler
 from HANDLER.ImageUploads import ImageUploadsHandler
 from HANDLER.AnemiaAnalysis import AnemiaAnalysisHandler
-from fastapi import UploadFile, File, HTTPException
 from HANDLER.HemoglobinEstimator import HemoglobinHandler
-import asyncpg
-import logging
-from fastapi.middleware.cors import CORSMiddleware
 
+# Global handler instances
 handler = PatientsHandler()
 image_handler = ImageUploadsHandler()
 analysis_handler = AnemiaAnalysisHandler()
-hemoglobin_handler = HemoglobinHandler()
-app = FastAPI()
+hgb_handler = None  # Loaded via lifespan
 
-# 👇 Add this after `app = FastAPI()`
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global hgb_handler
+    hgb_handler = HemoglobinHandler()
+    print("✅ Hemoglobin models loaded at startup!")
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+# CORS middleware (you can restrict this for production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For development only — allows all domains
+    allow_origins=["*"],  # ⚠️ Replace with your domain in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -130,37 +140,15 @@ async def update_analysis(analysis_id: int, status: str, confidence: float):
 @app.post("/predict_image")
 async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):
     try:
+        print("✅ Starting Prediction...")
         image_bytes = await file.read()
-        async with asyncpg.create_pool(DATABASE_URL
-        ) as pool:
-            async with pool.acquire() as conn:
-                result = hemoglobin_handler.predict_hgb(image_bytes)
-                # print(result)
+        result = hgb_handler(image_bytes)
         return result
     except Exception as e:
         import traceback
-        traceback.print_exc()  # 👈 This will show full traceback in terminal
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
-# @app.post("/predict_image")
-# async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):
-#     try:
-#         image_bytes = await file.read()
-#         async with asyncpg.create_pool(
-#             host="localhost",
-#             database="capiku",
-#             user="capiku",
-#             password="capiku@3131!",
-#             port="5433"
-#         ) as pool:
-#             async with pool.acquire() as conn:
-#                 result = hemoglobin_handler.predict_hgb(image_bytes)
-#                 # print(result)
-#         return result
-#     except Exception as e:
-#         import traceback
-#         traceback.print_exc()  # 👈 This will show full traceback in terminal
-#         raise HTTPException(status_code=500, detail=str(e))
     
 if __name__ == "__main__":
     import uvicorn
