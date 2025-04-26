@@ -146,7 +146,7 @@ async def predict_image(file: UploadFile = File(...), patient_id: int = None, im
         image_bytes = await file.read()
         result = hgb_handler(image_bytes)
         elapsed_time = time.time() - start_time
-        print("✅ Estimation Complete! Took ~{elapsed_time:.2f} seconds.")
+        print(f"✅ Estimation Complete! Took ~{elapsed_time:.2f} seconds.")
         return result
     except Exception as e:
         import traceback
