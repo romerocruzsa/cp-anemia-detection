@@ -25,6 +25,25 @@ body {
   line-height: 1.6;
 }
 
+/* Apply global font */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom text styles */
+.description-text {
+  font-size: 1.125rem; /* Tailwind's text-lg */
+  color: #4B5563;      /* Tailwind's text-gray-600 */
+  font-weight: 400;
+}
+
+.description-subtext {
+  font-size: 0.875rem; /* Tailwind's text-sm */
+  font-style: italic;
+  color: #4B5563;      /* Tailwind's text-gray-600 */
+}
+
+
 /* --- Utility Classes --- */
 .flex { display: flex; }
 .grid { display: grid; }
