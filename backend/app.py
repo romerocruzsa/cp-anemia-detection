@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 from typing import Dict
 from contextlib import asynccontextmanager
@@ -140,9 +141,12 @@ async def update_analysis(analysis_id: int, status: str, confidence: float):
 @app.post("/predict_image")
 async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):
     try:
+        start_time = time.time()
         print("✅ Starting Prediction...")
         image_bytes = await file.read()
         result = hgb_handler(image_bytes)
+        elapsed_time = time.time() - start_time
+        print(f"✅ Estimation Complete! Took ~{elapsed_time:.2f} seconds.")
         return result
     except Exception as e:
         import traceback

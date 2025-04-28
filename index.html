@@ -34,16 +34,16 @@
 
   <!-- Floating Logo -->
   <div class="fixed top-4 left-4 z-50">
-    <img src="../frontend/static/images/capicu-logo.png" alt="Capicu Logo" class="w-12 h-12 rounded-full" />
+    <img src="./frontend/static/images/capicu-logo.png" alt="Capicu Logo" class="w-12 h-12 rounded-full" />
   </div>
 
-  <div class="max-w-6xl w-full p-6 grid grid-cols-1 grid-cols-2 gap-8">
+  <div class="max-w-6xl w-full p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Preliminary Screening Card -->
     <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
       <h2 class="text-2xl font-bold mb-4 text-gray-800">Preliminary Screening</h2>
       <div class="bg-white-50 rounded-lg p-4 mb-6 text-sm text-gray-800">
         <h3 class="font-semibold text-base mb-2">🩺 How to Use</h3>
-        <img src="../frontend/static/images/howtouse.png" alt="How To Use" class="mb-6" />
+        <img src="./frontend/static/images/howtouse.png" alt="How To Use" class="mb-6" />
         <ul class="list-disc list-inside space-y-1">
           <li>Upload a clear photo of your fingernails <em>or</em> use the device camera.</li>
           <li>Center your middle finger in the red box and capture the image.</li>
@@ -110,12 +110,12 @@
 
     <!-- Branding and Logo Only -->
     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center border border-gray-200">
-      <img src="../frontend/static/images/logo.png" alt="Anemicare Logo" class="w-32" />
+      <img src="./frontend/static/images/logo.png" alt="Anemicare Logo" class="w-32" />
       <h1 class="text-3xl font-bold text-gray-800">Anemicare</h1>
       <p class="text-base text-gray-600 mb-4">AI Early Anemia Screening</p>
       <div class="space-y-2 text-sm">
-        <a href="../frontend/html/underconstruction.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
-        <a href="../frontend/html/underconstruction.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
+        <a href="./frontend/html/underconstruction.html" class="text-black hover:underline">Want to save your results? <strong>Login</strong></a><br/>
+        <a href="./frontend/html/underconstruction.html" class="text-black hover:underline">Don't have an account? <strong>Register</strong></a><br/>
       </div>
     </div>
     
@@ -279,17 +279,17 @@
         const formData = new FormData();
         formData.append("file", blob, "sample.png");
 
-        // Call the FastAPI backend
-        const result = await fetch("http://127.0.0.1:8000/predict_image", {
-          method: "POST",
-          body: formData,
-        });
-      
         // // Call the FastAPI backend
-        // const result = await fetch("https://anemicare.onrender.com/predict_image", {
+        // const result = await fetch("http://127.0.0.1:8000/predict_image", {
         //   method: "POST",
         //   body: formData,
         // });
+      
+        // Call the FastAPI backend
+        const result = await fetch("https://anemicare.onrender.com/predict_image", {
+          method: "POST",
+          body: formData,
+        });
 
         const data = await result.json(); // Read the response as JSON
         spinner.classList.add('hidden');  // Hide the spinner once done
