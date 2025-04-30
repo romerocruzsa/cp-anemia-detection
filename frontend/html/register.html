@@ -3,179 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - Anemi-Care</title>
+  <title>Register - Anemicare</title>
+
+  <!-- External Fonts and Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/frontend/static/style.css" />
-  <style>
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1rem;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 1200px;
-      background-color: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .login-form {
-      flex: 1;
-      min-width: 300px;
-      width: 100%;
-      margin-top: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .form-wrapper {
-        display: flex;
-        gap: 2rem;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .login-logo {
-        width: 100px;
-      }
-
-      .login-form {
-        margin-top: 0;
-      }
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="login-container">
-    <div class="login-card">
-      <div class="form-wrapper">
-        <!-- Branding Column -->
-        <div style="flex: 1; min-width: 250px;">
-          <img src="/frontend/static/images/eye-logo.png" alt="Anemi-Care Logo" class="login-logo" />
-          <h1 class="login-title">Anemi-Care</h1>
-          <p class="login-subtitle">University of Puerto Rico - Mayagüez</p>
+<body class="bg-gray-100 font-inter min-h-screen flex items-center justify-center">
+  <!-- Registration Page Container -->
+  <div class="bg-white shadow-lg rounded-lg p-8 max-w-2xl w-full">
+    <!-- Logo and Title Section -->
+    <div class="text-center mb-6">
+      <img src="/frontend/static/images/logo.png" alt="Anemi-Care Logo" class="w-16 h-16 mx-auto mb-4" />
+      <h1 class="text-2xl font-bold text-gray-800">Anemicare</h1>
+    </div>
+
+    <!-- Registration Form -->
+    <form id="register-form" class="space-y-6" autocomplete="off">
+
+      <!-- Personal Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+          <input type="text" id="first-name" name="first-name" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="Enter your first name" required />
         </div>
-
-        <!-- Registration Form -->
-        <form class="login-form" onsubmit="return validateForm()">
-          <h2 class="login-title">Patient Registration</h2>
-          <!-- Extracted reusable input fields -->
-          <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input type="text" id="first-name" name="first-name" required />
-          </div>
-          <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input type="text" id="last-name" name="last-name" required />
-          </div>
-          <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
-          </div>
-          <div class="form-group">
-            <label for="sex">Legal Sex</label>
-            <select id="sex" name="sex" required>
-              <option value="">Select</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="eg. @gmail.com, @outlook.com, etc." />
-          </div>
-          <div class="form-group">
-            <label for="phone">Mobile Phone</label>
-            <input type="tel" id="phone" name="phone" required placeholder="eg. 787-832-4040" />
-          </div>
-          <div class="form-group">
-            <label for="address">Street Address</label>
-            <input type="text" id="address" name="address" required />
-          </div>
-          <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" required />
-          </div>
-          <div class="form-group">
-            <label for="state">State/Province</label>
-            <input type="text" id="state" name="state" required />
-          </div>
-          <div class="form-group">
-            <label for="zip">ZIP Code</label>
-            <input type="text" id="zip" name="zip" required />
-          </div>
-          <div class="form-group">
-            <label for="country">Country</label>
-            <select id="country" name="country" required>
-              <option value="">Select</option>
-              <option value="USA">United States</option>
-              <option value="PR">Puerto Rico</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="mrn">Medical Record Number (if known)</label>
-            <input type="text" id="mrn" name="mrn" />
-          </div>
-        </form>
-
-        <!-- Emergency Contact Form -->
-        <form class="login-form">
-          <h2 class="login-title">Emergency Contact</h2>
-
-          <div class="form-group">
-            <label for="emergency-name">Contact Name</label>
-            <input type="text" id="emergency-name" name="emergency-name" />
-          </div>
-          <div class="form-group">
-            <label for="emergency-phone">Contact Phone</label>
-            <input type="tel" id="emergency-phone" name="emergency-phone" />
-          </div>
-          <div class="form-group">
-            <label for="relationship">Relationship to Patient</label>
-            <input type="text" id="relationship" name="relationship" />
-          </div>
-
-          <label style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
-            <input type="checkbox" required />
-            I certify the above information is correct and I have the legal right to submit this form.
-          </label>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-            <button type="submit" class="login-button">Create Account</button>
-            <a href="login.html" class="login-link">Already have an account? <strong>Login</strong></a>
-          </div>
-        </form>
+        <div>
+          <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+          <input type="text" id="last-name" name="last-name" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="Enter your last name" required />
+        </div>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+          <input type="date" id="dob" name="dob" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" required />
+        </div>
+        <div>
+          <label for="sex" class="block text-sm font-medium text-gray-700">Legal Sex</label>
+          <select id="sex" name="sex" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" required>
+            <option value=""></option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="you@example.com" required />
+      </div>
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700">Mobile Phone</label>
+        <input type="tel" id="phone" name="phone" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="e.g., 787-555-1234" required />
+      </div>
+
+      <!-- Address Information -->
+      <div>
+        <label for="address" class="block text-sm font-medium text-gray-700">Street Address</label>
+        <input type="text" id="address" name="address" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="Enter your address" required />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+          <input type="text" id="city" name="city" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="City" required />
+        </div>
+        <div>
+          <label for="state" class="block text-sm font-medium text-gray-700">State/Province</label>
+          <input type="text" id="state" name="state" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="State" required />
+        </div>
+        <div>
+          <label for="zip" class="block text-sm font-medium text-gray-700">ZIP Code</label>
+          <input type="text" id="zip" name="zip" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200" placeholder="ZIP Code" required />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white font-medium py-2 rounded-xl hover:from-purple-700 hover:to-purple-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400">
+        Create Account
+      </button>
+    </form>
+
+    <!-- Additional Links -->
+    <div class="mt-6 text-center space-y-2">
+      <p class="text-sm">
+        Already have an account? <a href="login.html" class="text-black-600 hover:underline"><strong>Login</strong></a>
+      </p>
     </div>
   </div>
 
   <script>
-    function validateForm() {
-      const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
-      const phoneRegex = /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    const registerForm = document.getElementById('register-form');
 
-      const firstName = document.getElementById("first-name").value;
-      const lastName = document.getElementById("last-name").value;
-      const phone = document.getElementById("phone").value;
-
-      if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
-        alert("First and Last Name must contain only letters, spaces, or hyphens.");
-        return false;
-      }
-
-      if (!phoneRegex.test(phone)) {
-        alert("Please enter a valid phone number (e.g. 787-832-4040).");
-        return false;
-      }
-
-      return true;
-    }
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevent form submission for now
+      alert('Registration form submitted!');
+    });
   </script>
 </body>
 </html>
