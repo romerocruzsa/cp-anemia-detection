@@ -25,10 +25,6 @@ body {
   line-height: 1.6;
 }
 
-/* Apply global font */
-body {
-  font-family: 'Inter', sans-serif;
-}
 
 /* Custom text styles */
 .description-text {
