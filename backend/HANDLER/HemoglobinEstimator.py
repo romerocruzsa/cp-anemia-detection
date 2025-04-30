@@ -28,8 +28,6 @@ class HemoglobinHandler:
         try:
             features = extract_features_from_image(image_bytes, self.fgn_model, debug=False)
             prediction = self.hb_model.predict(features)[0]
-            print("✅ Estimation complete!")
-
             severity = self.classify_severity(prediction)
             if severity == "Inconclusive":
                 return {
