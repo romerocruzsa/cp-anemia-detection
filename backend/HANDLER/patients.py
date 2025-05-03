@@ -1,86 +1,131 @@
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
 from DAO.patients import PatientsDAO
 
 class PatientsHandler:
-    def mapToDict(self, t):
+    def mapToDict(self, row: dict):
         return {
-            'PatientID': t["patientid"],
-            'FirstName': t["firstname"],
-            'LastName': t["lastname"],
-            'DateOfBirth': t["dateofbirth"].isoformat() if t["dateofbirth"] else None,
-            'Gender': t["gender"],
-            'Email': t["email"],
-            'CreatedAt': t["createdat"].isoformat() if t["createdat"] else None
-        }
+            'PatientID':   row["patientid"],
+            'FirstName':   row["firstname"], # already decrypted by DAO
+            'LastName':    row["lastname"], # already decrypted by DAO
+            'DateOfBirth': row["dateofbirth"].isoformat() if row["dateofbirth"] else None,
+            'Gender':      row["gender"],
+            'Email':       row["email"], # already decrypted by DAO
+            # 'BloodType':   row.get("bloodtype"),    # if you added this column
+            # 'Condition':   row.get("condition"),    # and this one
+            'CreatedAt':   row["createdat"].isoformat() if row["createdat"] else None
+            }
 
     async def getAllPatients(self):
         dao = PatientsDAO()
         try:
-            dbtuples = await dao.getPatients()
-            result = [self.mapToDict(e) for e in dbtuples] if dbtuples else []
+            rows = await dao.getPatients()
+            result = [ self.mapToDict(r) for r in rows ] if rows else []
             return JSONResponse(content=result)
         except Exception as e:
-            return JSONResponse(content={'error': f'An error occurred while retrieving patients: {e}'}, status_code=500)
+            return JSONResponse(
+                status_code=500,
+                content={'error': f'Error retrieving patients: {e}'}
+            )
 
-    async def getPatientsByID(self, pid):
+    async def getPatientsByID(self, pid: int):
         dao = PatientsDAO()
         try:
-            result = await dao.getPatientsById(pid)
-            if result:
-                return JSONResponse(content=self.mapToDict(result))
-            else:
-                return JSONResponse(content={"error": "Not found"}, status_code=404)
+            row = await dao.getPatientsById(pid)
+            if not row:
+                return JSONResponse(status_code=404, content={'error': 'Not found'})
+            return JSONResponse(content=self.mapToDict(row))
         except Exception as e:
-            return JSONResponse(content={'error': f'Error retrieving patient {pid}: {e}'}, status_code=500)
+            return JSONResponse(
+                status_code=500,
+                content={'error': f'Error retrieving patient {pid}: {e}'}
+            )
 
-    async def insertPatient(self, data):
-        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email']
-        if all(field in data for field in required_fields):
-            dao = PatientsDAO()
-            try:
-                date_of_birth = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
-                patient_id = await dao.insertPatients(
-                    data['FirstName'],
-                    data['LastName'],
-                    date_of_birth,  
-                    data['Gender'],
-                    data['Email']
+    async def insertPatientWithPassword(self, data: dict):
+        # This is your registration endpoint
+        required = ['FirstName','LastName','DateOfBirth','Gender','Email','Password']
+        if not all(k in data for k in required):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        # parse the date
+        try:
+            dob = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="DateOfBirth must be YYYY-MM-DD")
+
+        dao = PatientsDAO()
+        try:
+            patient_id = await dao.insertPatientWithPassword(
+                data['FirstName'],
+                data['LastName'],
+                dob,
+                data['Gender'],
+                data['Email'],
+                data['Password']
+            )
+            if not patient_id:
+                return JSONResponse(
+                    status_code=500,
+                    content={'error': 'Could not register patient'}
                 )
-                return {"PatientID": patient_id, **data}
-            except Exception as e:
-                raise JSONResponse(status_code=500, detail=f"Error inserting patient: {e}")
-        else:
-            raise JSONResponse(status_code=400, detail="Bad data or missing fields")
+            return JSONResponse(
+                status_code=200,
+                content={'PatientID': patient_id, 'message': 'Registration successful'}
+            )
+        except Exception as e:
+            return JSONResponse(
+                status_code=500,
+                content={'error': f'Error inserting patient: {e}'}
+            )
 
-    async def deleteById(self, pid):
+    async def loginPatient(self, email: str, password: str):
+        # Simply returns the patient_id or None
+        dao = PatientsDAO()
+        pid = await dao.validatePatientLogin(email, password)
+        return pid
+
+    async def putByID(self, pid: int, data: dict):
+        # Updating names, DOB, gender, email (all encrypted/decrypted by DAO)
+        required = ['FirstName','LastName','DateOfBirth','Gender','Email']
+        if not all(k in data for k in required):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        try:
+            dob = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="DateOfBirth must be YYYY-MM-DD")
+
+        dao = PatientsDAO()
+        try:
+            result = await dao.putPatientsByID(
+                pid,
+                data['FirstName'],
+                data['LastName'],
+                dob,
+                data['Gender'],
+                data['Email']
+            )
+            if result:
+                return JSONResponse(status_code=200, content=data)
+            else:
+                return JSONResponse(status_code=404, content={'error': 'Not found'})
+        except Exception as e:
+            return JSONResponse(
+                status_code=500,
+                content={'error': f'Error updating patient {pid}: {e}'}
+            )
+
+    async def deleteById(self, pid: int):
         dao = PatientsDAO()
         try:
             result = await dao.deletePatientsById(pid)
             if result:
-                return JSONResponse(content={"message": "Delete was successful"}, status_code=200)
+                return JSONResponse(status_code=200, content={'message': 'Delete successful'})
             else:
-                return JSONResponse(content={"error": "Not found"}, status_code=404)
+                return JSONResponse(status_code=404, content={'error': 'Not found'})
         except Exception as e:
-            return JSONResponse(content={'error': f'Error deleting patient {pid}: {e}'}, status_code=500)
-
-    async def putByID(self, pid, data):
-        required_fields = ['FirstName', 'LastName', 'DateOfBirth', 'Gender', 'Email']
-        if all(field in data for field in required_fields):
-            dao = PatientsDAO()
-            try:
-                date_of_birth = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
-                result = await dao.putPatientsByID(
-                    pid,
-                    data['FirstName'],
-                    data['LastName'],
-                    date_of_birth,
-                    data['Gender'],
-                    data['Email'],
-                )
-                if result:
-                    return JSONResponse(content=data, status_code=200)
-                else:
-                    return JSONResponse(content={"error": "Not found"}, status_code=404)
-            except Exception as e:
-                return JSONResponse(content={'error': f'Error updating patient {pid}: {e}'}, status_code=500)
+            return JSONResponse(
+                status_code=500,
+                content={'error': f'Error deleting patient {pid}: {e}'}
+            )
