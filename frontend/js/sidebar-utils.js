@@ -1,19 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const moreInfoBtn = document.getElementById("more-info-btn");
-  const patientInfo = document.getElementById("patient-info");
-
-  if (moreInfoBtn && patientInfo) {
-    moreInfoBtn.addEventListener("click", () => {
-      patientInfo.classList.toggle("hidden");
-      moreInfoBtn.textContent = patientInfo.classList.contains("hidden")
-        ? "More patient info"
-        : "Hide patient info";
-    });
-  }
-});
-
 async function loadSidebarDetails() {
-  console.log("Loading sidebar details..."); // Debug log
   const patientID = localStorage.getItem("patientID");
   if (!patientID) {
     alert("No user is logged in!");
@@ -33,6 +18,16 @@ async function loadSidebarDetails() {
       // Populate the sidebar with user details
       document.getElementById("sidebar-name").textContent = `${user.FirstName} ${user.LastName}`;
       document.getElementById("sidebar-patient-id").textContent = `Patient ID: ${user.PatientID}`;
+
+      // Set the profile picture based on gender
+      const profilePicture = document.getElementById("profile-picture");
+      if (user.Gender === "Male") {
+        profilePicture.src = "/frontend/static/images/4.jpg";
+      } else if (user.Gender === "Female") {
+        profilePicture.src = "/frontend/static/images/9.jpg";
+      } else {
+        profilePicture.src = "/frontend/static/images/1.jpg"; // Default image
+      }
     } else {
       const err = await res.json();
       console.error("Error response:", err); // Debug log
