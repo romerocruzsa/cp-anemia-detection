@@ -12,6 +12,18 @@ class AnemiaAnalysisHandler:
             'ImagePath': t.get("imagepath")
         }
     
+    def mapToDictHistory(self, t):
+        return {
+            'Sample': t["sample"],
+            'PatientID': t["Patient ID"],
+            'Date': t["Date"],
+            'Time': t["Time"],
+            'Hemoglobin Level': float(t["Hemoglobin Level"]),
+            'Remark': t["Remark"],
+            'Doctor': t["Doctor"],
+            'Hospital': t["Hospital"]
+        }
+    
     async def getAnalysis(self):
         dao = AnemiaAnalysisDAO()
         try:
@@ -66,7 +78,7 @@ class AnemiaAnalysisHandler:
         try:
             analyses = await dao.getAnalysisByPatient(patient_id)
             if analyses:
-                result = [self.mapToDict(a) for a in analyses]
+                result = [self.mapToDictHistory(a) for a in analyses]
                 return JSONResponse(content=result)
             return JSONResponse(content=[], status_code=200)
         except Exception as e:
