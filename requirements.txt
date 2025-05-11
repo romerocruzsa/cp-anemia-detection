@@ -27,3 +27,5 @@ torchvision
 tqdm
 uvicorn
 ultralytics
+dotenv
+bcrypt

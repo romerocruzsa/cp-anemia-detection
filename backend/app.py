@@ -1,16 +1,25 @@
 import sys
 import os
 import time
-
 from typing import Dict
 from contextlib import asynccontextmanager
+
 from fastapi import Body, FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
 import asyncpg
 import logging
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# ── Load .env from CONFIG/local.env ─────────────────────────────────────────
+from dotenv import load_dotenv
+load_dotenv(os.path.join("CONFIG", "local.env"))
+
 DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL must be set in CONFIG/local.env")
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from HANDLER.patients import PatientsHandler
 from HANDLER.ImageUploads import ImageUploadsHandler
@@ -43,21 +52,18 @@ app.add_middleware(
 
 @app.get("/test_db")
 async def test_db():
+    """
+    Quick raw check that DATABASE_URL is correct.
+    """
     try:
-        async with asyncpg.create_pool(
-            host="localhost",
-            database="capiku",
-            user="capiku",
-            password="capiku@3131!",
-            port="5433"
-        ) as pool:
+        # Use only the DATABASE_URL from local.env
+        async with asyncpg.create_pool(DATABASE_URL) as pool:
             async with pool.acquire() as conn:
                 result = await conn.fetch("SELECT * FROM Patients;")
                 return {"patients": result}
     except Exception as e:
         logging.error(f"Database error: {e}")
-        return {"error": "Failed to connect to database"}, 500
-
+        raise HTTPException(status_code=500, detail="Failed to connect to database")
 
 @app.get("/get_patients")
 async def get_patients():
@@ -138,6 +144,30 @@ async def delete_analysis(analysis_id: int):
 async def update_analysis(analysis_id: int, status: str, confidence: float):
     return await analysis_handler.updateAnalysis(analysis_id, status, confidence)
 
+@app.post("/register")
+async def register_patient(data: Dict = Body(...)):
+    # delegate entirely to the handler, which already returns JSONResponse
+    return await handler.insertPatientWithPassword(data)
+
+@app.post("/login")
+async def login(data: dict = Body(...)):
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password are required")
+
+    patient_id = await handler.loginPatient(email, password)
+    if patient_id:
+        # return a JSON object on success
+        return JSONResponse(
+            status_code=200,
+            content={"PatientID": patient_id, "message": "Login successful"}
+        )
+
+    # no match → 401
+    raise HTTPException(status_code=401, detail="Invalid email or password")
+
 @app.post("/predict_image")
 async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):
     try:
@@ -153,7 +183,6 @@ async def predict_image(file: UploadFile = File(...), patient_id: int = None, im
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
-    
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=10000)
