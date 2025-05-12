@@ -73,11 +73,7 @@ class AnemiaAnalysisDAO:
                 TO_CHAR(ia.AnalysisDate, 'YYYY-MM-DD') AS "Date",
                 TO_CHAR(ia.AnalysisDate, 'HH24:MI:SS') AS "Time",
                 ia.ConfidenceScore AS "Hemoglobin Level",
-                CASE 
-                    WHEN ia.AnemiaStatus = 'Positive' THEN 'Anemic'
-                    WHEN ia.AnemiaStatus = 'Negative' THEN 'Non-Anemic'
-                    ELSE 'Indeterminate'
-                END AS "Remark",
+                ia.AnemiaStatus AS "Remark",
                 'Dr. John Doe' AS "Doctor",
                 'General Hospital' AS "Hospital"
             FROM 
@@ -121,3 +117,11 @@ class AnemiaAnalysisDAO:
             except Exception as e:
                 logging.error(f"Error updating analysis {analysis_id}: {e}")
                 return None
+            
+
+    async def close_connection(self):
+        if self.pool:
+            try:
+                await self.pool.close()
+            except Exception as e:
+                logging.error(f"Error closing database connection: {e}")

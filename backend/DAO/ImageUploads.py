@@ -115,3 +115,10 @@ class ImageUploadsDAO:
             except Exception as e:
                 logging.error(f"Error deleting image {image_id}: {e}")
                 return None
+            
+    async def close_connection(self):
+        if self.pool:
+            try:
+                await self.pool.close()
+            except Exception as e:
+                logging.error(f"Error closing database connection: {e}")
