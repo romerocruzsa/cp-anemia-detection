@@ -67,12 +67,24 @@ class AnemiaAnalysisDAO:
         async with self.pool.acquire() as conn:
             try:
                 query = """
-                SELECT a.AnalysisID, a.ImageID, a.AnemiaStatus, 
-                       a.ConfidenceScore, a.AnalysisDate, i.ImagePath
-                FROM AnemiaAnalysis a
-                JOIN ImageUploads i ON a.ImageID = i.ImageID
-                WHERE i.PatientID = $1;
-                """
+            SELECT 
+                ia.AnalysisID AS Sample,
+                p.PatientID AS "Patient ID",
+                TO_CHAR(ia.AnalysisDate, 'YYYY-MM-DD') AS "Date",
+                TO_CHAR(ia.AnalysisDate, 'HH24:MI:SS') AS "Time",
+                ia.ConfidenceScore AS "Hemoglobin Level",
+                ia.AnemiaStatus AS "Remark",
+                'Dr. John Doe' AS "Doctor",
+                'General Hospital' AS "Hospital"
+            FROM 
+                AnemiaAnalysis ia
+            JOIN 
+                ImageUploads iu ON ia.ImageID = iu.ImageID
+            JOIN 
+                Patients p ON iu.PatientID = p.PatientID
+            WHERE 
+                p.PatientID = $1;
+            """
                 return await conn.fetch(query, patient_id)
             except Exception as e:
                 logging.error(f"Error fetching analysis for patient {patient_id}: {e}")
@@ -105,3 +117,11 @@ class AnemiaAnalysisDAO:
             except Exception as e:
                 logging.error(f"Error updating analysis {analysis_id}: {e}")
                 return None
+            
+
+    async def close_connection(self):
+        if self.pool:
+            try:
+                await self.pool.close()
+            except Exception as e:
+                logging.error(f"Error closing database connection: {e}")
