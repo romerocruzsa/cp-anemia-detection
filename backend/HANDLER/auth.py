@@ -4,6 +4,7 @@ from datetime import datetime
 from DAO.users import UsersDAO
 from DAO.patients import PatientsDAO
 from DAO.clinicians import CliniciansDAO
+from DAO.administrators import AdministratorsDAO
 import logging
 
 logging.basicConfig(level=logging.ERROR)
@@ -13,6 +14,7 @@ class AuthHandler:
         self.users_dao = UsersDAO()
         self.patients_dao = PatientsDAO()
         self.clinicians_dao = CliniciansDAO()
+        self.administrators_dao = AdministratorsDAO()
 
     async def register(self, data: dict):
         required_fields = {
@@ -35,7 +37,7 @@ class AuthHandler:
                 raise HTTPException(status_code=401, detail="Invalid administrator code")
 
         try:
-            # Create user record first
+            # Create user record
             user_id = await self.users_dao.create_user(
                 data['Email'],
                 data['Password'],
@@ -43,11 +45,11 @@ class AuthHandler:
             )
 
             if not user_id:
-                raise HTTPException(status_code=500, detail="Failed to create user account")
+                raise HTTPException(status_code=500, detail="Failed to create user")
 
             # Create role-specific record
             if role == 'patient':
-                record_id = await self.patients_dao.insertPatientWithPassword(
+                patient_id = await self.patients_dao.insertPatientWithPassword(
                     user_id,
                     data['FirstName'],
                     data['LastName'],
@@ -56,40 +58,49 @@ class AuthHandler:
                     data['Email'],
                     data['Password']
                 )
-                if not record_id:
+                if not patient_id:
                     raise HTTPException(status_code=500, detail="Failed to create patient record")
                 return JSONResponse(
                     status_code=200,
                     content={
                         'UserID': user_id,
-                        'PatientID': record_id,
+                        'PatientID': patient_id,
                         'Role': role,
                         'message': 'Registration successful'
                     }
                 )
             elif role == 'clinician':
-                record_id = await self.clinicians_dao.create_clinician(
+                clinician_id = await self.clinicians_dao.create_clinician(
                     user_id,
                     data['FirstName'],
                     data['LastName'],
                     data['LicenseNumber'],
                     data['Specialization']
                 )
+                if not clinician_id:
+                    raise HTTPException(status_code=500, detail="Failed to create clinician record")
                 return JSONResponse(
                     status_code=200,
                     content={
                         'UserID': user_id,
-                        'ClinicianID': record_id,
+                        'ClinicianID': clinician_id,
                         'Role': role,
                         'message': 'Registration successful'
                     }
                 )
             elif role == 'administrator':
+                admin_id = await self.administrators_dao.create_administrator(
+                    user_id,
+                    data['FirstName'],
+                    data['LastName']
+                )
+                if not admin_id:
+                    raise HTTPException(status_code=500, detail="Failed to create administrator record")
                 return JSONResponse(
                     status_code=200,
                     content={
                         'UserID': user_id,
-                        'AdminID': user_id,  # For admins, we use the UserID as AdminID
+                        'AdminID': admin_id,
                         'Role': role,
                         'message': 'Registration successful'
                     }
@@ -117,8 +128,7 @@ class AuthHandler:
                     content={
                         'UserID': user_id,
                         'PatientID': patient['patientid'],
-                        'Role': role,
-                        'message': 'Login successful'
+                        'Role': role
                     }
                 )
             elif role == 'clinician':
@@ -130,22 +140,23 @@ class AuthHandler:
                     content={
                         'UserID': user_id,
                         'ClinicianID': clinician['clinicianid'],
-                        'Role': role,
-                        'message': 'Login successful'
+                        'Role': role
                     }
                 )
             elif role == 'administrator':
+                admin = await self.administrators_dao.get_administrator_by_user_id(user_id)
+                if not admin:
+                    raise HTTPException(status_code=404, detail="Administrator record not found")
                 return JSONResponse(
                     status_code=200,
                     content={
                         'UserID': user_id,
-                        'AdminID': user_id,
-                        'Role': role,
-                        'message': 'Login successful'
+                        'AdminID': admin['adminid'],
+                        'Role': role
                     }
                 )
             else:
-                raise HTTPException(status_code=400, detail="Invalid user role")
+                raise HTTPException(status_code=400, detail="Invalid role")
 
         except HTTPException:
             raise

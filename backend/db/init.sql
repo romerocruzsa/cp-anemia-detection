@@ -41,6 +41,17 @@ CREATE TABLE IF NOT EXISTS Clinicians (
     UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create Administrators table
+CREATE TABLE IF NOT EXISTS Administrators (
+    AdminID SERIAL PRIMARY KEY,
+    UserID INTEGER UNIQUE REFERENCES Users(UserID) ON DELETE CASCADE,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    IsActive BOOLEAN DEFAULT true,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create ImageUploads table
 CREATE TABLE IF NOT EXISTS ImageUploads (
     ImageID SERIAL PRIMARY KEY,
@@ -90,6 +101,7 @@ CREATE TABLE IF NOT EXISTS AuditRecords (
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_patients_userid ON Patients(UserID);
 CREATE INDEX IF NOT EXISTS idx_clinicians_userid ON Clinicians(UserID);
+CREATE INDEX IF NOT EXISTS idx_administrators_userid ON Administrators(UserID);
 CREATE INDEX IF NOT EXISTS idx_imageuploads_patientid ON ImageUploads(PatientID);
 CREATE INDEX IF NOT EXISTS idx_anemiaanalysis_imageid ON AnemiaAnalysis(ImageID);
 CREATE INDEX IF NOT EXISTS idx_medicalnotes_analysisid ON MedicalNotes(AnalysisID);
@@ -114,6 +126,11 @@ CREATE TRIGGER update_patients_updated_at
 
 CREATE TRIGGER update_clinicians_updated_at
     BEFORE UPDATE ON Clinicians
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_administrators_updated_at
+    BEFORE UPDATE ON Administrators
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 

@@ -2,61 +2,82 @@ from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
 from DAO.patients import PatientsDAO
+from DAO.users import UsersDAO
 
 class PatientsHandler:
-    def mapToDict(self, row: dict):
-        return {
-            'PatientID':   row["patientid"],
-            'FirstName':   row["firstname"], # already decrypted by DAO
-            'LastName':    row["lastname"], # already decrypted by DAO
-            'DateOfBirth': row["dateofbirth"].isoformat() if row["dateofbirth"] else None,
-            'Gender':      row["gender"],
-            'Email':       row["email"], # already decrypted by DAO
-            # 'BloodType':   row.get("bloodtype"),    # if you added this column
-            # 'Condition':   row.get("condition"),    # and this one
-            'CreatedAt':   row["createdat"].isoformat() if row["createdat"] else None
-            }
+    def __init__(self):
+        self.dao = PatientsDAO()
+        self.users_dao = UsersDAO()
 
-    async def getAllPatients(self):
-        dao = PatientsDAO()
-        try:
-            rows = await dao.getPatients()
-            result = [ self.mapToDict(r) for r in rows ] if rows else []
-            return JSONResponse(content=result)
-        except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={'error': f'Error retrieving patients: {e}'}
-            )
+    def mapToDict(self, patient):
+        if patient is None:
+            return None
+        return {
+            "PatientID": patient['patientid'],
+            "UserID": patient['userid'],
+            "FirstName": patient['firstname'],
+            "LastName": patient['lastname'],
+            "DateOfBirth": patient['dateofbirth'].isoformat() if patient['dateofbirth'] else None,
+            "Gender": patient['gender'],
+            "Email": patient['email'] if 'email' in patient else None,
+            "Role": patient['role'] if 'role' in patient else None,
+            "CreatedAt": patient['createdat'].isoformat() if patient['createdat'] else None,
+            "UpdatedAt": patient['updatedat'].isoformat() if patient['updatedat'] else None
+        }
+
+    async def getPatientByID(self, pid):
+        patient = await self.dao.getPatientsById(pid)
+        return self.mapToDict(patient)
+
+    async def getPatientByUserID(self, user_id):
+        patient = await self.dao.getPatientsByUserId(user_id)
+        return self.mapToDict(patient)
 
     async def getPatientsByID(self, pid: int):
-        dao = PatientsDAO()
         try:
-            row = await dao.getPatientsById(pid)
+            row = await self.dao.getPatientsById(pid)
             if not row:
-                return JSONResponse(status_code=404, content={'error': 'Not found'})
-            return JSONResponse(content=self.mapToDict(row))
+                raise HTTPException(status_code=404, detail='Patient not found')
+            return self.mapToDict(row)
+        except HTTPException:
+            raise
         except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={'error': f'Error retrieving patient {pid}: {e}'}
+            raise HTTPException(status_code=500, detail=f'Error retrieving patient {pid}: {e}')
+
+    async def getAllPatients(self):
+        patients = await self.dao.getPatients()
+        return [self.mapToDict(patient) for patient in patients]
+
+    def insertPatientWithPassword(self, user_id, first_name, last_name, date_of_birth, gender, email, password):
+        try:
+            # Convert date string to date object if it's a string
+            if isinstance(date_of_birth, str):
+                date_of_birth = datetime.strptime(date_of_birth, '%Y-%m-%d').date()
+            
+            return self.dao.insert_patient_with_password(
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+                date_of_birth=date_of_birth,
+                gender=gender,
+                email=email,
+                password=password
             )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     async def insertPatientWithPassword(self, data: dict):
-        # This is your registration endpoint
         required = ['FirstName','LastName','DateOfBirth','Gender','Email','Password']
         if not all(k in data for k in required):
             raise HTTPException(status_code=400, detail="Missing required fields")
 
-        # parse the date
         try:
             dob = datetime.strptime(data['DateOfBirth'], "%Y-%m-%d").date()
         except ValueError:
             raise HTTPException(status_code=400, detail="DateOfBirth must be YYYY-MM-DD")
 
-        dao = PatientsDAO()
         try:
-            patient_id = await dao.insertPatientWithPassword(
+            patient_id = await self.dao.insert_patient_with_password(
                 data['FirstName'],
                 data['LastName'],
                 dob,
@@ -65,28 +86,18 @@ class PatientsHandler:
                 data['Password']
             )
             if not patient_id:
-                return JSONResponse(
-                    status_code=500,
-                    content={'error': 'Could not register patient'}
-                )
-            return JSONResponse(
-                status_code=200,
-                content={'PatientID': patient_id, 'message': 'Registration successful'}
-            )
+                raise HTTPException(status_code=500, detail='Could not register patient')
+            return {'PatientID': patient_id, 'message': 'Registration successful'}
+        except HTTPException:
+            raise
         except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={'error': f'Error inserting patient: {e}'}
-            )
+            raise HTTPException(status_code=500, detail=f'Error inserting patient: {e}')
 
     async def loginPatient(self, email: str, password: str):
-        # Simply returns the patient_id or None
-        dao = PatientsDAO()
-        pid = await dao.validatePatientLogin(email, password)
+        pid = await self.dao.validate_patient_login(email, password)
         return pid
 
     async def putByID(self, pid: int, data: dict):
-        # Updating names, DOB, gender, email (all encrypted/decrypted by DAO)
         required = ['FirstName','LastName','DateOfBirth','Gender','Email']
         if not all(k in data for k in required):
             raise HTTPException(status_code=400, detail="Missing required fields")
@@ -96,9 +107,8 @@ class PatientsHandler:
         except ValueError:
             raise HTTPException(status_code=400, detail="DateOfBirth must be YYYY-MM-DD")
 
-        dao = PatientsDAO()
         try:
-            result = await dao.putPatientsByID(
+            result = await self.dao.put_patients_by_id(
                 pid,
                 data['FirstName'],
                 data['LastName'],
@@ -106,20 +116,23 @@ class PatientsHandler:
                 data['Gender'],
                 data['Email']
             )
-            if result:
-                return JSONResponse(status_code=200, content=data)
-            else:
-                return JSONResponse(status_code=404, content={'error': 'Not found'})
+            if not result:
+                raise HTTPException(status_code=404, detail='Patient not found')
+            return data
+        except HTTPException:
+            raise
         except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={'error': f'Error updating patient {pid}: {e}'}
-            )
+            raise HTTPException(status_code=500, detail=f'Error updating patient {pid}: {e}')
 
     async def deleteById(self, pid: int):
-        dao = PatientsDAO()
         try:
-            result = await dao.deletePatientsById(pid)
+            result = await self.dao.delete_patients_by_id(pid)
+            if not result:
+                raise HTTPException(status_code=404, detail='Patient not found')
+            return {'message': 'Delete successful'}
+        except HTTPException:
+            raise
+        except Exception as e:
             if result:
                 return JSONResponse(status_code=200, content={'message': 'Delete successful'})
             else:

@@ -49,7 +49,12 @@ class CliniciansDAO:
                     JOIN Users u ON c.UserID = u.UserID
                     WHERE c.ClinicianID = $1;
                 """
-                return await conn.fetchrow(query, clinician_id)
+                result = await conn.fetchrow(query, clinician_id)
+                logging.error(f"Raw clinician data: {result}")  # Debug log
+                if result:
+                    result_dict = dict(result)
+                    logging.error(f"Clinician dict: {result_dict}")  # Debug log
+                return result
             except Exception as e:
                 logging.error(f"Error getting clinician: {e}")
                 return None
@@ -64,7 +69,12 @@ class CliniciansDAO:
                     JOIN Users u ON c.UserID = u.UserID
                     WHERE c.UserID = $1;
                 """
-                return await conn.fetchrow(query, user_id)
+                result = await conn.fetchrow(query, user_id)
+                logging.error(f"Raw clinician data by user_id: {result}")  # Debug log
+                if result:
+                    result_dict = dict(result)
+                    logging.error(f"Clinician dict by user_id: {result_dict}")  # Debug log
+                return result
             except Exception as e:
                 logging.error(f"Error getting clinician by user ID: {e}")
                 return None

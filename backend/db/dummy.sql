@@ -4,7 +4,8 @@ INSERT INTO Users (Email, PasswordHash, Role, IsActive, LastLogin) VALUES
 ('jane.smith@example.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'patient', true, CURRENT_TIMESTAMP),
 ('dr.wilson@clinic.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'clinician', true, CURRENT_TIMESTAMP),
 ('dr.brown@clinic.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'clinician', true, CURRENT_TIMESTAMP),
-('admin@clinic.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'administrator', true, CURRENT_TIMESTAMP);
+('admin@clinic.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'administrator', true, CURRENT_TIMESTAMP),
+('super.admin@clinic.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQ.3J5J5qK8i', 'administrator', true, CURRENT_TIMESTAMP);
 
 -- Insert dummy patients
 INSERT INTO Patients (UserID, FirstName, LastName, DateOfBirth, Gender) VALUES
@@ -15,6 +16,11 @@ INSERT INTO Patients (UserID, FirstName, LastName, DateOfBirth, Gender) VALUES
 INSERT INTO Clinicians (UserID, FirstName, LastName, LicenseNumber, Specialization) VALUES
 (3, 'Robert', 'Wilson', 'MD123456', 'General Medicine'),
 (4, 'Sarah', 'Brown', 'MD789012', 'Hematology');
+
+-- Insert dummy administrators
+INSERT INTO Administrators (UserID, FirstName, LastName) VALUES
+(5, 'Michael', 'Johnson'),
+(6, 'Emily', 'Davis');
 
 -- Insert dummy image uploads
 INSERT INTO ImageUploads (PatientID, ImagePath, Status) VALUES

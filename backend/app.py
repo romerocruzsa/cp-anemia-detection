@@ -7,6 +7,8 @@ from contextlib import asynccontextmanager
 from fastapi import Body, FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 import logging
 
@@ -17,6 +19,8 @@ load_dotenv(os.path.join("CONFIG", "local.env"))
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from HANDLER.patients import PatientsHandler
+from HANDLER.clinicians import CliniciansHandler
+from HANDLER.administrators import AdministratorsHandler
 from HANDLER.ImageUploads import ImageUploadsHandler
 from HANDLER.AnemiaAnalysis import AnemiaAnalysisHandler
 from HANDLER.HemoglobinEstimator import HemoglobinHandler
@@ -27,6 +31,8 @@ from db.database import get_connection, release_connection
 
 # Global handler instances
 handler = PatientsHandler()
+clinician_handler = CliniciansHandler()
+administrator_handler = AdministratorsHandler()
 image_handler = ImageUploadsHandler()
 analysis_handler = AnemiaAnalysisHandler()
 hgb_handler = None  # Loaded via lifespan
@@ -51,6 +57,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files
+app.mount("/frontend/static", StaticFiles(directory="../frontend/static"), name="static")
+
+# Configure templates
+templates = Jinja2Templates(directory="frontend/html")
 
 @app.get("/test_db")
 async def test_db():
@@ -79,6 +91,22 @@ async def get_patients():
 @app.get("/get_patient/{pid}")
 async def get_patient_by_id(pid: int):
     return await handler.getPatientsByID(pid)
+
+@app.get("/get_clinician/{cid}")
+async def get_clinician_by_id(cid: int):
+    return await clinician_handler.getClinicianByID(cid)
+
+@app.get("/get_administrator/{aid}")
+async def get_administrator_by_id(aid: int):
+    return await administrator_handler.getAdministratorByID(aid)
+
+@app.get("/get_administrator_by_user/{user_id}")
+async def get_administrator_by_user_id(user_id: int):
+    return await administrator_handler.getAdministratorByUserID(user_id)
+
+@app.get("/get_all_administrators")
+async def get_all_administrators():
+    return await administrator_handler.getAllAdministrators()
 
 @app.post("/insert_patient")
 async def insert_patient(data: Dict = Body(...)):
@@ -277,6 +305,10 @@ async def get_pending_follow_ups(clinician_id: int = None):
     except Exception as e:
         logging.error(f"Error retrieving follow-ups: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/get_all_users")
+async def get_all_users():
+    return await users_dao.get_all_users()
 
 if __name__ == "__main__":
     import uvicorn

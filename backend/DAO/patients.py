@@ -63,10 +63,11 @@ class PatientsDAO:
         async with self.pool.acquire() as conn:
             try:
                 sql = """
-                  SELECT PatientID, FirstName, LastName, DateOfBirth,
-                         Gender, CreatedAt
-                    FROM Patients
-                   WHERE PatientID = $1;
+                  SELECT p.PatientID, p.UserID, p.FirstName, p.LastName, p.DateOfBirth,
+                         p.Gender, u.Email, u.Role, p.CreatedAt, p.UpdatedAt
+                    FROM Patients p
+                    JOIN Users u ON p.UserID = u.UserID
+                   WHERE p.PatientID = $1;
                 """
                 row = await conn.fetchrow(sql, pid)
                 if not row:
