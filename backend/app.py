@@ -25,12 +25,16 @@ from HANDLER.patients import PatientsHandler
 from HANDLER.ImageUploads import ImageUploadsHandler
 from HANDLER.AnemiaAnalysis import AnemiaAnalysisHandler
 from HANDLER.HemoglobinEstimator import HemoglobinHandler
+from HANDLER.audit import AuditHandler
+from HANDLER.medical_notes import MedicalNotesHandler
 
 # Global handler instances
 handler = PatientsHandler()
 image_handler = ImageUploadsHandler()
 analysis_handler = AnemiaAnalysisHandler()
 hgb_handler = None  # Loaded via lifespan
+audit_handler = AuditHandler()
+notes_handler = MedicalNotesHandler()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -181,6 +185,79 @@ async def predict_image(file: UploadFile = File(...), patient_id: int = None, im
     except Exception as e:
         import traceback
         traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Audit endpoints
+@app.get("/audit/trail")
+async def get_audit_trail(user_id: int = None, table_name: str = None,
+                         start_date: str = None, end_date: str = None):
+    try:
+        records = await audit_handler.get_audit_trail(user_id, table_name, start_date, end_date)
+        return JSONResponse(content=records)
+    except Exception as e:
+        logging.error(f"Error retrieving audit trail: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Medical Notes endpoints
+@app.post("/notes/create")
+async def create_medical_note(data: Dict = Body(...)):
+    try:
+        note_id = await notes_handler.create_note(
+            data.get("clinician_id"),
+            data.get("patient_id"),
+            data.get("analysis_id"),
+            data.get("note_text"),
+            data.get("follow_up_date")
+        )
+        if note_id:
+            return JSONResponse(content={"note_id": note_id, "message": "Note created successfully"})
+        raise HTTPException(status_code=500, detail="Failed to create note")
+    except Exception as e:
+        logging.error(f"Error creating medical note: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/notes/patient/{patient_id}")
+async def get_patient_notes(patient_id: int):
+    try:
+        notes = await notes_handler.get_patient_notes(patient_id)
+        return JSONResponse(content=notes)
+    except Exception as e:
+        logging.error(f"Error retrieving patient notes: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/notes/{note_id}")
+async def get_note(note_id: int):
+    try:
+        note = await notes_handler.get_note_by_id(note_id)
+        if note:
+            return JSONResponse(content=note)
+        raise HTTPException(status_code=404, detail="Note not found")
+    except Exception as e:
+        logging.error(f"Error retrieving note: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/notes/{note_id}")
+async def update_note(note_id: int, data: Dict = Body(...)):
+    try:
+        updated_id = await notes_handler.update_note(
+            note_id,
+            data.get("note_text"),
+            data.get("follow_up_date")
+        )
+        if updated_id:
+            return JSONResponse(content={"message": "Note updated successfully"})
+        raise HTTPException(status_code=404, detail="Note not found")
+    except Exception as e:
+        logging.error(f"Error updating note: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/notes/follow-ups")
+async def get_pending_follow_ups(clinician_id: int = None):
+    try:
+        follow_ups = await notes_handler.get_pending_follow_ups(clinician_id)
+        return JSONResponse(content=follow_ups)
+    except Exception as e:
+        logging.error(f"Error retrieving follow-ups: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
