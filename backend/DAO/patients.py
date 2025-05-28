@@ -4,6 +4,7 @@ import logging
 import os
 import bcrypt
 from encryption import AESCipher
+from datetime import datetime
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -41,17 +42,16 @@ class PatientsDAO:
             try:
                 sql = """
                   SELECT PatientID, FirstName, LastName, DateOfBirth,
-                         Gender, Email, CreatedAt
+                         Gender, CreatedAt
                     FROM Patients;
                 """
                 rows = await conn.fetch(sql)
                 decrypted = []
                 for r in rows:
                     rec = dict(r)
-                    # decrypt first name, last name, email
+                    # decrypt first name and last name
                     rec['firstname'] = self.cipher.decrypt(rec['firstname'])
                     rec['lastname']  = self.cipher.decrypt(rec['lastname'])
-                    rec['email']     = self.cipher.decrypt(rec['email'])
                     decrypted.append(rec)
                 return decrypted
             except Exception as e:
@@ -64,7 +64,7 @@ class PatientsDAO:
             try:
                 sql = """
                   SELECT PatientID, FirstName, LastName, DateOfBirth,
-                         Gender, Email, CreatedAt
+                         Gender, CreatedAt
                     FROM Patients
                    WHERE PatientID = $1;
                 """
@@ -72,40 +72,40 @@ class PatientsDAO:
                 if not row:
                     return None
                 rec = dict(row)
-                # decrypt first name, last name, email
+                # decrypt first name and last name
                 rec['firstname'] = self.cipher.decrypt(rec['firstname'])
                 rec['lastname']  = self.cipher.decrypt(rec['lastname'])
-                rec['email']     = self.cipher.decrypt(rec['email'])
                 return rec
             except Exception as e:
                 logging.error(f"Error fetching/decrypting patient {pid}: {e}")
                 return None
 
-    async def insertPatientWithPassword(self, fname, lname, dob, gender, email, password):
+    async def insertPatientWithPassword(self, user_id, fname, lname, dob, gender, email, password):
         await self.connect()
         async with self.pool.acquire() as conn:
             try:
                 # hash the password
                 hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-                # encrypt first name, last name, and email
+                # encrypt first name and last name
                 encrypted_fname = self.cipher.encrypt(fname)
                 encrypted_lname = self.cipher.encrypt(lname)
-                encrypted_email = self.cipher.encrypt(email)
+
+                # Convert date string to date object
+                dob_date = datetime.strptime(dob, '%Y-%m-%d').date()
 
                 sql = """
                   INSERT INTO Patients
-                    (FirstName, LastName, DateOfBirth, Gender, Email, Password)
-                  VALUES ($1, $2, $3, $4, $5, $6)
+                    (UserID, FirstName, LastName, DateOfBirth, Gender)
+                  VALUES ($1, $2, $3, $4, $5)
                   RETURNING PatientID;
                 """
                 return await conn.fetchval(sql,
+                    user_id,
                     encrypted_fname,
                     encrypted_lname,
-                    dob,
-                    gender,
-                    encrypted_email,
-                    hashed_pw
+                    dob_date,
+                    gender
                 )
             except Exception as e:
                 logging.error(f"Error inserting patient with encrypted fields: {e}")
@@ -175,6 +175,28 @@ class PatientsDAO:
                 return await conn.execute(sql, pid)
             except Exception as e:
                 logging.error(f"Error deleting patient {pid}: {e}")
+                return None
+
+    async def getPatientsByUserId(self, user_id):
+        await self.connect()
+        async with self.pool.acquire() as conn:
+            try:
+                sql = """
+                  SELECT PatientID, FirstName, LastName, DateOfBirth,
+                         Gender, CreatedAt
+                    FROM Patients
+                   WHERE UserID = $1;
+                """
+                row = await conn.fetchrow(sql, user_id)
+                if not row:
+                    return None
+                rec = dict(row)
+                # decrypt first name and last name
+                rec['firstname'] = self.cipher.decrypt(rec['firstname'])
+                rec['lastname']  = self.cipher.decrypt(rec['lastname'])
+                return rec
+            except Exception as e:
+                logging.error(f"Error fetching/decrypting patient for user {user_id}: {e}")
                 return None
 
     async def close_connection(self):

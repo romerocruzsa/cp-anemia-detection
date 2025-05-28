@@ -21,7 +21,6 @@
 
     <!-- Login Form -->
     <form id="login-form" class="space-y-4" autocomplete="off">
-
       <!-- Email Field -->
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
@@ -67,35 +66,57 @@
         Want to test our Early Anemia Screening AI? <a href="../../index.html" class="text-blue-600 hover:underline"><strong>Click Here</strong></a>
       </p>
     </div>
+  </div>
 
-    <script>
-      document.getElementById('login-form').addEventListener('submit', async e => {
-        e.preventDefault();
-    
-        const email    = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-    
-        try {
-          const res = await fetch('http://localhost:8000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-          });
-    
-          if (res.ok) {
-            const data = await res.json();
-            alert(data.message);
-            localStorage.setItem('patientID', data.PatientID);
-            window.location.href = 'capture.html';
-          } else {
-            const err = await res.json();
-            alert(`Login failed: ${err.detail || err.error}`);
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('http://localhost:8000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            Email: email,
+            Password: password
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Store user information in localStorage
+          localStorage.setItem('userID', data.UserID);
+          localStorage.setItem('role', data.Role);
+          
+          // Store role-specific ID and redirect to capture page
+          switch(data.Role) {
+            case 'patient':
+              localStorage.setItem('patientID', data.PatientID);
+              window.location.href = 'capture.html';
+              break;
+            case 'clinician':
+              localStorage.setItem('clinicianID', data.ClinicianID);
+              window.location.href = 'capture.html';
+              break;
+            case 'administrator':
+              localStorage.setItem('adminID', data.AdminID);
+              window.location.href = 'capture.html';
+              break;
+            default:
+              throw new Error('Invalid user role');
           }
-        } catch {
-          alert('Network error – is the API running on port 8000?');
+        } else {
+          alert(data.detail || 'Login failed. Please try again.');
         }
-      });
-    </script>    
-    
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('An error occurred during login. Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>

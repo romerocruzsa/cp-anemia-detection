@@ -4,20 +4,15 @@ import time
 from typing import Dict
 from contextlib import asynccontextmanager
 
-from fastapi import Body, FastAPI, HTTPException, UploadFile, File
+from fastapi import Body, FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-import asyncpg
 import logging
 
 # ── Load .env from CONFIG/local.env ─────────────────────────────────────────
 from dotenv import load_dotenv
 load_dotenv(os.path.join("CONFIG", "local.env"))
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL must be set in CONFIG/local.env")
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +22,8 @@ from HANDLER.AnemiaAnalysis import AnemiaAnalysisHandler
 from HANDLER.HemoglobinEstimator import HemoglobinHandler
 from HANDLER.audit import AuditHandler
 from HANDLER.medical_notes import MedicalNotesHandler
+from HANDLER.auth import AuthHandler
+from db.database import get_connection, release_connection
 
 # Global handler instances
 handler = PatientsHandler()
@@ -35,6 +32,7 @@ analysis_handler = AnemiaAnalysisHandler()
 hgb_handler = None  # Loaded via lifespan
 audit_handler = AuditHandler()
 notes_handler = MedicalNotesHandler()
+auth_handler = AuthHandler()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -57,14 +55,15 @@ app.add_middleware(
 @app.get("/test_db")
 async def test_db():
     """
-    Quick raw check that DATABASE_URL is correct.
+    Quick raw check that database connection is working.
     """
     try:
-        # Use only the DATABASE_URL from local.env
-        async with asyncpg.create_pool(DATABASE_URL) as pool:
-            async with pool.acquire() as conn:
-                result = await conn.fetch("SELECT * FROM Patients;")
-                return {"patients": result}
+        conn = await get_connection()
+        try:
+            result = await conn.fetch("SELECT * FROM Patients;")
+            return {"patients": result}
+        finally:
+            await release_connection(conn)
     except Exception as e:
         logging.error(f"Database error: {e}")
         raise HTTPException(status_code=500, detail="Failed to connect to database")
@@ -149,28 +148,47 @@ async def update_analysis(analysis_id: int, status: str, confidence: float):
     return await analysis_handler.updateAnalysis(analysis_id, status, confidence)
 
 @app.post("/register")
-async def register_patient(data: Dict = Body(...)):
-    # delegate entirely to the handler, which already returns JSONResponse
-    return await handler.insertPatientWithPassword(data)
-
-@app.post("/login")
-async def login(data: dict = Body(...)):
-    email = data.get("email")
-    password = data.get("password")
-
-    if not email or not password:
-        raise HTTPException(status_code=400, detail="Email and password are required")
-
-    patient_id = await handler.loginPatient(email, password)
-    if patient_id:
-        # return a JSON object on success
+async def register(request: Request):
+    try:
+        data = await request.json()
+        return await auth_handler.register(data)
+    except HTTPException as e:
         return JSONResponse(
-            status_code=200,
-            content={"PatientID": patient_id, "message": "Login successful"}
+            status_code=e.status_code,
+            content={"detail": e.detail}
+        )
+    except Exception as e:
+        logging.error(f"Registration error: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal server error"}
         )
 
-    # no match → 401
-    raise HTTPException(status_code=401, detail="Invalid email or password")
+@app.post("/login")
+async def login(request: Request):
+    try:
+        data = await request.json()
+        email = data.get('Email')
+        password = data.get('Password')
+        
+        if not email or not password:
+            return JSONResponse(
+                status_code=400,
+                content={"detail": "Email and password are required"}
+            )
+            
+        return await auth_handler.login(email, password)
+    except HTTPException as e:
+        return JSONResponse(
+            status_code=e.status_code,
+            content={"detail": e.detail}
+        )
+    except Exception as e:
+        logging.error(f"Login error: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal server error"}
+        )
 
 @app.post("/predict_image")
 async def predict_image(file: UploadFile = File(...), patient_id: int = None, image_id: int = None):

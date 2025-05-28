@@ -8,99 +8,181 @@
   <!-- External Fonts and Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 font-inter min-h-screen flex items-center justify-center">
-    <!-- Registration Page Container -->
-    <div class="bg-white shadow-lg rounded-lg p-8 max-w-2xl w-full">
-      <!-- Logo and Title Section -->
-      <div class="text-center mb-6">
-        <img src="/frontend/static/images/logo.png" alt="Anemi-Care Logo" class="w-16 h-16 mx-auto mb-4" />
-        <h1 class="text-2xl font-bold text-gray-800">Anemicare</h1>
-      </div>
-
-  <!-- Registration Form -->
-  <form id="register-form" class="space-y-6" autocomplete="off">
-
-    <!-- Personal Information -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
-        <input type="text" id="first-name" name="FirstName" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your first name" required />
-      </div>
-      <div>
-        <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
-        <input type="text" id="last-name" name="LastName" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your last name" required />
-      </div>
+</head>
+<body class="bg-gray-100 font-inter min-h-screen flex items-center justify-center">
+  <!-- Registration Page Container -->
+  <div class="bg-white shadow-lg rounded-lg p-8 max-w-2xl w-full">
+    <!-- Logo and Title Section -->
+    <div class="text-center mb-6">
+      <img src="/frontend/static/images/logo.png" alt="Anemi-Care Logo" class="w-16 h-16 mx-auto mb-4" />
+      <h1 class="text-2xl font-bold text-gray-800">Anemicare</h1>
     </div>
 
-    <!-- DOB and Gender -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Registration Form -->
+    <form id="register-form" class="space-y-6" autocomplete="off">
+      <!-- User Role Selection -->
       <div>
-        <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
-        <input type="date" id="dob" name="DateOfBirth" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" required />
-      </div>
-      <div>
-        <label for="sex" class="block text-sm font-medium text-gray-700">Legal Sex</label>
-        <select id="sex" name="Gender" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" required>
-          <option value=""></option>
-          <option value="Female">Female</option>
-          <option value="Male">Male</option>
-          <option value="Other">Other</option>
+        <label for="role" class="block text-sm font-medium text-gray-700">Register as</label>
+        <select id="role" name="Role" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" required onchange="toggleRoleFields()">
+          <option value="patient">Patient</option>
+          <option value="clinician">Clinician</option>
+          <option value="administrator">Administrator</option>
         </select>
       </div>
+
+      <!-- Personal Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+          <input type="text" id="first-name" name="FirstName" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your first name" required />
+        </div>
+        <div>
+          <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+          <input type="text" id="last-name" name="LastName" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your last name" required />
+        </div>
+      </div>
+
+      <!-- DOB and Gender -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+          <input type="date" id="dob" name="DateOfBirth" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" required />
+        </div>
+        <div>
+          <label for="sex" class="block text-sm font-medium text-gray-700">Legal Sex</label>
+          <select id="sex" name="Gender" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" required>
+            <option value=""></option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            <option value="O">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="Email" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="you@example.com" required />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="Password" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Create a password" required />
+      </div>
+
+      <!-- Clinician-specific fields (initially hidden) -->
+      <div id="clinician-fields" class="space-y-4 hidden">
+        <div>
+          <label for="license" class="block text-sm font-medium text-gray-700">License Number</label>
+          <input type="text" id="license" name="LicenseNumber" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your medical license number" />
+        </div>
+        <div>
+          <label for="specialization" class="block text-sm font-medium text-gray-700">Specialization</label>
+          <input type="text" id="specialization" name="Specialization" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter your medical specialization" />
+        </div>
+      </div>
+
+      <!-- Administrator-specific fields (initially hidden) -->
+      <div id="admin-fields" class="space-y-4 hidden">
+        <div>
+          <label for="admin-code" class="block text-sm font-medium text-gray-700">Administrator Code</label>
+          <input type="password" id="admin-code" name="AdminCode" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Enter administrator registration code" />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium py-2 rounded-xl hover:from-blue-700 hover:to-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        Create Account
+      </button>
+    </form>
+
+    <!-- Additional Links -->
+    <div class="mt-6 text-center space-y-2">
+      <p class="text-sm">
+        Already have an account? <a href="login.html" class="text-blue-600 hover:underline"><strong>Login</strong></a>
+      </p>
     </div>
-
-    <!-- Contact Information -->
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-      <input type="email" id="email" name="Email" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="you@example.com" required />
-    </div>
-
-    <!-- Password -->
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-      <input type="password" id="password" name="Password" class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Create a password" required />
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium py-2 rounded-xl hover:from-blue-700 hover:to-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
-      Create Account
-    </button>
-  </form>
-
-  <!-- Additional Links -->
-  <div class="mt-6 text-center space-y-2">
-    <p class="text-sm">
-      Already have an account? <a href="login.html" class="text-blue-600 hover:underline"><strong>Login</strong></a>
-    </p>
   </div>
 
-<script>
-  document.getElementById('register-form')
-    .addEventListener('submit', async e => {
-      e.preventDefault();
-      // build the payload
-      const payload = {
-        FirstName:    document.getElementById('first-name').value,
-        LastName:     document.getElementById('last-name').value,
-        DateOfBirth:  document.getElementById('dob').value,
-        Gender:       document.getElementById('sex').value,
-        Email:        document.getElementById('email').value,
-        Password:     document.getElementById('password').value
-      };
-  
-      const res = await fetch('http://localhost:8000/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-  
-      if (res.ok) {
-        // on success, send them to login
-        window.location.href = 'login.html';
+  <script>
+    function toggleRoleFields() {
+      const role = document.getElementById('role').value;
+      const clinicianFields = document.getElementById('clinician-fields');
+      const adminFields = document.getElementById('admin-fields');
+      const licenseInput = document.getElementById('license');
+      const specializationInput = document.getElementById('specialization');
+      const adminCodeInput = document.getElementById('admin-code');
+      const dobInput = document.getElementById('dob');
+      const sexInput = document.getElementById('sex');
+      
+      // Hide all role-specific fields first
+      clinicianFields.classList.add('hidden');
+      adminFields.classList.add('hidden');
+      licenseInput.required = false;
+      specializationInput.required = false;
+      adminCodeInput.required = false;
+      
+      // Show and set required fields based on role
+      if (role === 'clinician') {
+        clinicianFields.classList.remove('hidden');
+        licenseInput.required = true;
+        specializationInput.required = true;
+        dobInput.required = false;
+        sexInput.required = false;
+      } else if (role === 'administrator') {
+        adminFields.classList.remove('hidden');
+        adminCodeInput.required = true;
+        dobInput.required = false;
+        sexInput.required = false;
       } else {
-        const err = await res.json();
-        alert('Registration failed: ' + (err.detail || JSON.stringify(err)));
+        dobInput.required = true;
+        sexInput.required = true;
+      }
+    }
+
+    document.getElementById('register-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      // Build the base payload
+      const payload = {
+        FirstName: document.getElementById('first-name').value,
+        LastName: document.getElementById('last-name').value,
+        DateOfBirth: document.getElementById('dob').value,
+        Gender: document.getElementById('sex').value,
+        Email: document.getElementById('email').value,
+        Password: document.getElementById('password').value,
+        Role: document.getElementById('role').value
+      };
+
+      // Add role-specific fields
+      if (payload.Role === 'clinician') {
+        payload.LicenseNumber = document.getElementById('license').value;
+        payload.Specialization = document.getElementById('specialization').value;
+      } else if (payload.Role === 'administrator') {
+        payload.AdminCode = document.getElementById('admin-code').value;
+      }
+
+      try {
+        const response = await fetch('http://localhost:8000/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Show success message
+          alert('Registration successful! You will be redirected to the login page.');
+          // Redirect to login page
+          window.location.href = 'login.html';
+        } else {
+          alert(data.detail || 'Registration failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('An error occurred during registration. Please try again.');
       }
     });
   </script>
